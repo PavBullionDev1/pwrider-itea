@@ -1,0 +1,65 @@
+<app-common-header [pageSource]="'search'" (cusBackEvent)="backToPrev($event)"></app-common-header>
+
+<ion-content class="voucherdetail" *ngIf="showNotFound == true" appSwipe (swipeLeft)="onSwipeLeft($event)">
+  <!-- Search Bar -->
+  <div class="customsearch">
+    <ion-searchbar (ionFocus)="searchMerchant(type='reset')" [(ngModel)]="findValue" placeholder="Find vouchers"></ion-searchbar>
+  </div>
+
+    <ion-card-header>
+        <img src="{{wishlistvoucherDetail.banner_url}}" class="mainimage">
+    </ion-card-header>
+
+     <ion-card-content>
+         <ion-row>
+             <ion-col size="9">
+                 <ion-card-title style="line-height: 20px;">
+                     <span  class="opensanLBold700">{{wishlistvoucherDetail.title}}</span><br>
+                     <span  class="notosanssc400" style="font-size: 16px;">{{wishlistvoucherDetail.title_cn}}</span></ion-card-title>
+             </ion-col>
+
+             <ion-col size="3" class="ion-align-self-center" >
+                 <img src="{{wishlistvoucherDetail.logo_url}}" style="width: 100%;">
+             </ion-col>
+         </ion-row>
+
+         <div style="width: 98%;background-color: #bbbdbf;height: 1px;text-align: center;margin-left: auto;margin-right: auto;" *ngIf="wishlistvoucherDetail.description!=''"></div>
+
+          <ion-row *ngIf="wishlistvoucherDetail.description!=''">
+             <ion-col size="12">
+               <div class="desc opensanLight300">{{wishlistvoucherDetail.description}}</div>
+             </ion-col>
+         </ion-row>
+
+          <div style="width: 98%;background-color: #bbbdbf;height: 1px;text-align: center;margin-left: auto;margin-right: auto;"></div>
+
+          <div class="shopinfomation">
+             <ul>
+                 <li><span class="iconimg"><img src="../../assets/location-icon.svg" ></span>{{wishlistvoucherDetail.address}}</li>
+
+                 <li><span class="iconimg"><img src="../../assets/clock-icon.svg" ></span>{{wishlistvoucherDetail.operation_hour}}</li>
+
+                 <li><span class="iconimg"><img src="../../assets/phone-icon.svg" ></span>{{wishlistvoucherDetail.tel}}</li>
+             </ul>
+          </div>
+
+           <div class="ion-text-center">
+            <ion-button expand="block" class="buttontheme-orange" mode="md"(click)="backToWishlist(actionMode)" *ngIf="actionMode == 'add'">Add to My Wishlist</ion-button>
+            <ion-button expand="block" class="buttontheme-orange" mode="md"(click)="backToWishlist(actionMode)" *ngIf="actionMode == 'remove'">Remove from My Wishlist</ion-button>
+          </div>
+
+          <div *ngIf= "tradeAvailable == 'open'">
+            <h6><ion-text class="txtorange" (click)="searchMerchant(wishlistvoucherDetail.title)">{{tradableVoucherList.length}} Vouchers</ion-text> available for trade</h6>
+          </div>
+
+
+     </ion-card-content>
+
+
+
+
+     <div class="spacer" style="height: 40px;"></div>
+
+</ion-content>
+
+<mytab></mytab>

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "958071698167",
+    "project_id": "pwrider-32aec",
+    "storage_bucket": "pwrider-32aec.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:958071698167:android:b5e5bc4ce1bb16078719f2",
+        "android_client_info": {
+          "package_name": "com.iteatech.pwrider"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD838DMkXf3THyEpH7bXUarvdn3wQr2BWI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:958071698167:android:6dcded5d784ef6218719f2",
+        "android_client_info": {
+          "package_name": "com.iteatech.pwriderinhouse"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD838DMkXf3THyEpH7bXUarvdn3wQr2BWI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

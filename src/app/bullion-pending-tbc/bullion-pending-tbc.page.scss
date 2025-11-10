@@ -1,0 +1,258 @@
+@use 'src/global';
+
+.detailicon{
+--color: #243a76;
+    position: absolute;
+    z-index: 5;
+    right: 0;
+    color: #243a76;
+    top: 0;
+    right: 0;
+    font-size: 25px;
+}
+
+.eachGRN {
+    padding: 10px;
+    margin: 5px;
+    background-color: white;
+    border-radius: 10px;
+}
+.itemList {
+    font-size: 0.8em;
+}
+.label {
+    padding: 5px;
+    margin-left: 5px;
+    background-color: rgba(255,0,0,0.5);
+    border-radius: 5px;
+}
+.table {
+    width: 100%;
+}
+
+.table td {
+    text-align: center;
+}
+
+.ordelist{
+    .productorderlist{
+        width: 100%;
+    }
+    ion-accordion{
+        margin-bottom: 10px;
+    }
+    ion-item{
+        margin-right: 5px !important;
+    }
+    ion-item, ion-accordion-group{
+        //background: #FFFFFF;
+        border-radius: 12px;
+        margin-top: 10px;
+        --inner-padding-end: 0;
+        margin-left: 18px;
+        margin-right: 18px;
+    
+        .status{
+            border: 1px solid #9e9e9e;
+            border-radius: 100px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 14px;
+            padding: 3px 10px;
+            font-weight: 600;
+            color: #243a76;
+        }
+    
+        h2{
+            margin-top: 0;
+            font-size: 15px;
+            font-weight: 600;
+            color: #243a76;
+        }
+
+        h5{
+            margin-top: 13px;
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: #92a2ce;
+            
+            div{
+               color: #243a76;
+               font-weight: 600;
+               font-size: 17px;
+            }
+        }
+
+        
+        .remarkdetail{
+            border-top: 1px dashed #b4b4b4;
+            padding-top: 0px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        
+        
+        
+        .buttonaction{
+            .pickupdetail{
+                width: 100%;
+                height: 35px;
+                font-size: 18px;
+                --background: #243a76;
+                color: #fbd23c;
+            }
+            .wazebtn{
+                margin-top:-7px;
+                height:30px;
+                img{
+                  height:38px;
+                  width:100%;
+                }
+            }
+            .googlemapbtn{
+                margin-top:-11px;
+                height:32px;
+                img{
+                  height:40px;
+                  width:100%;
+                }
+            }
+            .openmapbtn{
+
+                width: 100%;
+                height: 38px;
+                font-size: 13px;
+                margin-top: 3px;
+                background: #F6B606;
+                text-align: center;
+                padding-top: 11px;
+                border-radius: 6px;
+                ion-icon{
+                    color: #fff;
+                    float: inherit;
+                    margin-top: -2px;
+                    margin-right: 1px;
+                    font-size: 18px;
+                }
+            }
+
+            .whatsappbtn{
+
+                width: 100%;
+                height: 38px;
+                font-size: 13px;
+                margin-top: 3px;
+                background: #29AC00;
+                text-align: center;
+                padding-top: 11px;
+                border-radius: 6px;
+                ion-icon{
+                    color: #fff;
+                    float: inherit;
+                    margin-top: -2px;
+                    margin-right: 1px;
+                    font-size: 18px;
+                }
+            }
+
+            .callbtn{
+                width: 100%;
+                height: 38px;
+                font-size: 13px;
+                margin-top: 3px;
+                background: #3f51b5;
+                text-align: center;
+                padding-top: 11px;
+                border-radius: 6px;
+                ion-icon{
+                    color: #fff;
+                    float: inherit;
+                    margin-top: -2px;
+                    margin-right: 1px;
+                    font-size: 18px;
+                }
+            }
+        }
+        
+        
+        a{
+            font-weight: 500;
+            text-decoration: none;
+            padding-top: 10px;
+            display: block;
+            margin-top: 15px;
+            
+            ion-icon{
+                float: right;
+                color: #A7ACB6;
+                font-size: 22px;
+                margin-right: -5px;
+            }
+        }
+        
+        
+       
+        
+    }
+
+    
+}
+
+
+.footerbtn{
+    background-color: #fff;
+    
+    ion-button{
+        margin: 0;
+        --border-radius: 0;
+        --background: #fff;
+        --background-hover: #fff;
+        --background-activated: #fff;
+        img{
+            width: 24px;
+            margin-right: 7px;
+            margin-top: -1px;
+        }
+        
+        &.servicebtn{
+            color: #0B554C;
+            border-bottom: 3px solid #0B554C;
+            font-size: 17px;
+            font-weight: 700;
+            height: 60px;
+        }
+
+        &.camerabtn{
+            color: #A7ACB6;
+            border-bottom: 3px solid #ffffff;
+            font-size: 30px;
+            font-weight: 700;
+            height: 60px;
+        }
+
+        &.requestbtn{
+            color: #A7ACB6;
+            border-bottom: 3px solid #ffffff;
+            font-size: 17px;
+            font-weight: 700;
+            height: 60px;
+        }
+    }
+}
+
+.arangebutton{
+        margin-left: 12px;
+    margin-right: 12px;
+    --background: #243a76;
+    color: #f6cf3c;
+        font-size: 18px;
+    
+    .code-working-outline{
+        transform: rotate(90deg);
+        font-size: 24px;
+        margin-left: 5px;
+        font-size: 20px;
+    }
+}

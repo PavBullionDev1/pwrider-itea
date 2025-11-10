@@ -1,0 +1,168 @@
+//
+//@mixin bgSize($property) {
+//  -webkit-background-size: $property;
+//  -ms-background-size: $property;
+//  background-size: $property;
+//}
+
+@use 'src/global';
+@mixin borderRadius($property) {
+  -webkit-border-radius: $property;
+  -ms-border-radius: $property;
+  border-radius: $property;
+}
+
+
+$themOrangeColor: #f6921e;
+
+ion-content {
+    --padding-start: 10px;
+    --padding-end: 10px;
+    --background: #243a76 !important;
+}
+
+#inner{
+    transform: rotate(45deg);
+    background-color: #243a76;
+    width: 170px;
+    height: 170px;
+    top: -80px;
+    left: 0;
+    position: relative;
+    border-radius: 20px;
+}
+
+.logopos{
+margin: 0;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+.logo{
+    width: 50%;
+    margin-top: 5%;
+}
+
+.welcomtitle{
+    text-align: left;
+    font-size: 30px;
+    margin-bottom: 40px;
+    margin-top: 130px;
+}
+
+.loginPage{
+    ion-item{
+        --inner-padding-end: 0px;
+        --padding-start:0px
+    }
+    ion-item{
+       margin-bottom: 10px;
+        border-radius: 10px;
+        --background-color: #fff;
+        line-height: 30px;
+        overflow: hidden;
+    }
+    
+    .fgtpass{
+        color:#1A1A1A;
+        text-decoration: none;
+        font-size: 12px;
+    }
+    
+    .orangeline{
+        background-color: $themOrangeColor;
+        width: 100%;
+        height: 1px;
+        margin-bottom: 20px;
+        margin-top: 20px;
+    }
+    
+    .buttontheme-orange{
+        @include global.btnthemeorange(100%);
+        --background: #1858a3;
+        --background-hover: #1858a3;
+        --background-activated: #1858a3;
+        --color:#fbd23c !important;
+    font-weight: 600;
+    }
+    
+    .logininput{
+        ion-item{
+            ion-label{
+                padding-left: 10px;
+                margin: 0;
+                color: #757B8A
+            }
+            
+            ion-input{
+                border: 1px solid #EEEFF1;
+                border-radius: 10px;
+                padding-left: 10px !important;
+                --placeholder-opacity:0.3;
+                
+                &.ion-valid{
+                  border: 1px solid #2dd36f;  
+                }
+            }
+            margin-bottom: 20px;
+            
+            &:last-child{
+                margin-bottom: 5px;
+            }
+            
+            .showhidepass{
+                color: #A7ACB6;
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
+                background-color: #fff;
+                z-index: 2;
+            }
+        }
+    }
+    
+    .notetext{
+        color: #757B8A;
+        font-size: 16px;
+        display: block;
+        padding-top: 5px;
+    }
+    
+    
+    .backtologin{
+        font-size: 14px;
+        text-align: center;
+        text-decoration: none;
+        display: block;
+    }
+    
+    
+    .sucessforgetpassword{
+        margin-top: 25%;
+        
+        img{
+            width: 110px;
+        }
+        
+        h2{
+           margin-top: 30px;  
+        }
+        
+        h3{
+            font-size: 18px;
+            line-height: 25px;
+            color: #757B8A;
+            margin-top: 0;
+            
+            .emailtitle{
+                color: #1a1a1a;
+            }
+            
+        }
+    }
+}
+
+.myInput {
+    background-color:rgb(255,255,255);
+}

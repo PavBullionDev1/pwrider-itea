@@ -1,0 +1,121 @@
+<app-common-header [pageSource]="'pending_order'" [headerTitle]="'Pending Job List'"></app-common-header>
+
+<ion-content class="ordelist ion-padding-top">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+		<ion-refresher-content></ion-refresher-content>
+	</ion-refresher>
+
+	<ion-row class="ion-align-items-center">
+		<ion-col size="12">
+			<h5 style="margin-top: 5px; margin-left: 12px;font-weight: 600;">Total Pending Job: {{inlineCount}}
+			</h5>
+		</ion-col>
+
+    <ion-col size="12" *ngIf="type == 'bullion'">
+      <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none" *ngFor="let item of pendingJobList | keyvalue">
+        <div class="input-wrapper" style="display:block; width: 100%;">
+          <div class="productdetail" [ngStyle]="{'border-bottom': configData.current_tab == item.key ? '1px solid lightgray' : 'none'}" (click)="set_current_tab(item.key)">
+            <h5 class="txt400" style="margin-top: 0;">
+                <div>
+                  <div style="display: inline-block; font-size: 16px; padding-top: 20px; padding-bottom: 20px;">{{item.key}} <span>({{item.value.qty}})</span></div>
+                </div>
+            </h5>
+          </div>
+          <div *ngIf="configData.current_tab == item.key">
+            <div class="eachSupplier"
+            *ngFor="let po of item.value.customerDataList | keyvalue; let lastItem = last;"    
+            style="border-radius: unset;">
+              <div style="padding-bottom: 20px;" [ngStyle]="{'border-bottom': !lastItem ? '1px solid lightgray' : 'none'}">
+                <div>
+                    <span class="label" style="background-color: transparent; margin-left: 0px; padding-left: 0px; font-weight: bold; font-size: 16px; max-width: 80%;">{{po.value.name}} ({{po.value.po_count}})</span>
+                    <div style="margin-top: 10px; margin-bottom: 15px;">
+                      <span *ngIf="po.value.pendingOrderData && po.value.pendingOrderData.status == '0'" style="color: white; background-color: green; border:1px solid green; border-radius: 5px; padding: 5px; font-size: 12px; font-weight: 600; margin-right: 5px;">Sent</span>
+                      <span style="color: white; background-color: rgba(255, 0, 0, 0.5); border:1px solid rgba(255, 0, 0, 0.5); border-radius: 5px; padding: 5px; font-size: 12px; font-weight: 600; margin-right: 5px;" *ngIf="po.value.urgency_status">{{po.value.urgency_status}}</span>
+                      <span style="color: white; background-color: #243a76; border:1px solid #243a76; border-radius: 5px; padding: 5px; font-size: 12px; font-weight: 600; margin-right: 5px;">
+                        <span *ngIf="po.value.task_exist === 1 && po.value.pending_job_exist === 0">Task</span>
+                        <span *ngIf="po.value.pending_job_exist === 1 && po.value.task_exist === 0">PO</span>
+                        <span *ngIf="po.value.task_exist === 1 && po.value.pending_job_exist === 1">Task & PO</span>
+                      </span>
+                      <span style="color: white; background-color: orange; border:1px solid orange; border-radius: 5px; padding: 5px; font-size: 12px; font-weight: 600;" *ngIf="po.value.oldest_po_status">{{po.value.oldest_po_status}}</span>
+                    </div>
+                </div>
+                <div>
+                  <p style="font-size: 14px;">
+                    <span style="font-weight: 600;">Address : </span><span>{{po.value.city}} {{po.value.state}}</span></p>
+                  <div class="requestButton" style="margin-top: 10px;" mode="ios" (click)="submit_now(po.value)" *ngIf="!po.value.pendingOrderData">
+                    <button>Request Job</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ion-item>
+    </ion-col>
+
+    <ion-col size="12" *ngIf="type !== 'bullion'">
+      <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none" *ngFor="let item of pendingJobList | keyvalue" >
+        <div class="input-wrapper" style="display:block; width: 100%;">
+          <div class="productdetail" [ngStyle]="{'border-bottom': configData.current_tab == item.key ? '1px solid lightgray' : 'none'}" (click)="set_current_tab(item.key)">
+            <h5 class="txt400" style="margin-top: 0;">
+                <div>
+                  <div style="display: inline-block; font-size: 16px; padding-top: 20px; padding-bottom: 20px; font-weight: bold;">{{item.key}} <span>({{item.value.qty}})</span></div>
+                </div>
+            </h5>
+          </div>
+          <div *ngIf="configData.current_tab == item.key">
+            <div class="productdetail" *ngFor="let so of item.value.stateList | keyvalue; let lastItem = last;" [ngStyle]="{'border-bottom': configData.current_tab == item.key ? '1px solid lightgray' : 'none'}" >
+              <h5 class="txt400" style="margin-top: 0;" (click)="set_current_tab(so.key,'child')">
+                  <div>
+                    <div style="display: inline-block; font-size: 14px; padding-top: 20px; padding-bottom: 20px;">{{so.key}} <span>({{so.value.qty}})</span></div>
+                  </div>
+              </h5>
+              <div *ngIf="configData.current_tab_child == so.key">
+                <div class="eachSupplier"
+                *ngFor="let soData of so.value.salesList | keyvalue; let lastItem = last; let firstItem = first;"    
+                style="border-radius: unset;">
+                  <div style="padding-bottom: 20px;" [ngStyle]="{'border-bottom': !lastItem ? '1px solid lightgray' : 'none'}">
+                    <div>
+                      <span class="label" style="background-color: transparent; margin-left: 0px; padding-left: 0px; font-weight: bold; font-size: 16px; max-width: 80%;">
+                        <span *ngIf="soData.value.is_task === 0">{{soData.value.tracking_no}}</span>
+                        <span *ngIf="soData.value.is_task === 1">{{soData.value.title}}</span>
+                      </span>
+                      <div class="label" style="background-color: transparent; margin-left: 0px; padding-left: 0px; font-size: 14px; font-weight: 600; max-width: 80%;">Ordered By : {{soData.value.customer_name}}</div>
+                      <div style="margin-top: 10px; margin-bottom: 15px;">
+                        <span *ngIf="soData.value.pendingOrderData && soData.value.pendingOrderData.status == '0'" style="color: white; background-color: green; border:1px solid green; border-radius: 5px; padding: 5px; font-size: 12px; font-weight: 600; margin-right: 5px;">Sent</span>
+                        <span style="color: white; background-color: rgba(128, 3, 3, 0.5); border:1px solid rgba(255, 0, 0, 0.5); border-radius: 5px; padding: 5px; font-size: 12px; font-weight: 600; margin-right: 5px;" *ngIf="soData.value.urgency_status">{{soData.value.urgency_status}}</span>
+                        <span style="color: white; background-color: #243a76; border:1px solid #243a76; border-radius: 5px; padding: 5px; font-size: 12px; font-weight: 600; margin-right: 5px;">
+                          <span *ngIf="soData.value.is_task === 0">SO</span>
+                          <span *ngIf="soData.value.is_task === 1">Task</span>
+                        </span>
+                        <span style="color: white; background-color: orange; border:1px solid orange; border-radius: 5px; padding: 5px; font-size: 12px; font-weight: 600;" *ngIf="soData.value.oldest_po_status">{{soData.value.oldest_po_status}}</span>
+                      </div>
+                    </div>
+                    <div>
+                      <p style="font-size: 14px;">
+                        <span style="font-weight: 600;">Address : </span>
+                        <span *ngIf="item.key == 'Delivery'">{{soData.value.sender_city}} {{soData.value.sender_state}}</span>
+                        <span *ngIf="item.key == 'PickUp'">{{soData.value.recipient_city}} {{soData.value.recipient_state}}</span>
+                        <span *ngIf="soData.value.is_task == 1">{{soData.value.city}} {{soData.value.state}}</span>
+                      </p>
+                      <div *ngIf="soData.value.is_task == 0 && !soData.value.pendingOrderData" class="requestButton" style="margin-top: 10px;" mode="ios" (click)="logistic_request(soData.value,item.key)">
+                        <button>Request Job</button>
+                      </div>
+                      <div *ngIf="soData.value.is_task == 1 && !soData.value.pendingOrderData" class="requestButton" style="margin-top: 10px;" mode="ios" (click)="submit_now(soData.value)">
+                        <button>Request Job</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ion-item>
+    </ion-col>
+	</ion-row>
+
+	<div class="spacer" style="height: 40px"></div>
+</ion-content>
+
+<mytab></mytab>

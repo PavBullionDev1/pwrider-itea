@@ -1,0 +1,87 @@
+<ion-header>
+  <div>
+    <ion-toolbar class="varitaionslect ion-no-padding ion-no-margin" style="padding-top: 10px !important;">
+      <ion-item class="ion-no-padding ion-no-margin" style="--inner-padding-end: 0 !important;" no-padding>
+        <ion-row class="ion-align-items-end">
+          <ion-col>
+            <div class="txt500"><b>Action</b></div>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+
+      <ion-buttons slot="end">
+        <ion-button (click)="dismiss()" class="closemodal" mode="ios" style="bottom: 35px; right: 0;">
+          <ion-icon name="close-outline" style="color: #999;"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </div>
+</ion-header>
+
+<ion-content>
+  <div class="grnlist">
+    <ion-row class="polistitemv2" style="padding: 10px; margin-top: 10px;">
+      <table class="table" border="1" cellpadding="10" cellspacing="0">
+        <thead>
+        <tr>
+          <th style="width: 20%;">No.</th>
+          <th style="width: 40%;">Description</th>
+          <th style="width: 40%;">Customer</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of selectedTasks; let i = index;">
+          <td style="font-size: 14px;">{{ i+1 }}</td>
+          <td style="font-size: 12px;">{{ item.description }}</td>
+          <td style="font-size: 14px;">{{ item.customer_name }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </ion-row>
+
+    <ion-row *ngIf="selectedTasks.length > 0">
+      <ion-col size="12">
+        <ion-item lines="none">
+          <ion-label style="font-size: 13px; color: #999; ">Action</ion-label>
+          <ion-select [(ngModel)]="taskItemAction" style="font-size: 13px;">
+            <ion-select-option value="">Select Action</ion-select-option>
+            <ion-select-option value="0">Schedule</ion-select-option>
+            <ion-select-option value="1">Transfer</ion-select-option>
+            <ion-select-option value="2">Give Up</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="5" *ngIf="taskItemAction == '0'">
+        <ion-item lines="none">
+          <h5 style="font-size: 13px; margin:0; color: #999; padding-top: 10px;">Job Date:</h5>
+        </ion-item>
+      </ion-col>
+      <ion-col size="3" style="display: flex; justify-content: flex-start; align-items: center;" *ngIf="taskItemAction == '0'">
+        <div style="font-size: 13px; color: black;">{{ selectedTaskItemDate }}</div>
+      </ion-col>
+      <ion-col size="4" style="display: flex; justify-content: flex-start; align-items: center;" *ngIf="taskItemAction == '0'">
+        <ion-button (click)="is_show = !is_show">Change</ion-button>
+      </ion-col>
+      <div style="margin: 0 auto;" *ngIf="is_show == true && taskItemAction == '0'" >
+        <ion-datetime presentation="date" [(ngModel)]="selectedTaskItemDate" (ngModelChange)="updateTaskJobDate($event)" id="datetime"></ion-datetime>
+      </div>
+
+      <ion-col size="12">
+        <ion-item lines="none" *ngIf="taskItemAction == '1'">
+          <ion-label style="font-size: 13px; color: #999; ">Transfer To</ion-label>
+          <ion-select [(ngModel)]="taskItemTransferTo" style="font-size: 13px;">
+            <ion-select-option value="">Select Customer</ion-select-option>
+            <ion-select-option *ngFor="let item of userList" value="{{ item.user_id }}">{{ item.name }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+    </ion-row>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-button color="primary" mode="ios" (click)="submit()" expand="block" [disabled]="selectedTasks.length == 0">Confirm</ion-button>
+  <ion-button color="danger" mode="ios" (click)="dismiss()" expand="block">Cancel</ion-button>
+</ion-footer>

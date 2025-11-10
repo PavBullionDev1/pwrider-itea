@@ -1,0 +1,147 @@
+<ion-header>
+	<div>
+		<ion-toolbar class="varitaionslect ion-no-padding ion-no-margin" style="padding-top: 10px !important;">
+			<ion-item class="ion-no-padding ion-no-margin" style="--inner-padding-end: 0 !important;" no-padding>
+				<ion-row class="ion-align-items-end">
+					<ion-col>
+            <div class="txt500"><b>Task Cart Details - {{task.task_id}}</b></div>
+					</ion-col>
+				</ion-row>
+			</ion-item>
+
+			<ion-buttons slot="end">
+				<ion-button (click)="dismiss()" class="closemodal" mode="ios" style=" bottom: 35px; right: 0;">
+					<ion-icon name="close-outline" style="color: #999;"></ion-icon>
+				</ion-button>
+			</ion-buttons>
+		</ion-toolbar>
+	</div>
+</ion-header>
+
+<ion-content>
+  <div class="grnlist">
+    <ion-row class="polistitemv2" style="padding: 10px; margin-top: 10px;" *ngIf="task.job_type == '2' || task.job_type == '3'">
+      <div style="width:100%; padding-bottom: 5px; margin-bottom: 10px; border-bottom: 2px solid lightgray;">{{ task.job_type == '3'?'Purchase':'Delivery' }} Order List</div>
+      <div class="address-details">
+        <h5>Address:</h5>
+        <p>{{task.address1}}</p>
+        <p>{{task.address2}}</p>
+        <p>{{task.postcode}}, {{task.city}}</p>
+        <p>{{task.state}}</p>
+      </div>
+      <table class="table" border="1" cellpadding="10" cellspacing="0">
+        <thead>
+        <tr>
+          <th style="width: 20%;">No.</th>
+          <th style="width: 40%;">Serial No</th>
+          <th style="width: 40%;">XAU Amount</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of orderList; let i = index;">
+          <td style="font-size: 14px;">{{ i+1 }}</td>
+          <td style="font-size: 12px;">{{ item.serial_no }}</td>
+          <td style="font-size: 14px;">{{ item.XAU_amount | number:'.3' }}</td>
+        </tr>
+        </tbody>
+      </table>
+      <div *ngIf="task.remark_pic">
+        <label>Remark Pic:</label>
+        <ion-row>
+          <ion-col *ngFor="let item of task.remark_pic; let i = index;" size="4">
+            <ion-img [src]="item.img"></ion-img>
+          </ion-col>
+        </ion-row>
+      </div>
+      <ion-row style="border-top: 2px solid #cbcbcb; margin-top: 10px; width:100%">
+        <ion-col size="12">
+          <ion-button class="buttontheme-orange" mode="ios" (click)="needBook = true; dismiss();"
+                      expand="block" [disabled]="task.status !== '0'">Claim
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+    </ion-row>
+
+    <ion-row class="polistitemv2" style="padding: 10px; margin-top: 10px;" *ngIf="task.job_type == '4'">
+      <div style="width:100%; padding-bottom: 5px; margin-bottom: 10px; border-bottom: 2px solid lightgray;">Customize Task</div>
+      <div class="address-details">
+        <h5>Address:</h5>
+        <p>{{task.address1}}</p>
+        <p>{{task.address2}}</p>
+        <p>{{task.postcode}}, {{task.city}}</p>
+        <p>{{task.state}}</p>
+      </div>
+      <ion-row style="border-top: 2px solid #cbcbcb; margin-top: 10px; width:100%">
+        <ion-col size="12">
+          <ion-button class="buttontheme-orange" mode="ios" (click)="needBook = true; dismiss();"
+                      expand="block" [disabled]="task.status !== '0'">Claim
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-row>
+
+    <ion-row class="polistitemv2" style="padding: 10px; margin-top: 10px;" *ngIf="task.job_type == '0'">
+      <div style="width:100%; padding-bottom: 5px; margin-bottom: 10px; border-bottom: 2px solid lightgray;">{{orderList.serial_no}}</div>
+      <div class="address-details">
+        <h5>Address:</h5>
+        <p>{{task.address1}}</p>
+        <p>{{task.address2}}</p>
+        <p>{{task.postcode}}, {{task.city}}</p>
+        <p>{{task.state}}</p>
+      </div>
+      <div class="panel panel-primary" style="border: 1px solid #3c8dbc; margin-bottom: 20px; width: 100%">
+        <div class="panel-heading" style="background-color: #3c8dbc; color: white; padding: 10px;">
+          <h3 class="panel-title">Recipient Information</h3>
+        </div>
+        <div class="panel-body" style="padding: 20px;">
+          <div class="row">
+            <div class="col-md-6">
+              <p><strong>Name:</strong> {{orderList.recipient_name}}</p>
+              <p><strong>Address 1:</strong> {{orderList.recipient_address1}}</p>
+              <p><strong>Address 2:</strong> {{orderList.recipient_address2}}</p>
+            </div>
+            <div class="col-md-6">
+              <p><strong>State:</strong> {{orderList.recipient_state}}</p>
+              <p><strong>Postcode:</strong> {{orderList.recipient_postcode}}</p>
+              <p><strong>Country:</strong> {{orderList.recipient_country}}</p>
+              <p><strong>Phone:</strong> {{orderList.recipient_mobile}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-success" style="border: 1px solid #468847; margin-bottom: 20px; width: 100%">
+        <div class="panel-heading" style="background-color: #468847; color: white; padding: 10px;">
+          <h3 class="panel-title">Sender Information</h3>
+        </div>
+        <div class="panel-body" style="padding: 20px;">
+          <div class="row">
+            <div class="col-md-6">
+              <p><strong>Name:</strong> {{orderList.sender_name}}</p>
+              <p><strong>Address 1:</strong> {{orderList.sender_address1}}</p>
+              <p><strong>Address 2:</strong> {{orderList.sender_address2}}</p>
+            </div>
+            <div class="col-md-6">
+              <p><strong>State:</strong> {{orderList.sender_state}}</p>
+              <p><strong>Postcode:</strong> {{orderList.sender_postcode}}</p>
+              <p><strong>Country:</strong> {{orderList.sender_country}}</p>
+              <p><strong>Phone:</strong> {{orderList.sender_mobile}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ion-row style="border-top: 2px solid #cbcbcb; margin-top: 10px; width:100%">
+        <ion-col size="12">
+          <ion-button class="buttontheme-orange" mode="ios" (click)="needBook = true; dismiss();"
+                      expand="block" [disabled]="task.status !== '0'">Claim
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-row>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-button color="danger" mode="ios" (click)="dismiss()" expand="block">Cancel</ion-button>
+</ion-footer>

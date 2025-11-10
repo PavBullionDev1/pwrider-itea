@@ -1,0 +1,23 @@
+<ion-header class="headerbg">
+  <div class="headerbgtop">
+    <ion-toolbar>    
+          <!-- This Part is only used on Wishlist page -->
+          <ion-buttons *ngIf="pageSource == 'wishlist'" slot="start">
+            <ion-buttons slot="start">
+              <ion-back-button defaultHref="home" *ngIf="mode == 'noSearch'" color="light" text="" style="font-size: 20px;"></ion-back-button>
+                
+              <ion-back-button defaultHref="" *ngIf="mode == 'search'" (click)="customizedBackEvent('')" color="light" text="" style="font-size: 20px;"></ion-back-button>
+                
+            </ion-buttons>
+          </ion-buttons>        
+        
+          <ion-title><img src="../../assets/vouch-logo.svg"/></ion-title>      
+          <ion-buttons slot="end">
+            <ion-button (click)="customizedBackEvent()" color="light"><ion-icon name="close"></ion-icon></ion-button>
+          </ion-buttons>
+    </ion-toolbar>
+       
+</div>
+  
+  
+</ion-header>

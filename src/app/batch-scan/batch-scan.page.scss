@@ -1,0 +1,102 @@
+@use "../../global.scss";
+
+$bg-main: #243a76;
+$bg-secondary: #92a2ce;
+
+.btn {
+	--background: #243a76;
+	--background-activated: #1c2d60;
+}
+
+.no-parcel-container{
+  height: 170px;
+  display: grid;
+  place-items: center;
+  border: 2px dashed $bg-secondary;
+  border-radius: 15px;
+  margin: 15px 0;
+
+  p{
+    font-size: 14px;
+    font-weight: 400;
+    color: $bg-secondary;
+  }
+}
+
+.accordion-group {
+	margin: 15px 0;
+
+  .title, .desc{
+		font-size: 14px;
+		font-weight: 600;
+  }
+
+	.title {
+		color: $bg-secondary;
+    margin: 0;
+	}
+
+	.desc {
+		color: $bg-main;
+	}
+
+	.accordion {
+		border-radius: 12px;
+		margin-bottom: 10px;
+
+    &-header-label{
+      padding: 5px 0;
+
+      .title{
+        margin-bottom: 6px;
+      }
+    }
+
+    &-content-label{
+      margin: 0;
+      padding: 8px 0;
+      border-top: 1px dashed $bg-secondary
+    }
+	}
+}
+
+.confirm-container{
+  background-color: white;
+  border-radius: 15px;
+  padding: 16px;
+
+  .header{
+
+    .title{
+      font-size: 15px;
+      font-weight: 600;
+      color: $bg-secondary;
+      margin: 0;
+    }
+  }
+
+  .content{
+
+    .input{
+      border: 1px solid #d4d4d4;
+      padding-left: 10px !important;
+    }
+  }
+
+  .footer{
+    border-top: 1px dashed $bg-secondary;
+    margin-top: 15px;
+    padding-top: 10px;
+  }
+
+}
+
+ion-select.pickupselect{
+  width: 100%;
+  margin: 0;
+  max-width: inherit;
+  border: 1px solid #cbcbcb;
+  height: 30px;
+  margin-top: 6px;
+}
+

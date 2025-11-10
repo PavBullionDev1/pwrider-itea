@@ -1,0 +1,355 @@
+@use 'src/global';
+.productorderlist{
+    width: 100%;
+    ion-checkbox{
+        --background-checked:#243a76;
+    }
+}
+ion-button.btngrn{
+    background: #fbd23c;
+    --background: #fbd23c;
+    color: #243a76;
+    text-decoration: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 0 !important;
+    width: 80px;
+    height: 25px;
+}
+.ordelist{
+    
+    .detailinfor{
+        background-color: #fff;
+        box-shadow: 1px 2px 1px #efefef;
+        margin-bottom: 1px;
+        padding-left: 12px;
+        padding-right: 12px;
+        padding-top: 12px;
+        padding-bottom: 15px;
+        
+        h2{
+            margin: 0;
+           font-size: 20px;
+           font-weight: 600;
+        }
+        p{
+            margin: 0;
+            padding-top: 5px;
+            font-size: 16px;
+        }
+    }
+    
+    .polistitem{
+        background: #FFFFFF;
+        border-radius: 12px;
+        margin-left: 13px;
+        margin-right: 13px;
+        margin-top: 10px;
+        box-shadow: 1px 1px 1px #efefef;
+        padding: 13px 10px 10px 10px;
+       
+
+            .productdetail{
+                 ion-item{
+                 --inner-padding-end: 0;
+                     
+                    h2{
+                        margin-top: 0;
+                        letter-spacing: 0;
+                        font-size: 15px;
+                        font-weight: 500;
+                        margin-bottom: 0;
+                        color: #92a2ce;
+                        padding-left: 15px;
+                    } 
+
+                    p{
+                        margin-top: 0;
+                        margin-bottom: 0;
+                        color: #243a76;
+                        font-weight: 600;
+                        font-size: 17px;
+                        padding-left: 15px;
+                    }
+                }
+            }
+
+            .productdetailinfor{
+                border-top: 1px dashed #b4b4b4;
+                padding-top: 15px;
+                h3{
+                    margin-top: 0;
+                    margin-bottom: 0;
+
+                    &.title{
+                        color: #92a2ce;
+                        font-size: 14px;
+                        font-weight: 500;
+
+                    }
+
+                    &.desc{
+                        font-size: 14px;
+                        color: #243a76;
+                        font-weight: 600;
+                        line-height: 17px;
+
+                        .days{
+                            font-weight: 600;
+                        }
+                    }
+                }
+
+
+
+            }
+    }
+}
+
+
+.grnlistidplay{
+    margin-top: 65px;
+}
+
+.productorderlistprice{
+    border-top: 1px dashed #b4b4b4;
+    padding-top: 5px;
+    h3{
+        margin: 0;
+        font-size: 13px;
+        color: #9e9e9e;
+    }
+    h2{
+        margin: 0;
+        font-size: 17px;
+        font-weight: 600;
+        letter-spacing: -1px;
+    }
+}
+
+
+.footerbtn{
+    background-color: #fff;
+    
+    ion-button{
+        margin: 0;
+        --border-radius: 0;
+        --background: #fff;
+        --background-hover: #fff;
+        --background-activated: #fff;
+        img{
+            width: 24px;
+            margin-right: 7px;
+            margin-top: -1px;
+        }
+        
+        &.servicebtn{
+            color: #0B554C;
+            border-bottom: 3px solid #0B554C;
+            font-size: 17px;
+            font-weight: 700;
+            height: 60px;
+        }
+
+        &.requestbtn{
+            color: #A7ACB6;
+            border-bottom: 3px solid #ffffff;
+            font-size: 17px;
+            font-weight: 700;
+            height: 60px;
+        }
+    }
+}
+
+.buttontheme-orange{
+    @include global.btnthemeorange(100%);
+    --background: #243a76;
+    --background-hover: #243a76;
+    --background-activated: #243a76;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-left: 0;
+    margin-right: 0;
+    color: #fbd23c;
+    --color: #fbd23c;
+}
+
+.buttonbottom{
+    background: #f5f6f8;
+    &.whitepage{
+        background: #fff;
+    }
+}
+
+ion-input{
+    width: 100%;
+    margin: 0;
+    max-width: inherit;
+    border: 1px solid #cbcbcb;
+    height: 30px;
+    margin-top: 6px;
+}
+
+ion-select.pickupselect{
+    width: 100%;
+    margin: 0;
+    max-width: inherit;
+    border: 1px solid #cbcbcb;
+    height: 30px;
+    margin-top: 6px;
+}
+
+a.btngrn{
+    float: right;
+}
+
+h3.grntitle{
+    color: #243a76;
+    font-weight: 600;
+    font-size: 17px;
+    margin-left:18px;
+    margin-right:18px;
+    margin-bottom: -5px;
+    margin-top: 0;
+}
+
+.grnlist{
+    background: #FFFFFF;
+    border-radius: 12px;
+    margin-left: 13px;
+    margin-right: 13px;
+    box-shadow: 1px 1px 1px #efefef;
+    padding: 0 10px 10px 10px;
+    margin-bottom: 25px;
+    position: relative;
+    
+    .polistitemv2{
+        padding: 0;
+        padding-top: 10px;
+        
+        h3{
+            margin: 0;
+            font-size: 13px;
+            color: #333;
+        }
+        h2{
+            margin: 0;
+            font-weight: 600;
+            color: #243a76;
+        }
+        
+        h3.totaltitle{
+            font-weight: 600;
+            font-size: 17px;
+        }
+        h2.totaltitle{
+            text-align: end;
+        }
+    }
+    
+    ion-button.trashbtn{
+        --background: #f44336;
+        color: #fff;
+        padding: 0;
+        width: 25px;
+        --padding-start: 0;
+        --padding-end: 0;
+        height: 25px;
+        position: absolute;
+        right: 0;
+        top: -16px;
+        font-size: 14px;
+        --border-radius: 5px;
+    }
+}
+
+.addgrn{
+    padding:0 0px 10px 0px;
+    margin-left:13px;
+    margin-right:13px;
+    
+    ion-button{
+        background: #fbd23c;
+        --background: #fbd23c;
+        color: #243a76;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: 600;
+        font-size: 20px;
+        padding: 0 !important;
+        width: 100px;
+        height: 45px;
+        margin-left: -5px;
+    }
+    
+    h3{
+        font-size: 14px;
+        margin: 0;
+        display: inline-block;
+        margin-top: 15px;
+        padding-left: 5px;
+    }
+    
+    h2{
+        margin: 0;
+        display: inline-block;
+        float: right;
+        margin-top: 5px;
+        font-weight: 600;
+        padding-right: 5px;
+    }
+}
+
+.totalxauandgram{
+    padding-left: 17px;
+    padding-right: 17px;
+    margin-bottom: 15px;
+    width: 100%;
+    
+    h3{
+        margin: 0;   
+        font-size: 14px;
+        font-weight: 600; 
+    }
+    
+    h2{
+        margin: 0;
+        font-size: 18px;
+        font-weight: 600;
+        margin-top: 5px;
+        color: #243a76;
+    }
+}
+
+.buttontheme-orange{
+    @include global.btnthemeorange(100%);
+    --background: #243a76;
+    --background-hover: #243a76;
+    --background-activated: #243a76;
+    padding-left: 0;
+    padding-right: 0;
+    font-weight: 600;
+    margin-bottom: 0;
+    margin-top: 10px;
+    margin-left: 0;
+    margin-right: 0;
+    color: #fbd23c;
+    --color: #fbd23c;
+}
+
+
+
+.table {
+    width:100%;
+}
+.table td {
+    text-align: center;
+    height: 44px;
+}

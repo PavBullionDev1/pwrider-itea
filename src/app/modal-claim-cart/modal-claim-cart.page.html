@@ -1,0 +1,95 @@
+<ion-header>
+	<div>
+		<ion-toolbar class="varitaionslect ion-no-padding ion-no-margin" style="padding-top: 10px !important;">
+			<ion-item class="ion-no-padding ion-no-margin" style="--inner-padding-end: 0 !important;" no-padding>
+				<ion-row class="ion-align-items-end">
+					<ion-col>
+						<div class="txt500"><b>Claim Cart</b></div>
+					</ion-col>
+				</ion-row>
+			</ion-item>
+
+			<ion-buttons slot="end">
+				<ion-button (click)="dismiss()" class="closemodal" mode="ios" style=" bottom: 35px; right: 0;">
+					<ion-icon name="close-outline" style="color: #999;"></ion-icon>
+				</ion-button>
+			</ion-buttons>
+		</ion-toolbar>
+	</div>
+</ion-header>
+
+<ion-content>
+  <ion-row class="polistitemv2" style="padding: 10px; margin-top: 10px;">
+    <ion-col size="3">
+      <h5 style="font-size: 13px; color: #999; display: flex; justify-content: flex-start; align-items: center;">Job Date:</h5>
+    </ion-col>
+    <ion-col size="3" style="display: flex; justify-content: flex-start; align-items: center;">
+      <div style="font-size: 13px; color: black;">{{ apply_job_date }}</div>
+    </ion-col>
+    <ion-col size="6" style="display: flex; justify-content: flex-start; align-items: center;">
+      <ion-button (click)="is_apply = !is_apply">Change</ion-button>
+      <ion-button (click)="apply()">Apply</ion-button>
+    </ion-col>
+  </ion-row>
+  <div style="margin: 0 auto;" *ngIf="is_apply == true" >
+    <ion-datetime presentation="date" [(ngModel)]="apply_job_date" id="datetime"></ion-datetime>
+  </div>
+    <div class="grnlist">
+
+
+        <ion-row *ngFor="let item of modalData; let i = index;" class="polistitemv2" style="padding: 10px; margin-top: 10px;">
+            <ion-row style="padding:10px; width:100%; border-bottom: 2px solid lightgray;">
+                <ion-col size="5">
+                    <h5 style="font-size: 13px; margin:0; color: #999;">Customer Name:</h5>
+                </ion-col>
+                <ion-col size="7">
+                    <div style="font-size: 13px; color: black;">{{ item.customer_name }}</div>
+                </ion-col>
+
+                <ion-col size="5">
+                    <h5 style="font-size: 13px; margin:0; color: #999;">Description:</h5>
+                </ion-col>
+                <ion-col size="7">
+                    <div style="font-size: 13px; color: black;">{{ item.description }}</div>
+                </ion-col>
+                <ion-col size="5">
+                    <h5 style="font-size: 13px; margin:0; color: #999;">Internal Remark:</h5>
+                </ion-col>
+                <ion-col size="7">
+                    <ion-row>
+                        <ion-col *ngFor="let remark of item.internal_remark;" style="margin:0px 1px; text-align: center; font-size: 13px; color: white; padding: 5px 10px; border-radius: 5px; background-color: #999;">{{ remark }}</ion-col>
+                    </ion-row>
+                </ion-col>
+
+                <ion-col size="5">
+                    <h5 style="font-size: 13px; margin:0; color: #999;">Created Date:</h5>
+                </ion-col>
+                <ion-col size="7">
+                    <div style="font-size: 13px; color: black;">{{ item.created_date }}</div>
+                </ion-col>
+
+                <ion-col size="5">
+                    <h5 style="font-size: 13px; margin:0; color: #999; padding-top: 10px;">Job Date:</h5>
+                </ion-col>
+                <ion-col size="3" style="display: flex; justify-content: flex-start; align-items: center;">
+                    <div style="font-size: 13px; color: black;">{{ item.job_date }}</div>
+                </ion-col>
+                <ion-col size="4" style="display: flex; justify-content: flex-start; align-items: center;">
+                    <ion-button (click)="is_show[i] = !is_show[i]">Change</ion-button>
+                </ion-col>
+            </ion-row>
+            <div style="margin: 0 auto;" *ngIf="is_show[i] == true" >
+                <ion-datetime presentation="date" [(ngModel)]="job_date" (ngModelChange)="udpateTaskJobDate(item.task_id, 1)" id="datetime"></ion-datetime>
+            </div>
+            <ion-row style="border-top: 2px solid #cbcbcb; width:100%">
+                <ion-col size="12">
+                    <ion-button color="danger" mode="ios" (click)="removeTask(item.task_id)" expand="block">Remove</ion-button>
+                </ion-col>
+            </ion-row>
+        </ion-row>
+    </div>
+</ion-content>
+<ion-footer>
+    <ion-button class="buttontheme-orange" style="border-radius: 5px;" mode="ios" (click)="confirm = true; dismiss();" expand="block">Confirm</ion-button>
+    <ion-button color="danger" mode="ios" (click)="dismiss()" expand="block">Cancel</ion-button>
+</ion-footer>

@@ -1,0 +1,91 @@
+<app-common-header [pageSource]="'cdo-tasks'" [headerTitle]="'CDO Tasks'"></app-common-header>
+
+<ion-content class="ordelist ion-padding-top">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- Statistics Card -->
+  <ion-card *ngIf="statistics">
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="3" class="ion-text-center">
+            <div class="stat-number">{{statistics.pending}}</div>
+            <div class="stat-label">Pending</div>
+          </ion-col>
+          <ion-col size="3" class="ion-text-center">
+            <div class="stat-number">{{statistics.taken}}</div>
+            <div class="stat-label">Taken</div>
+          </ion-col>
+          <ion-col size="3" class="ion-text-center">
+            <div class="stat-number">{{statistics.on_the_way}}</div>
+            <div class="stat-label">OTW</div>
+          </ion-col>
+          <ion-col size="3" class="ion-text-center">
+            <div class="stat-number">{{statistics.picked_up}}</div>
+            <div class="stat-label">Picked Up</div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-segment [(ngModel)]="selectedSegment" (ionChange)="segmentChanged()">
+    <ion-segment-button value="all">
+      <ion-label>All</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="pending">
+      <ion-label>Pending</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="taken">
+      <ion-label>Taken</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="onTheWay">
+      <ion-label>OTW</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="pickedUp">
+      <ion-label>Picked Up</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-searchbar placeholder="Search by CDO No, Customer..." [(ngModel)]="searchTerm" (ionInput)="filterList()"></ion-searchbar>
+
+  <div *ngIf="isLoading" class="loading-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Loading CDO tasks...</p>
+  </div>
+
+  <div *ngIf="!isLoading && cdoList.length === 0" class="empty-state">
+    <ion-icon name="clipboard-outline" size="large"></ion-icon>
+    <p>No CDO tasks found</p>
+  </div>
+
+  <ion-list *ngIf="!isLoading && cdoList.length > 0">
+    <ion-item *ngFor="let cdo of cdoList" (click)="viewTaskDetail(cdo)" lines="full" detail="true">
+      <ion-label>
+        <h2><strong>{{cdo.serial_no}}</strong></h2>
+        <h3>{{cdo.customer_name}}</h3>
+        <p>{{cdo.delivery_address}}</p>
+        <ion-badge [color]="getStatusColor(cdo.status)" class="status-badge">
+          {{cdo.status_text}}
+        </ion-badge>
+        <p><strong>{{cdo.total_xau}} XAU</strong></p>
+      </ion-label>
+      <ion-note slot="end" *ngIf="cdo.state_group_name">
+        {{cdo.state_group_name}}
+      </ion-note>
+    </ion-item>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="selectedSegment === 'pending'">
+    <ion-fab-button (click)="scanQRCode()">
+      <ion-icon name="qr-code"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMore($event)" *ngIf="!isLoading && hasMore">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more tasks...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

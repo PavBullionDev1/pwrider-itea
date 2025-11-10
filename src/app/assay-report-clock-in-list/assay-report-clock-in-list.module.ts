@@ -1,0 +1,19 @@
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
+import { AssayReportClockInListPageRoutingModule } from './assay-report-clock-in-list-routing.module';
+import { AssayReportClockInListPage } from './assay-report-clock-in-list.page';
+import { SharedModule } from '../shared/shared.module';
+
+@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    AssayReportClockInListPageRoutingModule,
+    SharedModule],
+  declarations: [AssayReportClockInListPage],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+})
+export class AssayReportClockInListPageModule {}

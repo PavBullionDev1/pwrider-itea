@@ -1,0 +1,135 @@
+<app-common-header [pageSource]="'change-request'" [headerTitle]="'Change Request'"></app-common-header>
+
+<ion-content>
+    <div style="font-weight: 600; padding: 10px 20px;">Request List</div>
+    <div *ngIf="grn_change_requests.length == 0" style="padding-left: 30px; font-size: 14px;">There is no change request for this Item.</div>
+    <div *ngIf="grn_change_requests.length !== 0">
+        <div class="grnlist" *ngFor="let item1 of grn_change_requests;">
+            <ion-row class="polistitemv2">
+                <ion-col size="12">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 2px solid lightgray;">
+                        <div>
+                            <div style="font-size: 15px; font-weight: 600;">{{ item1.title }}</div>
+                            <div style="font-size: 13px;">Request ID: {{ item1.grnd_change_request_id }}</div>
+                        </div>
+                        <div [style.background-color]="item1.status_color" style="font-weight: 600; font-size: 12px; padding: 5px 10px; color: white; border-radius: 5px;">{{ item1.status_title }}</div>
+                    </div>
+                    <div *ngIf="item1.is_new == 0" style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: 2px solid lightgray;">
+                        <div *ngIf="item1.image_list && item1.image_list.length !== 0">
+                            <div style="font-size: 15px; font-weight: 600;">Image List</div>
+                            <div style="margin: 10px 0px;"><button class="btn" (click)="item1.is_expand=!item1.is_expand">Show Details</button></div>
+                            <div *ngIf="item1.is_expand">
+                                <ion-row>
+                                    <ion-col size="12" >
+                                        <ion-slides pager="true" [options]="slideOpts">
+                                            <!-- Item Image::Start -->
+                                            <ion-slide class="item-slide" *ngFor="let x of item1.image_list; let n = index;"><!-- List item images -->
+                                                <div style="border: 1px solid lightgray; border-radius: 3px; padding: 10px;">
+                                                    <div style="text-align: start; font-size: 15px; font-weight: 600;">Image 0{{ n+1 }}</div>
+                                                    <div class="image-slide-content">
+                                                        <img [src]="x.img" class="itemImage">
+                                                    </div>
+                                                    <div style="margin-top: 5px; text-align: start; font-size: 15px; font-weight: 600;">Description (Image{{ n+1 }})</div>
+                                                    <h2 class="totaltitle" style="margin-top:0px; border: 1px solid lightgray; border-radius: 3px;">
+                                                        <div style="text-align: start; font-size: 15px; font-weight:300; padding: 10px;" disabled="disabled">{{ x.description }}</div>
+                                                    </h2>
+                                                </div>
+                                            </ion-slide>
+                                            <!-- Item Image::End -->
+                                        </ion-slides>
+                                    </ion-col>
+                                </ion-row>
+                            </div>
+                        </div>
+                        <div *ngIf="!item1.image_list" style="font-size: 13px; padding-left: 10px;">
+                            No image uploaded in this change request.
+                        </div>
+                    </div>
+                    
+                    <table class="table" border="1" cellpadding="10" cellspacing="0" >
+                        <thead>
+                            <tr>
+                                <th colspan="4">Before</th>
+                            </tr>
+                            <tr>
+                                <th style="width: 30%;">ITEM</th>
+                                <th style="width: 20%;">%</th>
+                                <th style="width: 20%;">g</th>
+                                <th style="width: 30%;">XAU</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                                <td>{{ item1.gold_name_from }}</td>
+                                <td>{{ item1.gold_pure_percentage_from }}</td>
+                                <td>{{ item1.weight_from }}</td>
+                                <td>{{ item1.XAU_from }}</td>
+                            </tr>
+                          </tbody>
+                    </table>
+                    <div style="font-size: 30px; text-align: center; width: 100%; margin: 5px 0;">▼</div>
+                    <table class="table" border="1" cellpadding="10" cellspacing="0" style="margin-top: 10px;">
+                        <thead>
+                            <tr>
+                                <th colspan="5">After</th>
+                            </tr>
+                            <tr>
+                                <th style="width: 10%;">No.</th>
+                                <th style="width: 25%;">ITEM</th>
+                                <th style="width: 20%;">%</th>
+                                <th style="width: 20%;">g</th>
+                                <th style="width: 25%;">XAU</th>
+                            </tr>
+                          </thead>
+                          <tbody *ngFor="let item3 of item1.ItemList; let i = index;" (click)="item3.is_expand=!item3.is_expand">
+                                <tr>
+                                    <td>{{ i+1 }}</td>
+                                    <td>{{ item3.gold_name_to }}</td>
+                                    <td>{{ item3.gold_pure_percentage_to }}</td>
+                                    <td>{{ item3.weight_to }}</td>
+                                    <td>{{ item3.XAU_to }} 
+                                        <span *ngIf="item3.gold_name_to !== item1.gold_name_from" style="color: green; font-weight: 900;">+</span>
+                                        <span *ngIf="item3.is_gold == 0" style="color: red;">▼</span>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="item3.is_expand">
+                                    <td colspan="5" style="width: 100%; height: 300px;">
+                                        <ion-slides pager="true" [options]="slideOpts2">
+                                            <!-- Item Image::Start -->
+                                            <ion-slide class="item-slide" *ngFor="let item4 of item3.image_list; let n = index;" style="max-width: 100%;">
+                                                <div style="border: 1px solid lightgray; border-radius: 3px; padding: 10px; width: 100%; min-height: 300px;">
+                                                    <div style="border-radius: 5px; border: 2px solid black; margin-bottom: 5px; padding:5px; text-align: center; font-size: 15px; font-weight: 600;">{{ n == 0? 'Weight':(n == 1? 'Chop':'Machine') }} Image</div>
+                                                    <div class="image-slide-content">
+                                                        <img *ngIf="item4.img" [src]="item4.img" class="itemImage">
+                                                        <div *ngIf="!item4.img" style="border: 1.5px solid black; text-align: center; padding: 100px 0;">No Image</div>
+                                                    </div>
+                                                </div>
+                                            </ion-slide>
+                                            <!-- Item Image::End -->
+                                        </ion-slides>
+                                    </td>
+                                </tr>
+                          </tbody>
+                          <tfoot>
+                            <tr>
+                                <th colspan="4">Gain/Loss XAU</th>
+                                <th>{{ item1.gainLoss_XAU }} <span [style.color]="item1.XAU_status_color">{{ item1.XAU_status_text }}</span></th>
+                            </tr>
+                          </tfoot>
+                    </table>
+                    
+                    <div *ngIf="item1.is_new == 0" style="font-size: 13px; padding: 10px; margin-top: 10px; border-radius: 5px; background-color: lightgray;">
+                        {{ item1.remark }}
+                    </div>
+                </ion-col>
+                <ion-col size="12" *ngIf="item1.status == 0">
+                    <ion-button class="buttontheme-orange" mode="ios" [routerLink]="['/bullion-add-change-request',record_grnd_id,item1.grnd_change_request_id]" expand="block">Edit</ion-button>
+                    <ion-button class="buttontheme-orange" mode="ios" (click)="update_now(item1.grnd_change_request_id)" expand="block">Update Status</ion-button>
+                </ion-col>
+            </ion-row>
+        </div>
+    </div>
+</ion-content>
+<ion-footer *ngIf="allowAdd == 1">
+  <ion-button color="primary" mode="ios" [routerLink]="['/bullion-add-change-request',record_grnd_id,0]" expand="block">Add New Request</ion-button>
+</ion-footer>

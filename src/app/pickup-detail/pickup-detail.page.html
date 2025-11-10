@@ -1,0 +1,310 @@
+<app-common-header
+  [pageSource]="'pickup-detail'"
+  [headerTitle]="'Pickup Detail'"
+></app-common-header>
+<ion-content class="ordelist ion-padding-top">
+
+    
+    <!-- <ion-row class="detailinfor">
+        <ion-col size="12">
+             <h2 class="opensanLBold700 txtgreen-light">{{locationList.storefront_name}}</h2>
+             <p>{{locationList.address}}</p>
+        </ion-col> 
+    </ion-row> -->
+
+  <ion-item class="ion-no-padding" mode="ios" lines="none">  
+    <ion-row class="productorderlist ">
+        
+      <ion-col size="12" class="productdetail ion-align-self-center">
+          <h2>
+              Pickup Detail
+          </h2>
+          <p>{{riderList.tracking_no}}</p>
+      </ion-col>
+
+      <ion-col size="12" class="productdetailinfor">
+        <ion-row class="ion-align-items-center">
+            <ion-col size="5" style="padding-bottom:0;"><h3 class="title">Status</h3></ion-col>
+            <ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{riderList.delivery_status_text}}</h3></ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-center">
+            <ion-col size="5" style="padding-bottom:0;"><h3 class="title">Service Type</h3></ion-col>
+            <ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{riderList.service_type}}</h3></ion-col>
+        </ion-row>
+        <!-- <ion-row class="ion-align-items-center" *ngIf="riderList.future_pickup_date && riderList.future_pickup_date!='null'">
+            <ion-col size="5" style="padding-bottom:0;"><h3 class="title">Future Pickup Date</h3></ion-col>
+            <ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{riderList.future_pickup_date}}</h3></ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-center" *ngIf="riderList.future_pickup_time && riderList.future_pickup_time!='null'">
+          <ion-col size="5" style="padding-bottom:0;"><h3 class="title">Future Pickup Time</h3></ion-col>
+          <ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{riderList.future_pickup_time}}</h3></ion-col>
+        </ion-row> -->
+        <ion-row class="ion-align-items-center">
+          <ion-col size="5" style="padding-bottom:0;"><h3 class="title">Ordered By</h3></ion-col>
+          <ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{riderList.customer_name}}</h3></ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-center" *ngIf="riderList.shipping_remark && riderList.shipping_remark!='null'">
+          <ion-col size="5" style="padding-bottom:0;"><h3 class="title">Remark</h3></ion-col>
+          <ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{riderList.shipping_remark?riderList.shipping_remark:'-'}}</h3></ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-center" *ngIf="riderList.service_transport && riderList.service_transport!='null'">
+          <ion-col size="5" style="padding-bottom:0;"><h3 class="title">Transport</h3></ion-col>
+          <ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{riderList.service_transport}}</h3></ion-col>
+        </ion-row>
+        <!-- <ion-row class="ion-align-items-center" *ngIf="riderList.item_to_pickup && riderList.item_to_pickup!='null'">
+          <ion-col size="5" style="padding-bottom:0;"><h3 class="title">Item to pickup</h3></ion-col>
+          <ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{riderList.item_to_pickup}}</h3></ion-col>
+        </ion-row> -->
+
+        <ion-row class="ion-align-items-center" *ngIf="riderList.unit_qty && riderList.unit_qty!='null'">
+          <ion-col size="5" style="padding-bottom:0;"><h3 class="title">Qty</h3></ion-col>
+          <ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{riderList.unit_qty}} Carton</h3></ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-center" *ngIf="riderList.service_UOM && riderList.service_UOM!='null'">
+          <ion-col size="5" style="padding-bottom:0;"><h3 class="title">Uom</h3></ion-col>
+          <ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{riderList.service_UOM}}</h3></ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-center" *ngIf="riderList.weight && riderList.weight!='null'">
+          <ion-col size="5" style="padding-bottom:0;"><h3 class="title">Weight</h3></ion-col>
+          <ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{riderList.weight}}</h3></ion-col>
+        </ion-row>
+
+      </ion-col>
+    </ion-row>
+  </ion-item> 
+
+  <ion-item class="ion-no-padding" mode="ios" lines="none">  
+    <ion-row class="productorderlist ">
+        
+      <ion-col size="12" class="productdetail ion-align-self-center">
+          <h2>
+              Sender Info
+          </h2>
+          <!-- <p>{{riderList.order_serial}}</p> -->
+      </ion-col>
+
+      <ion-col size="12" class="productdetailinfor">
+        <ion-row class="ion-align-items-center">
+            <ion-col size="5" style="padding-bottom:0;"><h3 class="title">Name</h3></ion-col>
+            <ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{riderList.sender_name?riderList.sender_name:'-'}}</h3></ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-center">
+            <ion-col size="5" style="padding-bottom:0;"><h3 class="title">Email</h3></ion-col>
+            <ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{riderList.sender_email?riderList.sender_email:'-'}}</h3></ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-center">
+            <ion-col size="5" style="padding-bottom:0;"><h3 class="title">Tel</h3></ion-col>
+            <ion-col size="7" style="padding-bottom:0;"><h3 class="desc"><a href="tel://{{riderList.sender_dial_code?riderList.sender_dial_code:''}}{{riderList.sender_mobile?riderList.sender_mobile:'-'}}">{{riderList.sender_dial_code?riderList.sender_dial_code:''}}{{riderList.sender_mobile?riderList.sender_mobile:'-'}}</a></h3></ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-center">
+          <ion-col size="5" style="padding-bottom:0;"><h3 class="title">Address</h3></ion-col>
+          <ion-col size="7" style="padding-bottom:0;"><h3 class="desc"><a target="_blank" href="https://maps.google.com/?q={{riderList.sender_address1}}+{{riderList.sender_address2}}+{{riderList.sender_postcode}}+ {{riderList.sender_city}}+ {{riderList.sender_state}} +{{riderList.sender_country}}">{{riderList.sender_address1}}{{riderList.sender_address2}} {{riderList.sender_postcode}} {{riderList.sender_city}} {{riderList.sender_state}} {{riderList.sender_country}}</a></h3></ion-col>
+        </ion-row>
+
+      </ion-col>
+    </ion-row>
+  </ion-item> 
+
+  <ion-item class="ion-no-padding" mode="ios" lines="none">  
+    <ion-row class="productorderlist ">
+        
+      <ion-col size="12" class="productdetail ion-align-self-center">
+          <h2>
+              Receiver Info
+          </h2>
+          <!-- <p>{{riderList.order_serial}}</p> -->
+      </ion-col>
+
+      <ion-col size="12" class="productdetailinfor">
+        <ion-row class="ion-align-items-center">
+            <ion-col size="5" style="padding-bottom:0;"><h3 class="title">Name</h3></ion-col>
+            <ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{riderList.recipient_name}}</h3></ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-center">
+            <ion-col size="5" style="padding-bottom:0;"><h3 class="title">Email</h3></ion-col>
+            <ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{riderList.recipient_email}}</h3></ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-center">
+            <ion-col size="5" style="padding-bottom:0;"><h3 class="title">Tel</h3></ion-col>
+            <ion-col size="7" style="padding-bottom:0;"><h3 class="desc"><a href="tel://{{riderList.recipient_dial_code}}{{riderList.recipient_mobile}}" target="_blank">{{riderList.recipient_dial_code}}{{riderList.recipient_mobile}}</a></h3></ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-center">
+          <ion-col size="5" style="padding-bottom:0;"><h3 class="title">Address</h3></ion-col>
+          <ion-col size="7" style="padding-bottom:0;"><h3 class="desc"><a target="_blank" href="https://maps.google.com/?q={{riderList.recipient_address1}} + {{riderList.recipient_address2}} + {{riderList.recipient_postcode}} + {{riderList.recipient_city}} + {{riderList.recipient_state}} + {{riderList.recipient_country}}">{{riderList.recipient_address1}} {{riderList.recipient_address2}} {{riderList.recipient_postcode}} {{riderList.recipient_city}} {{riderList.recipient_state}} {{riderList.recipient_country}}</a></h3></ion-col>
+        </ion-row>
+
+      </ion-col>
+    </ion-row>
+  </ion-item> 
+
+  <ion-item class="ion-no-padding" mode="ios" lines="none" *ngIf="riderList['middle_hub_id']!=0">  
+    <ion-row class="productorderlist ">
+        
+      <ion-col size="12" class="productdetail ion-align-self-center">
+          <h2>
+              Hub Info
+          </h2>
+          <!-- <p>{{riderList.order_serial}}</p> -->
+      </ion-col>
+
+      <ion-col size="12" class="productdetailinfor">
+        <ion-row class="ion-align-items-center">
+            <ion-col size="5" style="padding-bottom:0;"><h3 class="title">Name</h3></ion-col>
+            <ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{riderList.hub_title?riderList.hub_title:'-'}}</h3></ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-center">
+            <ion-col size="5" style="padding-bottom:0;"><h3 class="title">Email</h3></ion-col>
+            <ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{riderList.hub_email?riderList.hub_email:'-'}}</h3></ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-center">
+            <ion-col size="5" style="padding-bottom:0;"><h3 class="title">Tel</h3></ion-col>
+            <ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{riderList.hub_mobile?riderList.hub_mobile:'-'}}</h3></ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-center">
+          <ion-col size="5" style="padding-bottom:0;"><h3 class="title">Address</h3></ion-col>
+          <ion-col size="7" style="padding-bottom:0;"><h3 class="desc"><a target="_blank" href="https://maps.google.com/?q={{riderList.hub_address1}}+{{riderList.hub_address2}}+ {{riderList.hub_postcode}} +{{riderList.hub_city}}+ {{riderList.hub_state}} + {{riderList.hub_country}}">{{riderList.hub_address1}} {{riderList.hub_address2}} {{riderList.hub_postcode}} {{riderList.hub_city}} {{riderList.hub_state}} {{riderList.hub_country}}</a></h3></ion-col>
+        </ion-row>
+
+      </ion-col>
+    </ion-row>
+  </ion-item> 
+
+  <ion-item class="ion-no-padding" mode="ios" lines="none" *ngIf="riderList.despatch_category && riderList.despatch_category!='null'">  
+    <ion-row class="productorderlist ">
+        
+      <ion-col size="12" class="productdetail ion-align-self-center">
+          <h2>
+            Office Boy
+          </h2>
+          <!-- <p>{{riderList.order_serial}}</p> -->
+      </ion-col>
+
+      <ion-col size="12" class="productdetailinfor">
+        <ion-row class="ion-align-items-center">
+            <ion-col size="5" style="padding-bottom:0;"><h3 class="title">Despatch Category</h3></ion-col>
+            <ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{riderList.despatch_category}}</h3></ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-center">
+            <ion-col size="5" style="padding-bottom:0;"><h3 class="title">Despatch Service</h3></ion-col>
+            <ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{riderList.despatch_service}}</h3></ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-center">
+            <ion-col size="5" style="padding-bottom:0;"><h3 class="title">Remarks</h3></ion-col>
+            <ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{riderList.despatch_remarks?riderList.despatch_remarks:'-'}}</h3></ion-col>
+        </ion-row>
+
+      </ion-col>
+    </ion-row>
+  </ion-item> 
+
+  <ion-item class="ion-no-padding" mode="ios" lines="none" *ngIf="riderList['cod_collect_amount']>0">  
+    <ion-row class="productorderlist " style="width: 100%;">
+      
+        
+      <ion-col size="12" class="productdetail ion-align-self-center">
+          <h2>
+              Cash On Delivery
+          </h2>
+          <!-- <p>detail</p> -->
+      </ion-col>
+
+      <ion-col size="12" class="productdetailinfor">
+        <ion-row class="ion-align-items-center">
+          <ion-col size="5" style="padding-bottom:0;"><h3 class="title">Amount</h3></ion-col>
+          <ion-col size="7" style="padding-bottom:0;"><h3 class="desc">RM {{riderList.cod_collect_amount}}</h3></ion-col>
+      </ion-row>
+
+      </ion-col>
+
+    </ion-row>
+  </ion-item>
+
+  <ion-item class="ion-no-padding" mode="ios" lines="none" *ngIf="riderList['delivery_status']==0">  
+    <ion-row class="productorderlist " style="width: 100%;">
+        
+      <ion-col size="12" class="productdetail ion-align-self-center">
+          <h2>
+              Confirm Pickup
+          </h2>
+          <!-- <p>detail</p> -->
+      </ion-col>
+
+      <ion-col size="12" class="productdetailinfor">
+        <ion-row class="ion-align-items-center">
+            <ion-col size="12" style="padding-bottom:0;">
+              <ion-label><strong>Upload Photos</strong>
+                <ion-icon (click)="openActionSheet()" name="add-circle-outline" style="float: right; background-color: #243a76; color: #fbd23c;font-size: 25px; border-radius: 6px; vertical-align: middle; margin-left: 10px;" *ngIf="(is_multiple_image == 0 && !imageUrl) || (is_multiple_image == 1 && MultipleImageUrl.length == 0)"></ion-icon>
+              </ion-label>
+            </ion-col>
+        </ion-row>
+
+        <ion-row class="ion-align-items-center">
+          <ion-col size="5" style="padding-bottom:0;">
+            <ion-label style="color:#243a76"><strong>Status</strong>
+          </ion-label>
+        </ion-col>
+        <ion-col size="7" style="padding-bottom:0;">
+          <ion-select value="variation" interface="action-sheet" [(ngModel)]="delivery_status"  cancelText='Cancel' class="pickupselect">
+            <ion-select-option [value]="item.id" *ngFor="let item of statusList">{{item['title']}}</ion-select-option>
+            <!-- <ion-select-option value="1">Individual Bottle </ion-select-option>
+            <ion-select-option value="2">Personal Starter Pack</ion-select-option>
+            <ion-select-option value="3">Family Starter Pack</ion-select-option> -->
+        </ion-select> 
+          </ion-col>
+      </ion-row>
+      
+        <!-- <ion-list class="ion-padding-horizontal"> -->
+          <ion-row *ngIf="imageUrl && is_multiple_image == 0">
+            <ion-col size="12" class="ion-align-self-center">
+
+                <img [src]="imageUrl" style="width: 100%;" class="logoimg">
+
+                <ion-button (click)="delete_img(0,imageUrl)" class="buttontheme-orange" color="danger">Delete</ion-button>
+            </ion-col>
+          </ion-row>
+
+        <!-- multiple image -->
+          <ion-row *ngIf="MultipleImageUrl && is_multiple_image == 1">
+            <ion-col size="12" class="ion-align-self-center" *ngFor="let item of MultipleImageUrl">
+
+                <img [src]="item" style="width: 100%;" class="logoimg">
+
+                <ion-button (click)="delete_img(1,item)" class="buttontheme-orange" color="danger">Delete</ion-button>
+            </ion-col>
+          </ion-row>
+        <!-- </ion-list> -->
+        <ion-row class="ion-align-items-center">
+            <ion-col size="12" style="padding-bottom:0;">
+              <ion-button (click)="pickup()" class="buttontheme-orange" expand="block" mode="ios" >Confirm Pickup</ion-button>
+            </ion-col>
+        </ion-row>
+      </ion-col>
+
+    </ion-row>
+  </ion-item>
+
+  <!-- <ion-item class="ion-no-padding" mode="ios" lines="none">  
+    <ion-row class="productorderlist ">
+        
+      <ion-col size="12" class="productdetail ion-align-self-center">
+          <h2>
+              Extend Pickup
+          </h2>
+       
+      </ion-col>
+
+      <ion-col size="12" class="productdetailinfor">
+        <ion-row class="ion-align-items-center">
+            <ion-col size="12" style="padding-bottom:0;">
+              <ion-button (click)="nextStep(5)" class="buttontheme-orange" expand="block" mode="ios" >Extend Pickup</ion-button>
+            </ion-col>
+        </ion-row>
+      </ion-col>
+
+    </ion-row>
+  </ion-item> -->
+
+  <!-- </div> -->
+  <div class="spacer" style="height: 40px"></div>
+</ion-content>
+<mytab></mytab>

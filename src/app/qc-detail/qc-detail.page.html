@@ -1,0 +1,250 @@
+<app-common-header [pageSource]="'collection-detail'" [headerTitle]="'QC Detail'"></app-common-header>
+
+      
+  <ion-fab vertical="top" slot="fixed" style="width: 100%; top: 53px; background: #ededed !important;" mode="ios">
+      <div class="ordelist ion-padding-top">
+           <div class="totalxauandgram">
+              <ion-row style="width:100%;">
+                  <ion-col size="6" style="padding-right: 0; margin-right: -12px;">
+                      <h3>Total XAU</h3>
+                      <h2>{{summary?.total_XAU_amount | number: '.3'}}/{{collectionDetails?.total_XAU | number: '.3'}}</h2>
+                  </ion-col>
+                  <ion-col size="6" style="border-left:1px dotted #ccc; padding-left:12px; padding-right:0;">
+                      <h3>Total Payment</h3>
+                      <h2>RM {{collectionDetails?.final_amount | number: '.2'}}</h2>
+                  </ion-col>
+              </ion-row>    
+          </div>
+      </div>    
+  </ion-fab>
+ 
+      
+
+
+<ion-content class="ordelist ion-padding-top">
+
+
+  <ion-grid>
+
+    <div class="grnlistidplay">
+
+      <!-- Current PO and previous haven't full payment record -->
+      <div class="polistitem">
+            <ion-row class="productorderlist">
+                <!-- <ion-col size="1" class="productdetail ion-align-self-center">
+                    <ion-checkbox></ion-checkbox>
+                </ion-col>    -->
+
+                <ion-col size="12" class="productdetail ion-align-self-center" >
+                    <ion-item class="ion-no-padding" mode="ios" lines="none"> 
+                        <ion-row>
+                            <ion-col size="12">
+                                <h2>
+                                    GRN No. 
+                                </h2>
+                                <p>{{collectionDetails.serial_no}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-item> 
+                </ion-col>
+            </ion-row>
+
+            <ion-row class="productorderlistprice">
+                <ion-col size="6" class="ion-align-self-center">
+                    <h3>Total Amount</h3>
+                    <h2>RM {{collectionDetails.final_amount | number: '.3'}}</h2>
+                </ion-col>   
+
+                <ion-col size="6" class="ion-align-self-center">
+                    <h3>XAU</h3>
+                    <h2>{{collectionDetails.total_XAU | number: '.3'}}</h2>
+                </ion-col>  
+            </ion-row>  
+
+            <ion-row class="productorderlistprice">
+                <ion-col size="6" class="ion-align-self-center">
+                    <h3>XAU collected:</h3>
+                    <h2>{{collectionDetails?.total_XAU_collect}}/{{collectionDetails?.poData.XAU_amount}}</h2>
+                </ion-col>   
+
+                <ion-col size="6" class="ion-align-self-center">
+                    <h3>Rider Remark</h3>
+                    <h2>{{collectionDetails.remark}}</h2>
+                </ion-col>  
+            </ion-row>  
+      </div>    
+
+      <ion-col size="12">
+          <h3 class="grntitle">GRN List</h3>
+      </ion-col>
+
+        <!-- GRN LIST -->
+       <div class="grnlist" *ngFor="let item of grnList; let i = index ;let last = last" [hidden]="item.is_deleted == 1">
+           <ion-button class="trashbtn" (click)="removeList(i)"><ion-icon name="close-outline"></ion-icon></ion-button>
+           <ion-row class="polistitemv2">
+
+                <ion-col size="6">
+                    <h3>Select Item Type</h3>
+                    <ion-select value="variation" interface="action-sheet" cancelText='Cancel' class="pickupselect" [(ngModel)]="item.item_type" (ionChange)="recalculate(item)"  >
+                        <ion-select-option *ngFor="let x of customerBItemTypeList" value="{{x.item_type_id}}">{{x.title}}</ion-select-option>
+                    </ion-select> 
+                </ion-col>
+                <ion-col size="6">
+                    <h3>Select Item Code</h3>
+                    <ion-select value="variation" interface="action-sheet" cancelText='Cancel' class="pickupselect" [(ngModel)]="item.item_code"  (ionChange)="recalculate(item)"  >
+                        <ion-select-option *ngFor="let x of customerGoldPurityList" value="{{x.id}}">{{x.gold_name}} ({{x.override_gold_pure_percent}}%)</ion-select-option>
+                    </ion-select> 
+                </ion-col>
+
+
+                <ion-col size="6">
+                    <h3>Preset Purity</h3>
+                    <h2 style="border: 1px solid black;"><ion-input type="number" step="0.1" [(ngModel)]="item.gold_pure_percent" (ionChange)="recalculate(item)" ></ion-input></h2>
+                    <!-- <h2>{{item.gold_pure_percent}}%</h2> -->
+                </ion-col>
+                <ion-col size="6">
+                    <h3>XAU Amount</h3>
+                    <h2><ion-input type="number"  [(ngModel)]="item.XAU_amount" (ionChange)="recalculate(item)" disabled="disabled"></ion-input></h2>
+                    <!-- <h2>{{item.XAU_amount | number :'.3'}}</h2> -->
+                </ion-col>
+
+                <ion-col size="8" class=" ion-align-self-end">
+                  <h3 class="totaltitle">Collected GRAM</h3>
+                </ion-col>
+                <ion-col size="4"> 
+                    <h2 class="totaltitle" style="border: 1px solid black;">
+                        <ion-input type="number" [(ngModel)]="item.gram" (ionChange)="recalculate(item)" ></ion-input>
+                    </h2>    
+                </ion-col>
+
+                <ion-col size="12" style="border-top: 2px solid #cbcbcb; width:100%">
+                  <h3 class="totaltitle">Image By Rider</h3>
+                    <!-- Image show -->
+                    <ion-slides pager="true" [options]="slideOpts" class="homepagesilder" *ngIf="item.item_multiple_image && item.item_is_multiple_image == 1">
+                      <ion-slide *ngFor="let x of item.item_multiple_image">
+                          <ion-card>
+                              <img [src]="x" />
+                          </ion-card>
+                      </ion-slide>
+                    </ion-slides>
+
+                    <ion-slides pager="true" [options]="slideOpts" class="homepagesilder" *ngIf="item.item_image && item.item_is_multiple_image == 0">
+                      <ion-slide>
+                          <ion-card>
+                              <img [src]="item.item_image" />
+                          </ion-card>
+                      </ion-slide>
+                    </ion-slides>
+                    <!-- End Image show -->
+                </ion-col>
+
+                <ion-row style="border-top: 2px solid #cbcbcb; width:100%" >
+
+                    <!-- <ion-col size="12" style="padding-bottom:0;">
+                        <ion-label><strong>Admin QC Check <span style="color:red;">*</span></strong>
+                        <ion-col size="1" class="productdetail ion-align-self-center"><ion-checkbox [(ngModel)]="item.is_checked" (ionChange)="priceUpdate()"></ion-checkbox></ion-col>   
+                        </ion-label>
+                    </ion-col> -->
+
+                    <!-- <ion-col size="12" class=" ion-align-self-end">
+                        <h3 class="totaltitle">Status : <span style="color:red;">*</span></h3>
+                        <ion-select value="variation" interface="action-sheet" cancelText='Cancel' class="pickupselect" [(ngModel)]="item.is_checked" (ionChange)="priceUpdate()">
+                            <ion-select-option value="1">Approve</ion-select-option>
+                            <ion-select-option value="2">Rejected</ion-select-option>
+                        </ion-select> 
+                    </ion-col> -->
+
+                    <ion-col size="12" class=" ion-align-self-end">
+                        <h3 class="totaltitle">Remark:</h3>
+                        <ion-input style="border: 1px solid black;" placeholder="Remarks" type="text" [(ngModel)]="item.remark"></ion-input>
+                    </ion-col>
+
+                    <ion-col size="12" style="padding-bottom:0;">
+                        <ion-label><strong>Upload Photos <span style="color:red;">*</span></strong>
+                        <ion-icon (click)="openActionSheet(i)" name="add-circle-outline" style="float: right; background-color: #243a76; color: #fbd23c;font-size: 25px; border-radius: 6px; vertical-align: middle; margin-left: 10px;" ></ion-icon>
+                        </ion-label>
+                    </ion-col>
+
+                    <ion-row *ngIf="item.imageUrl && item.is_multiple_image == 0">
+                        <ion-col size="12" class="ion-align-self-center">
+          
+                            <img [src]="item.imageUrl" style="width: 100%;" class="logoimg">
+          
+                            <ion-button (click)="delete_img(0,item.imageUrl,i)" class="buttontheme-orange" color="danger">Delete</ion-button>
+                        </ion-col>
+                    </ion-row>
+          
+                    <!-- multiple image -->
+                    <ion-row *ngIf="item.MultipleImageUrl && item.is_multiple_image == 1">
+                      <ion-col size="12" class="ion-align-self-center" *ngFor="let x of item.MultipleImageUrl">
+          
+                          <img [src]="x" style="width: 100%;" class="logoimg">
+          
+                          <ion-button (click)="delete_img(1,x,i)" class="buttontheme-orange" color="danger">Delete</ion-button>
+                      </ion-col>
+                    </ion-row>
+                    
+
+                </ion-row>
+            </ion-row> 
+        </div> 
+        <ion-row>
+            <ion-col size="12">
+                <ion-button class="buttontheme-orange" mode="ios" (click)="submit_grn()" expand="block">Submit</ion-button>
+             </ion-col>  
+        </ion-row>
+        
+        <!-- Total gram and add item -->
+        <div class="addgrn"> 
+            <ion-row>
+                <ion-col size="4">
+                    <ion-button mode="ios" (click)="addItem()">Add Item</ion-button>
+                </ion-col>
+                <ion-col size="8" class="text-end ion-align-self-end" style="background-color: #999; border: 1px solid #ffffff; color: #ffff; height: 45px;margin-bottom: 8px;">
+                    <h3>Total Grams</h3>
+                    <h2>{{summary.total_gram | number: '.2'}}</h2>
+                </ion-col>
+            </ion-row>  
+        </div>   
+
+        <!-- <img [src]="signature_data" style="width: 100%;" class="logoimg"> -->
+
+        <!-- <div class="polistitem">
+            <ion-row class="productorderlist">
+
+                <ion-col size="12">
+                    <h3 class="grntitle">Customer Sign</h3>
+                </ion-col>
+
+                <ion-row>
+                    <ion-col size="12" class="ion-align-self-center">
+      
+                        <img *ngIf="signature_data != 0" [src]="signature_data" style="width: 100%;" class="logoimg">
+      
+                        <ion-button (click)="openModalSign()" class="buttontheme-orange" color="danger">Sign</ion-button>
+                    </ion-col>
+                </ion-row>
+            </ion-row>
+
+        </div>   -->
+
+       
+    </div>       
+
+
+      
+      
+</ion-grid>     
+
+
+
+
+
+
+  
+
+
+  <!-- </div> -->
+  <div class="spacer" style="height: 40px"></div>
+</ion-content>
+<mytab></mytab>

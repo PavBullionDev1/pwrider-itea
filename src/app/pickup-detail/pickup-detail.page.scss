@@ -1,0 +1,153 @@
+@use 'src/global';
+.ordelist{
+    
+    .detailinfor{
+        background-color: #fff;
+        box-shadow: 1px 2px 1px #efefef;
+        margin-bottom: 1px;
+        padding-left: 12px;
+        padding-right: 12px;
+        padding-top: 12px;
+        padding-bottom: 15px;
+        
+        h2{
+            margin: 0;
+           font-size: 20px;
+           font-weight: 600;
+        }
+        p{
+            margin: 0;
+            padding-top: 5px;
+            font-size: 16px;
+        }
+    }
+    
+    ion-item{
+        background: #FFFFFF;
+        border-radius: 12px;
+        margin-left: 12px;
+        margin-right: 12px;
+        margin-top: 10px;
+        --inner-padding-end: 0;
+        box-shadow: 1px 1px 1px #efefef;
+        padding: 13px 10px 10px 10px;
+        margin-left: 18px;
+        margin-right: 18px;
+        
+        .productdetail{
+            h2{
+                margin-top: 0;
+                letter-spacing: 0;
+                font-size: 15px;
+                font-weight: 500;
+                margin-bottom: 0;
+                color: #92a2ce;
+            } 
+            
+            p{
+                margin-top: 0;
+                margin-bottom: 0;
+                color: #243a76;
+                font-weight: 600;
+                font-size: 17px;
+            }
+        }
+        
+        .productdetailinfor{
+            border-top: 1px dashed #b4b4b4;
+            padding-top: 15px;
+            h3{
+                margin-top: 0;
+                margin-bottom: 0;
+                
+                &.title{
+                    color: #92a2ce;
+                    font-size: 14px;
+                    font-weight: 500;
+                        
+                }
+                
+                &.desc{
+                    font-size: 14px;
+                    color: #243a76;
+                    font-weight: 600;
+                    line-height: 17px;
+                    
+                    .days{
+                        font-weight: 600;
+                    }
+                }
+            }
+            
+            
+            
+        }
+        
+    }
+}
+
+
+.footerbtn{
+    background-color: #fff;
+    
+    ion-button{
+        margin: 0;
+        --border-radius: 0;
+        --background: #fff;
+        --background-hover: #fff;
+        --background-activated: #fff;
+        img{
+            width: 24px;
+            margin-right: 7px;
+            margin-top: -1px;
+        }
+        
+        &.servicebtn{
+            color: #0B554C;
+            border-bottom: 3px solid #0B554C;
+            font-size: 17px;
+            font-weight: 700;
+            height: 60px;
+        }
+
+        &.requestbtn{
+            color: #A7ACB6;
+            border-bottom: 3px solid #ffffff;
+            font-size: 17px;
+            font-weight: 700;
+            height: 60px;
+        }
+    }
+}
+
+.buttontheme-orange{
+    @include global.btnthemeorange(100%);
+    --background: #243a76;
+    --background-hover: #243a76;
+    --background-activated: #243a76;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-left: 0;
+    margin-right: 0;
+    color: #fbd23c;
+    --color: #fbd23c;
+}
+
+.buttonbottom{
+    background: #f5f6f8;
+    &.whitepage{
+        background: #fff;
+    }
+}
+
+ion-select.pickupselect{
+    width: 100%;
+    margin: 0;
+    max-width: inherit;
+    border: 1px solid #cbcbcb;
+    height: 30px;
+    margin-top: 6px;
+}

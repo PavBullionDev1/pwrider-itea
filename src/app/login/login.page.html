@@ -1,0 +1,139 @@
+<ion-content class="loginPage nomovingcontent whitepage" mode="ios">
+
+  <ion-grid>
+
+    <ion-row *ngIf="mode == 'Login'">
+      <ion-col size="12" class="">
+        <form [formGroup]="login" (ngSubmit)="toLogin()">
+
+          <ion-text color="light">
+              <div class="logopos">
+                  <div id="inner"></div>
+                 <img src="../../assets/pw-logo.png" style="position: absolute; top: -38px; transform: scale(0.6);"> 
+              </div> 
+              <p class="opensanLBold700 welcomtitle txtgreen-dark">Login</p>
+          </ion-text>
+
+          <div class="logininput">
+              <ion-item class="ion-no-padding" lines="none">
+                   <ion-label position="stacked">Mobile No</ion-label>  
+                   <ion-input name="username" [(ngModel)]="loginForm.username" placeholder="Your Mobile No (0167552339)" formControlName="username" type="tel" required mode="ios"></ion-input>
+              </ion-item>
+
+              <ion-item class="ion-no-padding" lines="none">
+                   <ion-label position="stacked">Password</ion-label>  
+                   <ion-input name="password" [(ngModel)]="loginForm.password" [type]="getType()" placeholder="Your Password" formControlName="password" required mode="ios"></ion-input>
+                   <ion-icon [name]="getIcon()" name="eye" item-right (click)="toggleTextPassword()" class="showhidepass"></ion-icon>
+
+              </ion-item>
+          </div>
+
+          <div class="ion-text-left ion-padding-bottom ">
+            <ion-checkbox value="selectall" (click)="selectAll()" checked></ion-checkbox>
+            <ion-text color="black" style="font-size: 14px; text-align: left;">{{' Remember me '}}</ion-text>
+          </div>
+
+          <div class="ion-text-start">
+            <a href="javascript:;" (click)="switchMode('forgetPassword')" class="fgtpass opensanLBold600">Forget Password?</a>
+          </div>
+
+
+          <div class="ion-padding-top ion-text-center" style="padding-top: 50px;">
+            <ion-button type="submit" [disabled]="!login.valid" class="buttontheme-orange">Log In</ion-button>
+          </div>
+
+        </form>
+      </ion-col>
+    </ion-row>
+
+
+    <ion-row *ngIf="mode == 'forgetPassword'" id="forgetPassword">
+      <ion-col size="12">
+
+        <form [formGroup]="forgetPwd" (ngSubmit)="toReset()">
+
+            <ion-text color="light">
+              <p class="opensanLBold700 welcomtitle txtgreen-dark">Forget Password
+              <span class="notetext notosanssc400">Please enter your mobile number to reset password.</span>    
+              </p>
+            </ion-text>
+
+            <div class="logininput">
+              <ion-item class="ion-no-padding" lines="none">
+                  <ion-label position="stacked">Mobile Number</ion-label>  
+                  <ion-input [(ngModel)]="fpForm.email" name="email" class="myInput" placeholder="Your Mobile Number" required formControlName="email" type="tel"></ion-input>
+              </ion-item>
+            </div>
+
+
+            <div class="ion-text-center ion-padding-top">
+                 <ion-text color="light opensanLight300" style="font-size: 14px;">Enter your email and we will send you instructions on how to reset your password</ion-text>
+            </div>
+
+
+            <div class="ion-text-center ion-padding-top ">
+                <ion-button type="submit" [disabled]="!forgetPwd.valid" class="buttontheme-orange">Send OTP to your Whatsapp</ion-button>
+
+                <div>
+                      <a href="javascript:;" (click)="switchMode('Login')" class="backtologin opensanLBold600 txtgreen-light">Login now?</a>
+                </div>
+            </div>
+        </form>
+
+      </ion-col>
+    </ion-row>
+      
+      
+    <ion-row id="sucessforgetPassword" *ngIf="mode == 'sucessforgetPassword'">
+      <ion-col size="12">
+
+        <form [formGroup]="resetPwd" (ngSubmit)="toResetPassword()">
+
+            <ion-text color="light">
+              <p class="opensanLBold700 welcomtitle txtgreen-dark">Forget Password
+              <span class="notetext notosanssc400">Please enter OTP and the new password to reset password.</span>    
+              </p>
+            </ion-text>
+
+            <div class="logininput">
+              <ion-item class="ion-no-padding" lines="none">
+                  <ion-label position="stacked">Five digit OTP code</ion-label>  
+                  <ion-input [(ngModel)]="rpForm.otp" name="otp" class="myInput" placeholder="Five digit OTP code" required formControlName="otp" type="tel"></ion-input>
+              </ion-item>
+              <ion-item class="ion-no-padding" lines="none">
+                <ion-label position="stacked">Password</ion-label>  
+                <ion-input [(ngModel)]="rpForm.newpwd" type="password" name="newpwd" class="myInput" placeholder="Password" required formControlName="newpwd"></ion-input>
+            </ion-item>
+            <ion-item class="ion-no-padding" lines="none">
+              <ion-label position="stacked">Confirm Password</ion-label>  
+              <ion-input [(ngModel)]="rpForm.confirmpwd" type="password" name="confirmpwd" class="myInput" placeholder="Confirm Password" required formControlName="confirmpwd"></ion-input>
+          </ion-item>
+            </div>
+
+
+            <div class="ion-text-center ion-padding-top">
+                 <ion-text color="light opensanLight300" style="font-size: 14px;">Enter your email and we will send you instructions on how to reset your password</ion-text>
+            </div>
+
+
+            <div class="ion-text-center ion-padding-top ">
+                <ion-button type="submit" [disabled]="!forgetPwd.valid" class="buttontheme-orange">Submit</ion-button>
+
+                <div>
+                      <a href="javascript:;" (click)="switchMode('forgetPassword')" class="backtologin opensanLBold600 txtgreen-light">Resend OTP</a>
+                </div>
+            </div>
+        </form>
+
+      </ion-col>
+    </ion-row>
+      
+      
+      
+    <div align="center">
+      <ion-text color="light opensanLight300" style="font-size: 12px; color:#999;"> Version: {{this.App.appConfig['version']}}</ion-text>
+
+    </div>
+  </ion-grid>
+
+</ion-content>

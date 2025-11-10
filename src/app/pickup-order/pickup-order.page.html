@@ -1,0 +1,116 @@
+<app-common-header
+  [pageSource]="'pickup-detail'"
+  [headerTitle]="'Pick Up Edit'"
+></app-common-header>
+<ion-content class="ordelist ion-padding-top">
+  
+  <ion-reorder-group disabled="false" (ionItemReorder)="doReorder($event)">
+    <!-- Default reorder icon, end aligned items -->
+      
+      <ion-item slot="header" class="ion-no-padding ion-no-margin" mode="ios" lines="none" *ngFor="let x of riderList">
+        <ion-label style="margin-bottom: 0;">
+            <ion-row class="productorderlist">
+                <ion-col size="12" class="productdetail">
+                  <div>
+                      <h5 class="txt400" style="margin-top: 0;">Tracking No: 
+                          <div>{{x.tracking_no}}</div>
+                      </h5>
+
+                      <h5 class="txt400">Address: <div>{{x.customer_address1}},<br/>{{x.customer_address2}},<br/>{{x.customer_city}},{{x.customer_postcode}}</div></h5>
+
+                  </div> 
+              </ion-col>
+          </ion-row>
+          </ion-label>
+          <ion-reorder slot="end">
+              <ion-icon name="code-working-outline" class="code-working-outline"></ion-icon>
+          </ion-reorder>
+      </ion-item>
+      
+      
+      
+      
+      
+  
+  </ion-reorder-group>
+
+
+
+   
+  <!-- <ion-item *ngFor="let x of riderList" class="ion-no-padding" mode="ios" lines="none">  
+      <ion-row class="productorderlist">
+        <ion-col size="12" class="productdetail">
+          <div [routerLink]="['/pickup-detail/'+x.job_log_id]">
+             
+              <h2 class="txt500">
+                {{x.serial_no}}
+              </h2>
+
+              <h5 class="txt400">CN. No: 
+                  <div>{{x.tracking_no}}</div>
+              </h5>
+
+              <h5 class="txt400">Status: <div>{{x.delivery_status_text}}</div></h5>
+
+              <h5 class="txt400">Order Date: <div>{{x.order_date}}</div></h5>
+
+              <h5 class="txt400">Pick Up Date: <div>{{x.delivery_date}}</div></h5>
+
+              <h5 class="txt400">Pick Up Time: <div>{{x.delivery_time}}</div></h5>
+
+              <h5 class="txt400">Ordered By: <div>{{x.customer_name}}</div></h5>
+
+
+              <div class="remarkdetail">
+                  <h5 class="txt400">Remark: <div>{{x.remark?x.remark:'-'}}</div></h5>
+              </div>
+          </div> 
+          
+          <div class="buttonaction">  
+              <ion-row>
+                  <ion-col size="4">
+                  <ion-button class="pickupdetail" [routerLink]="['/pickup-detail/'+x.job_log_id]">Detail </ion-button>
+                  </ion-col>
+                  <ion-col size="2">
+                    <a class="wazebtn" target="_blank" href="https://waze.com/ul?q={{x.customer_address1}},{{x.customer_address2}},{{x.customer_city}},{{x.customer_postcode}}">   <img src="../../assets/waze.png"></a>
+                  </ion-col>
+                  <ion-col size="2">
+                       <a class="googlemapbtn" target="_blank" href="http://maps.google.com/?q={{x.customer_address1}},{{x.customer_address2}},{{x.customer_city}},{{x.customer_postcode}}"><img src="../../assets/google-maps.png"></a>
+                  </ion-col>
+                  <ion-col size="2">
+                    <a  class="whatsappbtn" target="_blank" href="https://api.whatsapp.com/send/?phone={{x.sender_telephone}}&text=Dear+Valued+Customer%2C+RIDER+will+be+picking+up+your+shipment+within+30mins&app_absent=0"> <ion-icon name="logo-whatsapp"></ion-icon></a>
+                  </ion-col>
+                  <ion-col size="2">
+                       <a target="_blank" class="callbtn" href="tel:{{x.sender_telephone}}"> <ion-icon name="call"></ion-icon></a>
+                  </ion-col>
+              </ion-row>
+              
+          </div>
+          
+        </ion-col>
+      </ion-row>
+  </ion-item>     -->
+    
+
+
+<ion-row style="width:100%;" *ngIf="has_riderlist==0">
+    <ion-col size="12" class="ion-text-center">
+      <div class="noitemincart ion-margin-top">
+        <img src="../../assets/gg-icon/attention-icon.svg" style="width: 100px;">
+        <h2 class="" style="color: #1A1A1A; font-weight: 600;">No any location</h2>
+      </div>
+    </ion-col>
+  </ion-row>
+    
+  <!-- <ion-list> -->
+  <!-- <ion-col size="4" style="padding: 5px;">
+            <ion-item (click)="searchWishList()" lines="none" class="ion-no-padding">
+            <img src="../../assets/add-icon.svg" style="margin-top: 2px; width: 100%;">
+            </ion-item>   
+        </ion-col>    -->
+
+  <!-- </div> -->
+  <div class="spacer" style="height: 40px"></div>
+</ion-content>
+
+<mytab></mytab>

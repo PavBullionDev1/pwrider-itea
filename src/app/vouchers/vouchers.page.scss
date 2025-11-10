@@ -1,0 +1,99 @@
+@use 'src/global';
+h2{
+    color: #eb008b;
+    font-size: 20px;
+}
+
+ion-icon{
+    color: rgb(99, 97, 95);
+    font-size: 30px;
+}
+ion-icon.lightUp {
+    color: rgb(255, 153, 0);
+    font-size: 30px;
+}
+
+.voucherslit{
+      img.logoimg{
+            border: 1px solid #f6921e;
+            border-radius: 7px;
+            background: #fff;
+        }
+    
+    .filterarea{
+            margin-bottom: 15px;
+        
+        ion-button{
+            height: 30px;
+            border-radius: 5px;
+            letter-spacing: 0;
+            font-size: 11px;
+            text-transform: capitalize;
+        }
+        
+        ion-button::part(native){
+            padding-left: 20px !important;
+            padding-right: 20px !important;
+        }
+        
+        ion-button ion-select{
+            padding-left: 3px;
+            text-transform: capitalize;
+        }
+        
+        ion-icon{
+            vertical-align: middle;
+            padding-top: 10px;
+            margin-left: 10px;
+            font-size: 25px
+        }     
+            
+    }
+    
+    ion-list{
+        .boxcontent{
+            position: relative;
+            overflow: hidden;
+        }
+        
+        ion-thumbnail{
+            width: 100% !important;
+            height: 100%;
+        }
+        
+        ion-label{
+            
+            h2{
+                @include global.themeorangetxt; 
+                font-size: 18px;
+                margin-bottom: 3px;
+                margin-top: 0;
+            }
+            
+            p{
+                font-size: 11px;
+                color: #000;
+                line-height: 12px;
+                margin-bottom: 0;
+            }
+            
+            img.tradelogo{
+                width: 13px;
+                vertical-align: middle;
+            }
+        }
+        
+         ion-icon{
+                color: #d0d2d3 !important;
+                width: 25px !important;
+             margin-bottom: -20px;
+            }
+    }
+    
+}
+.newlabel.expiredlabel{
+    font-size: 9px;
+    padding: 12px 15px 0px 17px;
+    top: -1px;
+    left: -25px;
+}

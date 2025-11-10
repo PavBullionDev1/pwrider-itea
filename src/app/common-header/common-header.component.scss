@@ -1,0 +1,186 @@
+@use 'src/global';
+.headerbg {
+
+    .headerbgtop {
+       background-color: #243a76; 
+        .usericon{
+            
+            img{
+                width: 30px;
+                margin-right: 5px;
+            }
+        }
+        
+        ion-back-button{
+            font-size: 18px;
+            margin-left: 5px;
+            --color: #fbd23c !important;
+            --ion-color-base: #fbd23c;
+        }
+    }
+    .toolbar-background {
+        background: none !important;
+    }
+    img {
+        width: 60%;
+        max-width: 120px;
+    }
+    .toolbar-title-default {
+        padding-bottom: 5px;
+        padding-top: 5px;
+        background: none !important;
+        box-shadow: 1px 2px 1px #efefef;
+        margin-bottom: 1px;
+        color: #fbd23c;
+    }
+    img.tradelogo {
+        width: 100%;
+        max-width: 200px;
+        margin-bottom: 15px;
+    }
+    ion-title{
+        font-size: 20px;
+    }
+}
+
+ion-icon {
+    color: #fff;
+    font-size: 28px;
+}
+
+.backbtn{
+    ion-icon {
+        color: #222428;
+        font-size: 22px;
+    }
+}
+
+
+.messagenumber {
+    background-color: #f6921e;
+    width: auto;
+    height: 15px;
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+    padding: 1px;
+    border-radius: 3px;
+    font-weight: 600;
+    line-height: 14px;
+    position: absolute;
+    z-index: 1;
+    top: 1px;
+    left: 18px;
+    transform: scale(0.85);
+    padding-left: 2px;
+    padding-right: 3px;
+}
+
+ion-menu-button {
+    width: 50px;
+    margin-left: 0;
+}
+
+ion-menu-button img {
+    width: 80%;
+    margin-left: 5px;
+}
+
+.profilecontent {
+    display: inline-block;
+    width: 100%;
+    padding-left: 25px;
+    padding-right: 25px;
+    margin-bottom: 20px;
+    .avatar {
+        width: 100%;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 8px solid rgba(255, 255, 255, 0.3);
+        display: flex;
+        .changeavatar {
+            @include global.btnthemeorangeBg;
+            position: absolute;
+            width: 25px;
+            right: 6px;
+            bottom: 12px;
+            z-index: 2;
+            border-radius: 50%;
+            height: 25px;
+            text-align: center;
+            line-height: 30px;
+            padding: 3px;
+            img {
+                @include global.btnthemeorangeBg;
+                width: 20px;
+                text-align: center;
+            }
+        }
+    }
+    ion-img,
+    img {
+        width: 100%;
+        border-radius: 50%;
+        overflow: hidden;
+        background-color: #fff;
+    }
+    .username {
+        color: #fff;
+        font-size: 20px;
+    }
+    ion-note {
+        margin-bottom: 0 !important;
+        padding: 0;
+        margin-left: 5px;
+        padding: 0 !important;
+    }
+    ion-note p {
+        color: #fff;
+        font-size: 12px;
+        line-height: normal;
+        margin-top: 2px;
+        ion-icon {
+            margin-right: 3px;
+            font-size: 11px;
+        }
+    }
+    .chathomefilter {
+        background-color: #fff;
+        border-radius: 7px;
+        box-shadow: 0px 0px 5px #333;
+        text-align: center;
+        height: 30px;
+        line-height: 15px;
+        margin-top: -10px;
+        border: 3px solid #fff;
+    }
+    .chathomefilter ion-button {
+        border-radius: 0 !important;
+        border: 0 !important;
+        height: 20px;
+        font-size: 10px;
+        border-right: 1px solid #f6921e;
+        color: #333;
+        --background: #fff !important;
+        margin: 0;
+        --box-shadow: none;
+    }
+    .chathomefilter ion-button:last-child {
+        border-right: 0;
+    }
+    .chathomefilter ion-button .ion-activated {
+        --background: #fff !important;
+    }
+    .chathomefilter ion-button::part(native) {
+        border-radius: 0!important;
+        height: 20px;
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+        border: 0 !important;
+        --background-activated: #fff !important;
+    }
+}
+
+.ios .chathomefilter ion-button {
+    font-size: 12px;
+}

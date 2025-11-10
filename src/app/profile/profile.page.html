@@ -1,0 +1,114 @@
+<app-common-header [pageSource]="'profile'" [headerTitle]="'Profile'" (cusBackEvent)="backToPrev($event)">
+</app-common-header>
+
+<ion-content class="specialcontent whitepage" appSwipe (swipeLeft)="onSwipeLeft($event)" mode="ios">
+    <ion-grid class="ion-no-padding">
+        <ion-row>
+            <ion-col size="12">
+                <div *ngIf="mode=='profile'" class="profiledetail ion-margin-top">
+                    <form [formGroup]="profile" (ngSubmit)="toUpdateProfile()">
+
+
+
+                        <!-- <ion-row class="strofrontdetail ion-align-items-center"> 
+                 <ion-col size="2">
+                     <img src="../../assets/gg-icon/storefront-icon.svg"/>
+                 </ion-col> 
+                 <ion-col size="10" class="ion-padding-start">
+                     <h2>{{company.company_name}}</h2>
+                     <p>{{company.address}}</p>
+                 </ion-col> 
+              </ion-row>     -->
+
+
+                        <ion-row class="accountinfor">
+                            <ion-col size="12" style="margin-bottom: 10px;">
+                                <h2>Username</h2>
+                                <ion-input readonly formControlName="name">{{profileFrm.name}}</ion-input>
+                            </ion-col>
+
+                            <ion-col size="12" style="margin-bottom: 20px;">
+                                <h2>Email</h2>
+                                <ion-input readonly formControlName="email">{{profileFrm.email}}</ion-input>
+                            </ion-col>
+
+                            <ion-col size="12" style="margin-bottom: 20px;">
+                                <h2>Rider Seniority</h2>
+
+                                <ion-input> {{profileFrm.rider_seniority==1?'Senior':"Junior"}}</ion-input>
+                            </ion-col>
+
+                            <ion-col size="12" style="margin-bottom: 10px;" class="inputpassword">
+                                <h2>Password</h2>
+                                <ion-input [(ngModel)]="profileFrm.password"
+                                    placeholder="*Insert password if you want to change" formControlName="password"
+                                    type="password"></ion-input>
+                            </ion-col>
+
+                            <ion-col size="12" style="margin-bottom: 10px;">
+                                <ion-button expand="block" type="submit" [disabled]="profileFrm.password==''"
+                                    class="buttontheme-orange" style="text-align:right;">Save</ion-button>
+                            </ion-col>
+                        </ion-row>
+
+
+                    </form>
+
+
+                    <div class="spacer" style="height: 50px"></div>                    
+
+                    <ion-row class="logoutbtnsection">
+                        <ion-col size="12">
+                            <ion-item (click)="viewRiderCommissionReport()" lines="none"
+                                class="ion-text-center no-padding">
+                                <ion-label class="opensanLBold700 ion-no-margin"> Commission Report <ion-icon
+                                        name="receipt-outline">
+                                    </ion-icon>
+                                </ion-label>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+
+                    <ion-row class="logoutbtnsection">
+                        <ion-col size="12">
+                            <ion-item lines="none" class="ion-text-center no-padding" [routerLink]="['/company-holiday']">
+                                <ion-label class="opensanLBold700 ion-no-margin"> Company Holiday <ion-icon
+                                        name="calendar-outline">
+                                    </ion-icon>
+                                </ion-label>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+
+                    <ion-row class="logoutbtnsection">
+                        <ion-col size="12">
+                            <ion-item (click)="toLogout()" lines="none" class="ion-text-center no-padding"
+                                color="danger">
+                                <ion-label class="opensanLBold700 ion-no-margin" style="color:#fff;"> Log Out <ion-icon
+                                        name="power-outline"></ion-icon>
+                                </ion-label>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                    
+                    <ion-row class="logoutbtnsection" *ngIf="showdeleteaccount">
+                        <ion-col size="12">
+                            <ion-item (click)="delAccount()" lines="none" class="ion-text-center no-padding" style="--background: none;border: 0;color: #f00;">
+                                <ion-label class="opensanLBold700 ion-no-margin" style="color:#f00;"> Delete an account
+                                </ion-label>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+
+                </div>
+
+            </ion-col>
+
+        </ion-row>
+
+    </ion-grid>
+
+</ion-content>
+
+
+<mytab></mytab>

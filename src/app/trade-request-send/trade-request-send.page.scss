@@ -1,0 +1,16 @@
+@use 'src/global';
+
+.txtorange{
+      @include global.themeorangetxt;   
+}
+
+.title{
+    font-size: 18px;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.desc{
+       font-size: 13px;
+    color: #000;
+}

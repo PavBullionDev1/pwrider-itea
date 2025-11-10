@@ -1,0 +1,192 @@
+@use 'src/global';
+.ordelist{
+    ion-item{
+        background: #FFFFFF;
+        border-radius: 12px;
+        margin-left: 12px;
+        margin-right: 12px;
+        margin-top: 10px;
+        --inner-padding-end: 0;
+        box-shadow: 1px 1px 1px #efefef;
+        padding: 13px 10px 10px 10px;
+    
+    
+        h2{
+            margin-top: 0;
+            font-size: 18px;
+            font-weight: 600;
+            color: #243a76;
+            margin-bottom: 5px;
+        }
+
+        h5{
+            margin-top: 0;
+            font-size: 14px;        
+            margin-bottom: 2px;
+        }
+
+        a{
+            border-top: 1px dashed #fbde9c;
+            font-weight: 500;
+            text-decoration: none;
+            padding-top: 10px;
+            display: block;
+            margin-top: 15px;
+            
+            ion-icon{
+                float: right;
+                color: #A7ACB6;
+                font-size: 22px;
+                margin-right: -5px;
+            }
+        }
+        
+    }
+    
+    .productdetailinfor{
+        border-top: 1px dashed #243a76;
+        padding-top: 15px;
+        h3{
+            margin-top: 0;
+            margin-bottom: 0;
+
+            &.title{
+                color: #243a76;
+                font-size: 14px;
+                font-weight: 500;
+
+            }
+
+            &.desc{
+                font-size: 14px;
+                color: #0f0b00;
+                font-weight: 600;
+                line-height: 17px;
+
+                .days{
+                    font-weight: 600;
+                }
+            }
+        }
+
+        .password{
+            background-color: #fff;
+            border: 1px solid #EEEFF1;
+            border-radius: 10px;
+            padding-left: 10px !important;
+            padding: 10px;
+        }
+
+        ion-input{
+            height: 20px;
+            padding: 0 !important;
+            margin: 0 !important;
+            color: #0f0b00;
+            font-weight: 500;
+            font-size: 16px;
+            background-color: #fff;
+            --placeholder-opacity: 0.3;
+            --placeholder-font-weight: 400;
+
+        }
+
+    }
+    
+}
+
+.footerbtn{
+    background-color: #fff;
+    
+    ion-button{
+        margin: 0;
+        --border-radius: 0;
+        --background: #fff;
+        --background-hover: #fff;
+        --background-activated: #fff;
+        img{
+            width: 24px;
+            margin-right: 7px;
+            margin-top: -1px;
+        }
+        
+        &.footeractivebtn{
+            color: #243a76;
+            border-bottom: 3px solid #243a76;
+            font-size: 17px;
+            font-weight: 700;
+            height: 60px;
+        }
+
+        &.footerinactivebtn{
+            color: #A7ACB6;
+            border-bottom: 3px solid #ffffff;
+            font-size: 17px;
+            font-weight: 700;
+            height: 60px;
+        }
+    }
+}
+
+.productorderlist {
+    width: 100%;
+}
+
+
+.buttontheme-orange{
+    @include global.btnthemeorange(100%);
+    --background: #243a76;
+    --background-hover: #243a76;
+    --background-activated: #243a76;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.buttonbottom{
+    background: #f5f6f8;
+    &.whitepage{
+        background: #fff;
+    }
+}
+
+ion-input{
+    background-color:whiteSmoke;
+}
+
+canvas {
+    border: 3px dashed gray;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.productorderlist {
+    width: 100%;
+}
+
+// 添加条码扫描器样式
+:host {
+  .scanner-active {
+    --background: transparent;
+    --ion-background-color: transparent;
+  }
+}
+
+body.scanner-active {
+  --background: transparent;
+  --ion-background-color: transparent;
+  background: transparent;
+  
+  ion-content {
+    --background: transparent;
+  }
+  
+  ion-header,
+  ion-toolbar,
+  ion-footer,
+  .ordelist ion-item,
+  .spacer {
+    display: none;
+  }
+}

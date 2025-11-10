@@ -1,0 +1,54 @@
+<ion-header>
+	<div>
+		<ion-toolbar class="varitaionslect ion-no-padding ion-no-margin" style="padding-top: 10px !important;">
+			<ion-item class="ion-no-padding ion-no-margin" style="--inner-padding-end: 0 !important;" no-padding>
+				<ion-row class="ion-align-items-end">
+					<ion-col>
+						<div class="txt500"><b>Logistic Request Form</b></div>
+					</ion-col>
+				</ion-row>
+			</ion-item>
+
+			<ion-buttons slot="end">
+				<ion-button (click)="dismiss()" class="closemodal" mode="ios" style=" bottom: 35px; right: 0;">
+					<ion-icon name="close-outline" style="color: #999;"></ion-icon>
+				</ion-button>
+			</ion-buttons>
+		</ion-toolbar>
+	</div>
+</ion-header>
+
+<ion-content>
+  <div class="grnlist">
+    <ion-row class="polistitemv2">
+      <ion-col size="12">
+          <h3 style="margin-bottom: 10px;">Select Job Type</h3>
+          <ion-select value="variation" interface="action-sheet" cancelText='Cancel' class="pickupselect"
+              [(ngModel)]="modalData.job_type" disabled>
+              <ion-select-option value="">--Select One--</ion-select-option>
+              <ion-select-option value="0">PickUp</ion-select-option>
+              <ion-select-option value="1">Delivery</ion-select-option>
+          </ion-select>
+      </ion-col>
+      
+      <ion-col size="12" *ngIf="modalData.job_type == '0' || modalData.job_type == '2'">
+        <h3 style="margin-bottom: 10px;">PickUp Schedule Time</h3>
+        <ion-datetime [(ngModel)]="modalData.pickup_date" min="{{modalData.min_date}}"></ion-datetime>
+      </ion-col>
+
+      <ion-col size="12" *ngIf="modalData.job_type == '1' || modalData.job_type == '2'">
+        <h3 style="margin-bottom: 10px;">Delivery Schedule Time</h3>
+        <ion-datetime [(ngModel)]="modalData.delivery_date" min="{{modalData.min_date}}"></ion-datetime>
+      </ion-col>
+
+
+      <ion-row style="border-top: 2px solid #cbcbcb; width:100%">
+          <ion-col size="12">
+              <ion-button class="buttontheme-orange" mode="ios" (click)="callSubmitFunction()"
+                  expand="block">Submit
+              </ion-button>
+          </ion-col>
+      </ion-row>
+    </ion-row>
+  </div>
+</ion-content>

@@ -1,0 +1,217 @@
+@use 'src/global';
+
+.blackline{
+    background-color: #000;
+    width: 100%;
+    height: 1px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+
+.stepbar::before{
+    content: "";
+    background-color: #d0d2d3;
+    height: 3px;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    z-index: -1;
+    right: 0;
+    left: 0;
+    top: 18px;
+}
+
+.stepbar{
+     margin-top: 5px;
+     padding-left: 10px;
+     padding-right: 10px;
+
+     ion-badge{
+            color: #fff;
+            width: 22px;
+            height: 22px;
+            border-radius: 580%;
+            font-size: 14px;
+            text-align: center;
+            line-height: 18px;
+             padding: 3px;
+
+        &.active{
+            background-color: #f6921e;
+        }     
+
+        &.noactive{
+            background-color: #d0d2d3;
+        }
+
+    }    
+
+
+        h6{
+            margin-top: 0;
+            font-size: 11px;
+            color: #000;
+        }
+
+
+
+}
+
+.voucherdetail{
+    padding-left: 12px;
+    padding-right: 12px;
+    
+    img.coucherimg{
+        box-shadow: 0px 0px 15px #ccc;
+        border-radius: 20px;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    
+    
+    .txthemecolor{
+        @include global.themeorangetxt;
+    }
+    
+    
+    
+    .basicinformation{
+        ion-row{
+           line-height: 16px;
+        }
+        ion-text{
+            &.title{
+                 font-size: 13px;
+            }
+            &.restaurantname{
+                 font-size: 16px;
+                
+            }
+            
+             font-size: 14px;
+            
+        }
+        
+        
+    }
+    
+    .tnctitle{
+          font-size: 14px;  
+    }
+    
+    .tncdesc{
+        font-size: 13px;
+    }
+    
+    .meettheowner{
+         width: 100%;
+        h2{
+            margin-top: 0;
+            font-size: 18px;
+        }
+        
+        img.avatar{
+            border-radius: 50%;
+        }
+        
+        .ownerdetail{
+            padding-left: 10px;
+            
+            .ownername{
+              color:#f6921e !important;
+              display: block;
+              font-size: 18px
+            }
+            
+            small{
+                font-size: 14px;
+                margin-right: 5px;
+                vertical-align: text-top;
+            }
+            
+            ion-icon{
+              color:#f6921e !important;
+                margin-right: 3px;
+                    display: inline-block;
+            }
+            
+            .displaywishlist{
+                
+                .wishlist{
+                    margin-top: 5px;
+                    font-size: 14px;
+                    line-height: 20px;
+                    
+                    img.tradeicon{
+                       width: 20px;
+                        vertical-align: middle;
+                    }
+                    
+                    .restauranticon{
+                        border: 1px solid #f8941c;
+                        border-radius: 5px;
+                        padding: 5px;
+                        background-color: #fff;
+                    }
+                }
+                
+                
+            }
+            
+            
+            .nowishlist{
+                    
+                img.tradeicon{
+                    width: 20px;
+                    vertical-align: bottom;
+                    margin-right: 5px;
+                }
+                    
+            }
+            
+            
+        }
+        
+        
+     }
+    
+}
+
+.btnstatus{
+    
+    margin-bottom: 20px;
+    width: 100%;
+    
+    ion-button.btndecline{
+        width: 100%;
+        --background: #90278e;
+        --border-radius: 5px !important;
+        box-shadow: 0px 0px 5px #ccc;
+        height: 50px;
+            white-space: break-spaces;
+        
+    }
+    
+}
+.opbtntrade{
+        font-size: 12px;
+    height: 40px !important;
+    text-transform: none;
+    font-weight: 400;
+    img{
+        width: 25px;
+        margin-left: -6px;
+        margin-right: 8px;
+    }
+    img.img1{
+        margin-left: -15px;
+    }
+    img.img2{
+        width: 25px;
+        margin-left: -6px;
+        margin-right: 8px;
+    }
+}
+

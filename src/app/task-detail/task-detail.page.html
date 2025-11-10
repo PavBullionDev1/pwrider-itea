@@ -1,0 +1,455 @@
+<app-common-header [pageSource]="'task-detail'" [headerTitle]="'Task Detail'"></app-common-header>
+
+<ion-content class="ordelist ion-padding-top">
+
+	<ion-row class="ion-align-items-center" *ngIf="taskDetails?.job_type_detail != 2">
+		<ion-col size="6">
+			<ion-button expand="full" (click)="select_all(true)">Select All</ion-button>
+		</ion-col>
+		<ion-col size="6">
+			<ion-button expand="full" (click)="select_all(false)">Unselect All</ion-button>
+		</ion-col>
+	</ion-row>
+
+    <div *ngIf="taskDetails?.job_type_detail != 2">
+        <div class="polistitem" *ngFor="let item of previous_not_yet_completed; let i = index ;let first = first">
+            <ion-row class="productorderlist">
+                <ion-col size="1" class="productdetail1 ion-align-self-center">
+                    <ion-checkbox [(ngModel)]="item.is_checked" (ionChange)="tick_target_task(item)"></ion-checkbox>
+                </ion-col>
+
+                <ion-col size="11" class="productdetail1 ion-align-self-center">
+                    <ion-item class="ion-no-padding" mode="ios" lines="none">
+                        <ion-row>
+                            <ion-col size="12">
+                                <h2>
+                                    Task ID.
+                                </h2>
+                                <p>{{item.task_id}}</p>
+                                <h2>
+                                    Title.
+                                </h2>
+                                <p>{{item.title}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </div>
+    </div>
+
+	<ion-item class="ion-no-padding" mode="ios" lines="none">
+		<ion-row class="productorderlist " style="width: 100%;">
+
+		  <ion-col size="12" class="productdetail ion-align-self-center">
+			  <h2>
+				  Task Detail
+			  </h2>
+		  </ion-col>
+
+		  <ion-col size="12" class="productdetailinfor">
+			<ion-row class="ion-align-items-center">
+				<ion-col size="5" style="padding-bottom:0;"><h3 class="title">Title</h3></ion-col>
+				<ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{taskDetails?.title}}</h3></ion-col>
+			</ion-row>
+			<ion-row class="ion-align-items-center">
+				<ion-col size="5" style="padding-bottom:0;"><h3 class="title">Description</h3></ion-col>
+				<ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{taskDetails?.description}}</h3></ion-col>
+			</ion-row>
+			<ion-row class="ion-align-items-center" *ngIf="taskDetails.job_type_detail != 2">
+				<ion-col size="5" style="padding-bottom:0;"><h3 class="title">Job Type</h3></ion-col>
+				<ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{taskDetails.job_type_name}}</h3></ion-col>
+			</ion-row>
+			<ion-row class="ion-align-items-center" *ngIf="taskDetails.job_type == 1 && taskDetails.job_type_detail != 2">
+				<ion-col size="5" style="padding-bottom:0;"><h3 class="title">Job Type Detail</h3></ion-col>
+				<ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{taskDetails?.job_type_detail_name}}</h3></ion-col>
+			</ion-row>
+			<ion-row class="ion-align-items-center">
+				<ion-col size="5" style="padding-bottom:0;"><h3 class="title">Created Date</h3></ion-col>
+				<ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{taskDetails?.created_date}}</h3></ion-col>
+			</ion-row>
+			<ion-row class="ion-align-items-center" *ngIf="taskDetails.job_type_detail != 2">
+				<ion-col size="5" style="padding-bottom:0;"><h3 class="title">Due Date</h3></ion-col>
+				<ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{taskDetails?.due_date}}</h3></ion-col>
+			</ion-row>
+			<ion-row class="ion-align-items-center">
+				<ion-col size="5" style="padding-bottom:0;"><h3 class="title">Customer Name</h3></ion-col>
+				<ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{customerData?.name}}</h3></ion-col>
+			</ion-row>
+			<ion-row class="ion-align-items-center">
+				<ion-col size="5" style="padding-bottom:0;"><h3 class="title">Customer Phone</h3></ion-col>
+				<ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{customerData?.tel}}</h3></ion-col>
+			</ion-row>
+			<ion-row class="ion-align-items-center">
+				<ion-col size="5" style="padding-bottom:0;"><h3 class="title">Customer Address</h3></ion-col>
+				<ion-col size="7" style="padding-bottom:0;"><h3 class="desc"><span>{{customerData?.address1}}</span>&nbsp;<span *ngIf="customerData?.address2">{{customerData?.address2}}&nbsp;</span><span>{{customerData?.postcode}}</span>&nbsp;<span>{{customerData?.city}}</span>&nbsp;<span>{{customerData?.state}}</span></h3></ion-col>
+			</ion-row>
+			<ion-row class="ion-align-items-center" *ngIf="taskDetails?.job_type_detail != 2">
+				<ion-col size="5" style="padding-bottom:0;"><h3 class="title">Attachments</h3></ion-col>
+				<img [src]="taskDetails?.attachment" style="width: 100%;" class="logoimg">
+			</ion-row>
+		  </ion-col>
+		</ion-row>
+	</ion-item>
+
+	<ion-item class="ion-no-padding" mode="ios" lines="none" *ngIf="taskDetails.job_type == 2">
+		<ion-row class="productorderlist " style="width: 100%;">
+			
+			<ion-col size="12">
+				<h3 class="grntitle">Item List</h3>
+			</ion-col>
+
+			<ion-col size="12">
+				<div>
+					<div style="padding:0px 20px">
+						<p *ngIf="!taskDetails.ItemList || taskDetails.ItemList.length==0">No Record Found.</p>
+					</div>
+					<table class="table" border="1" cellpadding="10" cellspacing="0" >
+						<thead>
+							<tr>
+							<th>ITEM</th>
+							<th>g</th>
+							<th>%</th>
+							<th>XAU</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngFor="let item of taskDetails.ItemList; let i = index ;">
+								<!-- <td (click)="view_detail(item)" [style.backgroundColor]="getWarehouseColor(item.warehouse_id)">                                 -->
+								<td (click)="view_detail(item,i)">                                
+									<span *ngIf="item.MultipleImageUrl.length == 0">{{item.gold_pure_name}}</span>
+									<span *ngIf="item.MultipleImageUrl.length > 0" style="text-decoration: underline;" >{{item.gold_pure_name}}</span>
+								</td>
+								<td (click)="view_detail(item,i)">{{item.weight  | number :'.2'}}</td>
+								<td (click)="view_detail(item,i)">{{item.gold_percentage}}</td>
+								<td (click)="view_detail(item,i)">{{item.XAU | number :'.3'}}</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<th>Total</th>
+								<th>{{taskDetails.total_weight | number: '.2'}}</th>
+								<th></th>
+								<th>{{taskDetails.total_XAU | number: '.3'}}</th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</ion-col>
+
+            <ion-col size="12">
+                <ion-button color="warning" mode="ios" (click)="addItem()" *ngIf="taskDetails.delivery_type === '1'" expand="block">Add Item</ion-button>
+            </ion-col>
+
+			<ion-item *ngIf="haveItemImages" class="ion-no-padding" mode="ios" lines="none">
+				<ion-row class="productorderlist " style="width: 100%;">
+					<ion-col size="12" class="productdetail ion-align-self-center">
+						<p><strong>Item Photos</strong></p>
+					</ion-col>
+					<ion-col size="12" class="productdetailinfor">
+						<!-- Item Image List::Start -->
+						<div *ngFor="let item of formData.detailList; let i = index;">
+							<ion-row *ngIf="item.MultipleImageUrl.length !== 0">
+								<div style="font-size: 15px; color: gray; font-weight: 600;">Image for {{item.gold_name}} ({{item.gold_pure_percent}}%)</div>
+								<ion-col size="12" >
+									<ion-slides pager="true" [options]="slideOpts">
+										<!-- Item Image::Start -->
+										<ion-slide class="item-slide" *ngFor="let x of item.MultipleImageUrl"><!-- List item images -->
+											<div class="image-slide-content" [ngStyle]="{'border': item.showImage === x ? '3px solid red' : 'none'}">
+												<img [src]="x" (click)="item.showImage = (item.showImage == ''? x : (item.showImage == x? '': x))" class="itemImage">
+											</div>
+											<button (click)="delete_img(0,x,i)" class="deleteImageBtn">x</button>
+										</ion-slide>
+										<!-- Item Image::End -->
+									</ion-slides>
+								</ion-col>
+								<ion-col size="12" class="ion-align-self-center" *ngIf="item.showImage">
+									<img [src]="item.showImage" style="width: 100%;" class="logoimg">
+									<button class="deleteImageBtn" (click)="delete_img(0,item.showImage,i)" style="font-size: 30px; border-radius: 50%; padding: 5px 8px; top: 5%; right: 3%;">
+										<ion-icon name="trash-outline"></ion-icon>
+									</button>
+								</ion-col>
+							</ion-row>
+						</div>
+						<!-- Item Image List::End -->
+					</ion-col>
+				</ion-row>
+			</ion-item>
+
+			<!-- <ion-col size="12" class="productdetail ion-align-self-center">
+				<h2>
+					Item List
+				</h2>
+			</ion-col> -->
+
+			<!-- <ion-col size="12" class="productdetailinfor">
+				<ion-row class="ion-align-items-center">
+					<ion-col size="12" style="padding-bottom:0;">
+						<table class="table" cellpadding="5" cellspacing="0" border="1">
+							<thead>
+								<tr>
+									<th>Item Code</th>
+									<th>Barcode</th>
+									<th>Weight (g)</th>
+									<th>Billing wgt (g)</th>
+									<th>Purity</th>
+									<th>Remark</th>
+									<th>XAU</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr *ngFor="let keyValuePair of taskDetails.ItemList | keyvalue">
+									<td>
+										<ion-row class="polistitemv2">
+											<ion-col size="12">
+												<ion-select class="pickupselect"
+													[(ngModel)]="keyValuePair.value.gold_pure_id" (ngModelChange)="recalculate(keyValuePair.value)">
+													<ion-select-option *ngFor="let x of taskDetails.goldPurityList" value="{{x.gold_pure_id}}">{{x.gold_name}}
+														({{x.override_gold_pure_percent}}%)
+													</ion-select-option>
+												</ion-select>
+											</ion-col>
+										</ion-row>
+									</td>
+									<td><ion-input labelPlacement="stacked" [disabled]="keyValuePair.value.is_editable === '0'" type="text" [(ngModel)]="keyValuePair.value.barcode" [style.background-color]="keyValuePair.value.is_editable === '0' ? '#bebebe' : 'initial'" style="border:1px solid black"></ion-input></td>
+									<td><ion-input labelPlacement="stacked" type="number" [(ngModel)]="keyValuePair.value.weight" (ngModelChange)="recalculate(keyValuePair.value)" style="border:1px solid black" placeholder="E.g, 2.00"></ion-input></td>
+									<td><ion-input labelPlacement="stacked" type="number" [(ngModel)]="keyValuePair.value.billing_wgt" (ngModelChange)="recalculate(keyValuePair.value)" style="border:1px solid black" placeholder="E.g, 2.00"></ion-input></td>
+									<td><ion-input labelPlacement="stacked" [disabled]="keyValuePair.value.is_editable === '0'" type="number" [(ngModel)]="keyValuePair.value.gold_percentage" (ngModelChange)="recalculate(keyValuePair.value)" style="border:1px solid black" placeholder="E.g, 2.00"></ion-input></td>
+									<td><ion-input labelPlacement="stacked" type="text" [(ngModel)]="keyValuePair.value.remark" style="border:1px solid black"></ion-input></td>
+									<td style="width: 10%;">{{keyValuePair.value.XAU | number:'.3' }}</td>
+									<td style="width: 10%;"><button (click)="deleteItem(keyValuePair.value)" class="deleteImageBtn">x</button></td>
+								</tr>
+							</tbody>
+						</table>
+					</ion-col>
+					<ion-col size="12">
+						<ion-button color="warning" mode="ios" (click)="addItem()" expand="block">Add Item</ion-button>
+					</ion-col>
+				</ion-row>
+			</ion-col> -->
+		</ion-row>
+	</ion-item>
+
+	<ion-item class="ion-no-padding" mode="ios" lines="none" *ngIf="taskDetails.job_type == 1 && taskDetails.job_type_detail == 1">
+		<ion-row class="productorderlist " style="width: 100%;">
+
+			<ion-col size="12" class="productdetail ion-align-self-center">
+				<h2>Payment Amount</h2>
+			</ion-col>
+
+			<ion-col size="12" style="padding-bottom:0;">
+				<ion-input labelPlacement="stacked" type="number" [clearInput]="true" [(ngModel)]="taskDetails.payment_amount" style="border:1px solid lightgray; border-radius: 10px; --padding-start: 10px;" placeholder="E.g, 100.000" ></ion-input>
+			</ion-col>
+			<ion-col size="12">
+				<h2 style="font-size: 16px; color:#243a76; font-weight:600; margin: 0; margin-top: 10px;">Customer Signature</h2>
+				<img *ngIf="signature_data != 0" [src]="signature_data" style="width: 100%; border: 1px solid lightgray; border-radius: 10px;" class="logoimg">
+				<ion-button style="margin: 0;" class="buttontheme-orange" mode="ios" (click)="openModalSign()"
+					expand="block">Sign</ion-button>
+			</ion-col>
+		</ion-row>
+	</ion-item>
+
+	<ion-item class="ion-no-padding" mode="ios" lines="none">
+		<ion-row class="productorderlist " style="width: 100%;">
+
+			<ion-col size="12" class="productdetail ion-align-self-center" *ngIf="taskDetails.job_type_detail && taskDetails.job_type_detail == 2">
+				<h2>Service Adjustment</h2>
+			</ion-col>
+
+			<ion-col size="12" class="productdetailinfor" *ngIf="taskDetails.service_adjustment_dtl?.service_adj_type == 0 && taskDetails.job_type_detail && taskDetails.job_type_detail == 2">
+				<ion-row class="ion-align-items-center">
+					<ion-col size="5" style="padding-bottom:0;"><h3 class="title">Customer</h3></ion-col>
+					<ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{taskDetails.service_adjustment_dtl?.customer_name}}</h3></ion-col>
+				</ion-row>
+				<ion-row class="ion-align-items-center">
+					<ion-col size="5" style="padding-bottom:0;"><h3 class="title">Service</h3></ion-col>
+					<ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{taskDetails.service_adjustment_dtl?.service_name}}</h3></ion-col>
+				</ion-row>
+				<ion-row class="ion-align-items-center">
+					<ion-col size="5" style="padding-bottom:0;"><h3 class="title">Adjustment Type</h3></ion-col>
+					<ion-col size="7" style="padding-bottom:0;" *ngIf="taskDetails.service_adjustment_dtl?.adjustment_type == 1">
+						<h3 class="desc">Delivery Fee</h3>
+					</ion-col>
+					<ion-col size="7" style="padding-bottom:0;" *ngIf="taskDetails.service_adjustment_dtl?.adjustment_type == 2">
+						<h3 class="desc">Insurance Rate</h3>
+					</ion-col>
+					<ion-col size="7" style="padding-bottom:0;" *ngIf="taskDetails.service_adjustment_dtl?.adjustment_type == 3">
+						<h3 class="desc">Free Insurance</h3>
+					</ion-col>
+					<ion-col size="7" style="padding-bottom:0;" *ngIf="taskDetails.service_adjustment_dtl?.adjustment_type == 4">
+						<h3 class="desc">COD Charge</h3>
+					</ion-col>
+				</ion-row>
+				<ion-row class="ion-align-items-center">
+					<ion-col size="5" style="padding-bottom:0;"><h3 class="title">Before</h3></ion-col>
+					<ion-col size="7" style="padding-bottom:0;" *ngIf="taskDetails.service_adjustment_dtl?.adjustment_type != 2">
+						<h3 class="desc">RM {{taskDetails.service_adjustment_dtl?.before_value | number:'1.2-2'}}</h3>
+					</ion-col>
+					<ion-col size="12" style="padding-bottom:0;" *ngIf="taskDetails.service_adjustment_dtl?.adjustment_type == 2">
+						<table class="table" cellpadding="5" cellspacing="0" border="1">
+							<tr style="background-color:#bfdbfe">
+								<th>Parcel Value</th>
+								<th>Insurance</th>
+							</tr>
+							<tr *ngFor="let item of taskDetails.service_adjustment_dtl?.before_value; let i = index">
+								<td>
+									{{item.price_from}} - {{item.price_to}}
+								</td>
+								<td>
+									<div *ngIf="item.insurance_type=='0'">
+										RM {{item.insurance_rate}}
+									</div>
+									<div *ngIf="item.insurance_type=='1'">
+										{{item.insurance_rate}}% from parcel value
+									</div>
+								</td>
+							</tr>
+						</table>
+					</ion-col>
+				</ion-row>
+				<ion-row class="ion-align-items-center">
+					<ion-col size="5" style="padding-bottom:0;"><h3 class="title">After</h3></ion-col>
+					<ion-col size="7" style="padding-bottom:0;" *ngIf="taskDetails.service_adjustment_dtl?.adjustment_type != 2">
+                        <h3 class="desc">RM {{taskDetails.service_adjustment_dtl?.after_value | number:'1.2-2'}}</h3>
+                    </ion-col>
+                    <ion-col size="12" style="padding-bottom:0;" *ngIf="taskDetails.service_adjustment_dtl?.adjustment_type == 2">
+						<table class="table" cellpadding="5" cellspacing="0" border="1">
+							<tr style="background-color:#bfdbfe">
+								<th>Parcel Value</th>
+								<th>Insurance</th>
+							</tr>
+							<tr *ngFor="let item of taskDetails.service_adjustment_dtl?.after_value; let i = index">
+								<td>
+									{{item.price_from}} - {{item.price_to}}
+								</td>
+								<td>
+									<div *ngIf="item.insurance_type=='0'">
+										RM {{item.insurance_rate}}
+									</div>
+									<div *ngIf="item.insurance_type=='1'">
+										{{item.insurance_rate}}% from parcel value
+									</div>
+								</td>
+							</tr>
+						</table>
+					</ion-col>
+				</ion-row>
+			</ion-col>
+
+			<ion-col size="12" class="productdetailinfor" *ngIf="taskDetails.service_adjustment_dtl?.service_adj_type == 1">
+				<ion-row class="ion-align-items-center">
+					<ion-col size="5" style="padding-bottom:0;"><h3 class="title">Service</h3></ion-col>
+					<ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{taskDetails.service_adjustment_dtl?.service_name}}</h3></ion-col>
+				</ion-row>
+				<ion-row class="ion-align-items-center">
+					<ion-col size="5" style="padding-bottom:0;"><h3 class="title">Delivery Fee</h3></ion-col>
+					<ion-col size="7" style="padding-bottom:0;"><h3 class="desc">RM {{taskDetails.service_adjustment_dtl?.delivery_fee | number:'1.2-2'}}</h3></ion-col>
+				</ion-row>
+				<ion-row class="ion-align-items-center">
+					<ion-col size="5" style="padding-bottom:0;"><h3 class="title">Insurance rate</h3></ion-col>
+					<ion-col size="12" style="padding-bottom:0;">
+						<table class="table" cellpadding="5" cellspacing="0" border="1">
+							<tr style="background-color:#bfdbfe">
+								<th>Parcel Value</th>
+								<th>Insurance</th>
+							</tr>
+							<tr *ngFor="let item of taskDetails.service_adjustment_dtl?.insurance_rate; let i = index">
+								<td>
+									{{item.price_from}} - {{item.price_to}}
+								</td>
+								<td>
+									<div *ngIf="item.insurance_type=='0'">
+										RM {{item.insurance_rate}}
+									</div>
+									<div *ngIf="item.insurance_type=='1'">
+										{{item.insurance_rate}}% from parcel value
+									</div>
+								</td>
+							</tr>
+						</table>
+					</ion-col>
+				</ion-row>
+				<ion-row class="ion-align-items-center">
+					<ion-col size="5" style="padding-bottom:0;"><h3 class="title">Free Insurance</h3></ion-col>
+					<ion-col size="7" style="padding-bottom:0;"><h3 class="desc">RM {{taskDetails.service_adjustment_dtl?.free_insurance | number:'1.2-2'}}</h3></ion-col>
+				</ion-row>
+				<ion-row class="ion-align-items-center">
+					<ion-col size="5" style="padding-bottom:0;"><h3 class="title">COD Fee</h3></ion-col>
+					<ion-col size="7" style="padding-bottom:0;"><h3 class="desc">RM {{taskDetails.service_adjustment_dtl?.cod_fee | number:'1.2-2'}}</h3></ion-col>
+				</ion-row>
+			</ion-col>
+
+			<ion-col size="12">
+				<h2 style="font-size: 16px; color:#243a76; font-weight:600; margin: 0; margin: 10px 0;">Approval Signature</h2>
+				<img *ngIf="signature_data != 0" [src]="signature_data" style="width: 100%; border: 1px solid lightgray; border-radius: 10px;" class="logoimg">
+				<ion-button class="buttontheme-orange" style="margin-bottom: 10px;" mode="ios" (click)="openModalSign()" expand="block">Sign</ion-button>
+			</ion-col>
+		</ion-row>
+	</ion-item>
+
+    <ion-item class="ion-no-padding" mode="ios" lines="none" *ngIf="taskDetails.job_type_detail != 2">
+		<ion-row class="productorderlist " style="width: 100%;">
+
+		  <ion-col size="12" class="productdetail ion-align-self-center">
+			  <h2>
+				  Upload Photos
+			  </h2>
+			  <!-- <p>detail</p> -->
+		  </ion-col>
+
+		  <ion-col size="12" class="productdetailinfor">
+			<ion-row class="ion-align-items-center">
+				<ion-col size="12" style="padding-bottom:0;">
+				  <ion-label><strong>Upload Photos</strong>
+					<ion-icon (click)="openActionSheet()" name="add-circle-outline" style="float: right; background-color: #243a76; color: #fbd23c;font-size: 25px; border-radius: 6px; vertical-align: middle; margin-left: 10px;" *ngIf="(is_multiple_image == 0 && !imageUrl) || (is_multiple_image == 1 && MultipleImageUrl.length == 0)"></ion-icon>
+				  </ion-label>
+				</ion-col>
+			</ion-row>
+
+			<!-- <ion-list class="ion-padding-horizontal"> -->
+			  <ion-row *ngIf="imageUrl && is_multiple_image == 0">
+				<ion-col size="12" class="ion-align-self-center">
+
+					<img [src]="imageUrl" style="width: 100%;" class="logoimg">
+
+					<ion-button (click)="delete_img(0,imageUrl)" class="buttontheme-orange" color="danger">Delete</ion-button>
+				</ion-col>
+			  </ion-row>
+
+			<!-- multiple image -->
+			  <ion-row *ngIf="MultipleImageUrl && is_multiple_image == 1">
+				<ion-col size="12" class="ion-align-self-center" *ngFor="let item of MultipleImageUrl">
+
+					<img [src]="item" style="width: 100%;" class="logoimg">
+
+					<ion-button (click)="delete_img(1,item)" class="buttontheme-orange" color="danger">Delete</ion-button>
+				</ion-col>
+			  </ion-row>
+			<!-- </ion-list> -->
+		  </ion-col>
+		</ion-row>
+	</ion-item>
+
+	<ion-item class="ion-no-padding" mode="ios" lines="none">
+		<ion-row class="productorderlist " style="width: 100%;">
+
+			<ion-col size="12" class="productdetail ion-align-self-center">
+				<h2>
+					Remarks
+				</h2>
+			</ion-col>
+
+			<ion-col size="12" style="padding-bottom:0;">
+				<ion-textarea [(ngModel)]="taskDetails.remarks"
+					placeholder="Write some remark or comment here...">
+				</ion-textarea>
+			</ion-col>
+			<ion-col size="12">
+				<ion-button class="buttontheme-orange" mode="ios" (click)="submit()"
+					expand="block">Submit</ion-button>
+			</ion-col>
+		</ion-row>
+	</ion-item>
+</ion-content>
+<mytab></mytab>

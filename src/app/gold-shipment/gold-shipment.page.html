@@ -1,0 +1,400 @@
+<app-common-header [pageSource]="'gold-shipment'" [headerTitle]="'Gold Shipment'"></app-common-header>
+
+<style>
+  .form-title {
+    font-size: 1.8em;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+    color: #444;
+  }
+
+  .input-group {
+    margin: 15px 10px;
+  }
+
+  .input-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 1.1em;
+    color: #555;
+  }
+
+  .input-field,
+  ion-textarea {
+    margin-bottom: 10px;
+    border: 1px solid #ccc; /* Improved border style */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px; /* Padding inside the input */
+    width: 100%;
+  }
+
+  ion-button.toggle-button {
+    margin-top: 10px;
+    --background: #007bff; /* Custom blue color for button */
+    --color: white;
+  }
+
+  .upload-button {
+    --background: #5c6bc0;
+    --background-activated: #3f51b5;
+    --border-radius: 6px;
+    width: 100%;
+    height: 36px;
+    margin: 0;
+    position: relative;
+    overflow: visible;
+    font-size: 12px;
+    letter-spacing: 0.3px;
+    --box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    text-transform: none;
+  }
+
+  .upload-button ion-icon {
+    font-size: 18px;
+    margin-right: 4px;
+    position: relative;
+    top: 1px;
+  }
+
+  .image-count {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: #ff5252;
+    color: white;
+    border-radius: 50%;
+    min-width: 18px;
+    height: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    font-weight: bold;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    border: 1.5px solid white;
+    padding: 0 2px;
+    z-index: 2;
+  }
+
+  .remarks-field {
+    margin-top: 20px;
+  }
+
+  .deleteImageBtn {
+    font-size: 16px;
+    border-radius: 50%;
+    background-color: red;
+    color: white;
+    padding: 5px;
+    position: absolute;
+    top: 5%;
+    right: 3%;
+    cursor: pointer;
+  }
+
+  /* 表格整体样式 */
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 15px 0;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: white;
+  }
+  
+  /* 表头样式 */
+  table th {
+    background-color: #5c6bc0;
+    color: white;
+    font-size: 0.95em;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 12px 10px;
+    text-align: center;
+  }
+  
+  /* 表格边框样式 */
+  table td {
+    border-bottom: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+    padding: 10px;
+    vertical-align: middle;
+    font-size: 0.95em;
+  }
+  
+  table tr:last-child td {
+    border-bottom: none;
+  }
+  
+  table td:last-child {
+    border-right: none;
+  }
+  
+  /* 表格行悬停效果 */
+  table tbody tr {
+    transition: background-color 0.2s;
+  }
+  
+  table tbody tr:hover {
+    background-color: rgba(92, 107, 192, 0.05);
+  }
+
+  .itemImage {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin: 5px;
+  }
+
+  .image-upload-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  ion-content {
+    --padding-bottom: 80px; /* Ensure content doesn't overlap with the footer */
+  }
+
+  ion-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #fff; /* White footer background */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  /* 表格列宽比例调整 - 使备注列更宽 */
+  table th:nth-child(1), 
+  table td:nth-child(1) {
+    width: 15%;
+    min-width: 80px;
+  }
+  
+  table th:nth-child(2), 
+  table td:nth-child(2) {
+    width: 20%;
+    min-width: 100px;
+  }
+  
+  table th:nth-child(3), 
+  table td:nth-child(3) {
+    width: 50%;
+  }
+  
+  table th:nth-child(4), 
+  table td:nth-child(4) {
+    width: 15%;
+    min-width: 80px;
+    padding: 5px;
+  }
+
+  /* 备注文本区样式增强 */
+  .remark-textarea {
+    --background: #ffffff;
+    --color: #333333;
+    --placeholder-color: #9e9e9e;
+    --placeholder-opacity: 0.8;
+    --padding-start: 10px;
+    --padding-end: 10px;
+    --padding-top: 8px;
+    --padding-bottom: 8px;
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.4;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  
+  .remark-textarea.has-focus {
+    --background: #f8f9ff;
+    border-color: #5c6bc0;
+    box-shadow: 0 0 0 2px rgba(92, 107, 192, 0.2);
+  }
+  
+  /* 修正表格内文字对齐 */
+  table td:first-child {
+    text-align: left;
+    padding-left: 15px;
+    font-weight: 500;
+  }
+  
+  table td:nth-child(2) {
+    text-align: center;
+  }
+
+  /* 权重输入框样式 */
+  table td:nth-child(2) ion-input {
+    --padding-start: 8px;
+    --padding-end: 8px;
+    --padding-top: 6px;
+    --padding-bottom: 6px;
+    border: 1px solid #dadce0;
+    border-radius: 6px;
+    --background: #ffffff;
+    text-align: center;
+    font-weight: 500;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+    margin: 0 auto;
+    width: 100%;
+    max-width: 120px;
+  }
+
+  /* 总计行样式 */
+  .total-cell {
+    font-weight: bold;
+    font-size: 16px;
+    color: #3f51b5;
+    background-color: #f0f3ff;
+    border-radius: 4px;
+    text-align: center;
+  }
+</style>
+
+<ion-content>
+
+  <div class="input-group">
+    <div class="input-label">Doc No</div>
+    <ion-input class="input-field" [(ngModel)]="doc_no" placeholder="Leave Blank For Auto Generate" type="text" disabled></ion-input>
+  </div>
+
+  <div class="input-group">
+    <div class="input-label">Doc Date</div>
+    <div class="selected-date">
+      {{ doc_date ? (doc_date | date: 'dd/MM/yyyy HH:mm') : 'No date selected' }}
+    </div>
+    <ion-button expand="block" (click)="toggleCalendar()" class="toggle-button">
+      {{ calendarVisible ? 'Close Calendar' : 'Open Calendar' }}
+    </ion-button>
+    <div *ngIf="calendarVisible">
+      <ion-datetime
+        display-format="dd/MM/yyyy HH:mm"
+        picker-format="dd MMM yyyy HH:mm"
+        [(ngModel)]="doc_date"
+        placeholder="Select Date and Time"
+        (ngModelChange)="onDateChange($event)">
+      </ion-datetime>
+    </div>
+  </div>
+
+  <div class="input-group">
+    <div class="input-label">Type</div>
+    <ion-radio-group [(ngModel)]="type">
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>Exchange</ion-label>
+            <ion-radio slot="start" value="1"></ion-radio>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label>Melting</ion-label>
+            <ion-radio slot="start" value="2"></ion-radio>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-radio-group>
+  </div>
+
+  <div class="input-group">
+    <div class="input-label">Status</div>
+    <ion-radio-group [(ngModel)]="status">
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>Pending</ion-label>
+            <ion-radio slot="start" value="0" [disabled]="status!='3'"></ion-radio>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label>Exchanged</ion-label>
+            <ion-radio slot="start" value="1" [disabled]="true"></ion-radio>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label>Melted</ion-label>
+            <ion-radio slot="start" value="2" [disabled]="true"></ion-radio>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label>Cancelled</ion-label>
+            <ion-radio slot="start" value="3"></ion-radio>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-radio-group>
+  </div>
+
+  <div class="input-group remarks-field">
+    <div class="input-label">Remarks</div>
+    <ion-textarea [(ngModel)]="remark" placeholder="Enter any remarks here" class="remark-textarea"></ion-textarea>
+  </div>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <table>
+          <thead>
+          <tr>
+            <th>Title</th>
+            <th>Weight (g)</th>
+            <th>Remark</th>
+            <th>Images</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of detailList">
+            <td>{{item.title}}</td>
+            <td><ion-input [(ngModel)]="item.weight" placeholder="Enter weight (g)" type="number" (ngModelChange)="calculateTotal()"></ion-input></td>
+            <td>
+              <ion-textarea 
+                [(ngModel)]="item.remark" 
+                placeholder="Enter remarks" 
+                rows="2"
+                autoGrow="true"
+                class="remark-textarea">
+              </ion-textarea>
+            </td>
+            <td>
+              <div class="image-upload-container">
+                <ion-button class="upload-button" (click)="openPhotoViewer(item)">
+                  <ion-icon name="camera-outline"></ion-icon>
+                  <span *ngIf="item.image && item.image.length > 0" class="image-count">
+                    {{item.image.length}}
+                  </span>
+                </ion-button>
+                <div *ngIf="item.is_loading == true" class="loading-icon">
+                  <ion-spinner></ion-spinner>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td class="total-cell">{{total_weight | number: '.2-2'}}</td>
+            <td></td>
+            <td></td>
+          </tr>
+          </tbody>
+        </table>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
+
+<ion-footer>
+  <ion-button class="submit-button" expand="block" (click)="submitGoldShipment()">Submit</ion-button>
+</ion-footer>

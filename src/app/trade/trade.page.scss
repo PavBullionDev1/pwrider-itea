@@ -1,0 +1,302 @@
+@use 'src/global';
+
+
+.searchpage{
+    
+   
+    .customsearch{
+        position: relative;
+        z-index: 1;
+        margin-top: 15px !important;
+    }
+    
+    
+    ion-list{
+        ---background: #fff;
+        box-shadow: 0px 0px 5px #b5b5b5;
+        margin-left: 12px;
+        margin-right: 12px;
+        margin-top: -10px;
+        padding-bottom: 10px;
+        padding-top: 20px;
+     
+        
+        ion-item::part(native){
+            display: inline-block;
+            min-height: 20px;
+            color: #555;
+        }
+        
+        
+    }
+    
+    ion-list.voucherlist{
+        margin-top: 0;
+        box-shadow: none;
+        padding-top: 0;
+        
+        img{
+            border-radius: 7px;
+            background-color: #fff;
+        }
+        
+        img.logoimg{
+            border: 1px solid #f6921e;
+            border-radius: 7px;
+            padding: 5px;
+            background: #fff;
+        }
+        
+        
+        ion-row{
+            border-bottom: 1px solid #e6e7e8 !important;
+            margin-top: 15px;
+            padding-bottom: 15px !important;
+            
+            .border-right{
+                border-right: 1px solid #e6e7e8 !important;
+            }
+        }
+        
+        ion-row:last-child{
+            border-bottom: 0 !important;
+        }
+        
+        
+        h2{
+            font-size: 16px;
+            margin-bottom: 0 !important;
+            margin-right: 10px;
+        }
+        p{
+            font-size: 11px;
+            margin-top:5px !important; 
+            text-align: justify;
+            margin-right: 10px;
+        }
+        
+        ion-button::part(native){
+            --background: none !important;
+
+        }
+        
+        .ownerwishlist{
+             text-decoration: none;
+        }
+        
+        .ownerwishlist{
+            
+            img{
+                width: 25px;
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+                display: block;
+            }
+        
+            h5{
+                font-size: 12px;
+                color: #000;
+                margin-top: 5px;
+            }
+            
+        }
+        
+         .username{
+            font-size: 14px;
+
+            ion-icon{
+               vertical-align: bottom;
+                color: #a7a7a7;
+                font-size: 18px; 
+                margin-left: 0;
+            }
+
+         }
+        
+    }
+    
+    
+    .txtorange{
+      @include global.themeorangetxt;   
+    }
+    
+    
+    .suggestrestaurant{
+        img{
+            border: 1px solid #faaf40 !important;
+            background-color: #fff !important;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        
+        ion-item{
+            --padding-end: 0px;
+            --inner-padding-end: 0px;
+        }
+    }
+    
+    .stepbar::before{
+        content: "";
+        background-color: #d0d2d3;
+        height: 3px;
+        width: 70%;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        top: 18px;
+        z-index: -1;
+        right: 0;
+        left: 0;
+    }
+    
+    .stepbar{
+         margin-top: 15px;
+         padding-left: 10px;
+         padding-right: 10px;
+        
+         
+        
+         ion-badge{
+                color: #fff;
+                width: 22px;
+                height: 22px;
+                border-radius: 580%;
+                font-size: 14px;
+                text-align: center;
+                line-height: 18px;
+                 padding: 3px;
+             
+            &.active{
+                background-color: #f6921e;
+            }     
+        
+            &.noactive{
+                background-color: #d0d2d3;
+            }
+             
+        }    
+           
+        
+            h6{
+                margin-top: 0;
+                font-size: 11px;
+                color: #000;
+            }
+        
+        
+        
+    }
+    
+    .selected{
+        img{
+            width: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+        
+        h5{
+            margin-top: 5px;
+            font-size: 11px;
+            margin-bottom: 0;
+        }
+    }
+    
+    
+    .buttontheme-orange{
+        @include global.btnthemeorange(65%,18px);
+        box-shadow: 0px 0px 5px #ccc;
+        letter-spacing: 0;
+        text-transform: capitalize;
+        height: 45px;
+        
+    }
+}
+
+.vouchertrade{
+        margin-left: 10px;
+    margin-right: 10px;
+    
+    h5{
+        font-size: 16px;
+        margin-bottom: 5px;
+        margin-top: 5px;
+    }
+    .voucherdetail{
+        border-radius: 5px;
+        
+        .boxcontent{
+            position: relative;
+            overflow: hidden;
+        }
+
+        
+        img{
+            border: 1px solid #f6921e;
+            border-radius: 5px;
+            width: 100%;
+        }
+        
+        .voucherdesc{
+            
+           
+            h4{
+               @include global.themeorangetxt; 
+                margin-top: 3px;
+                margin-bottom: 0;
+                font-size: 18px;
+            }
+            
+            h5{
+                font-size: 13px;
+                margin-top: 3px;
+                margin-bottom: 15px;
+            }
+            
+            p{
+                margin-top: 5px;
+                font-size: 12px;
+            }
+            
+        }
+        
+        .username{
+            margin-top: 10px;
+            border-top: 2px solid #fff;
+            padding-top: 10px;
+            color: #000 !important;
+                font-size: 13px;
+            
+           ion-icon{ 
+               vertical-align: bottom;
+                color: #000 !important;
+                   font-size: 13px !important;
+           }
+        }
+    }
+    
+    .tradeimg{
+        position: absolute;
+        z-index: 1;
+        top: 25%;
+        left: 46%;
+        
+        img.tradelogo{
+            width: 28px;
+        }
+        
+    }
+    
+    .nomatchicon{
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        z-index: 1;
+        img{
+            width: 23px;
+            border: 0;
+        }
+    }
+    
+}

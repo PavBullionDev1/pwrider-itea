@@ -1,0 +1,101 @@
+<style>
+  ion-footer {
+    position: fixed;
+    bottom: 85px;
+    left: 0;
+    right: 0;
+  }
+
+  .filter-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin: 10px 15px;
+  }
+
+  .filter-button {
+    flex: 1;
+    margin: 0 5px;
+    text-align: center;
+    border-radius: 5px;
+    font-weight: 600;
+    padding: 10px;
+    background-color: #f4f4f4;
+    border: 1px solid #ccc;
+  }
+
+  .filter-button.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #0056b3;
+  }
+</style>
+
+<app-common-header [pageSource]="'melting-job-list'" [headerTitle]="'Melting Job List'"></app-common-header>
+
+<ion-content class="ordelist ion-padding-top">
+
+  <ion-progress-bar *ngIf="isLoading" type="indeterminate" color="primary"></ion-progress-bar>
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-row class="ion-align-items-center">
+    <ion-col size="12">
+      <h5 style="margin-top: 5px; margin-left: 12px; font-weight: 600;">Total: {{filteredList?.length}}</h5>
+    </ion-col>
+  </ion-row>
+
+  <!-- Filter Buttons -->
+  <div class="filter-buttons">
+    <div
+      class="filter-button"
+      [class.active]="currentFilter === 'inProgress'"
+      (click)="setFilter('inProgress')"
+    >
+      In Progress
+    </div>
+    <div
+      class="filter-button"
+      [class.active]="currentFilter === 'all'"
+      (click)="setFilter('all')"
+    >
+      All
+    </div>
+  </div>
+
+  <div>
+    <div class="eachSupplier" *ngFor="let item of filteredList; let i = index;">
+      <div>
+        <ion-grid [routerLink]="['/melting-job/' + item.melting_job_order_id]" *ngIf="currentFilter == 'all'">
+          <ion-row>
+            <ion-col>
+              <strong>{{ item.factory_code }} - {{item.status_name}}</strong>
+              <br>
+              <span>{{ item.remark }}</span>
+              <br *ngIf="item.riderList">
+              <div class="label" *ngIf="item.riderList">{{item.riderList}}</div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <ion-grid [routerLink]="['/melting-job-wizard/' + item.melting_job_order_id]" *ngIf="currentFilter == 'inProgress'">
+          <ion-row>
+            <ion-col>
+              <strong>{{ item.factory_code }} - {{item.status_name}}</strong>
+              <br>
+              <span>{{ item.remark }}</span>
+              <br *ngIf="item.riderList">
+              <div class="label" *ngIf="item.riderList">{{item.riderList}}</div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
+  </div>
+
+  <div class="spacer" style="height: 40px"></div>
+</ion-content>
+
+<mytab></mytab>
+
+<ion-footer></ion-footer>

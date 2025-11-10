@@ -1,0 +1,19 @@
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
+import { JobLogHistoryPageRoutingModule } from './job-log-history-routing.module';
+import { JobLogHistoryPage } from './job-log-history.page';
+import { SharedModule } from '../shared/shared.module';
+
+@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    JobLogHistoryPageRoutingModule,
+    SharedModule],
+  declarations: [JobLogHistoryPage],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+})
+export class JobLogHistoryPageModule {}

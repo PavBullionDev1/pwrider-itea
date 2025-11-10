@@ -1,0 +1,982 @@
+<app-common-header [pageSource]="'home'" [headerTitle]="'Home'"></app-common-header>
+
+<ion-content class="ordelist ion-padding-top">
+
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+		<ion-refresher-content></ion-refresher-content>
+	</ion-refresher>
+
+    <div style="padding-left:25px;">{{versionCode}}</div>
+
+    <ion-row>
+        <!-- <ion-col size="12" style="margin-bottom:10px">
+            <h3 class="title" (click)="configData.Pwws_tab=!configData.Pwws_tab" style="margin-bottom:10px">PW Work Space <ion-badge color="warning"  style="color:white" *ngIf="configData.total_reminder_task>0">{{configData.total_reminder_task}}</ion-badge></h3>
+
+            <div *ngIf="configData.Pwws_tab">
+                <ion-row>
+                    <ion-col size="12">
+                        <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                            <ion-label class="productorderlist">
+                                <div class="productdetail">
+                                    <h5 class="txt400" style="margin-top: 0;">
+                                        <div><img src="../../assets/gg-icon/personal-info-active.svg">
+                                            <div style="display: inline-block; font-size: 16px;">Personal Info</div>
+                                            <ion-icon name="caret-forward-outline"
+                                                style="float: right; padding-top: 12px; padding-right: 10px;">
+                                            </ion-icon>
+                                        </div>
+                                    </h5>
+                                </div>
+                            </ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="12" [routerLink]="['/punch-card']">
+                        <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                            <ion-label class="productorderlist">
+                                <div class="productdetail">
+                                    <h5 class="txt400" style="margin-top: 0;">
+                                        <div><img src="../../assets/gg-icon/attendance.svg">
+                                            <div style="display: inline-block; font-size: 16px;">Attendance</div>
+                                            <ion-icon name="caret-forward-outline"
+                                                style="float: right; padding-top: 12px; padding-right: 10px;">
+                                            </ion-icon>
+                                        </div>
+                                    </h5>
+                                </div>
+                            </ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row> -->
+
+<!--                <ion-row>-->
+<!--                    <ion-col size="12">-->
+<!--                        <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">-->
+<!--                            <ion-label class="productorderlist">-->
+<!--                                <div class="productdetail">-->
+<!--                                    <h5 class="txt400" style="margin-top: 0;">-->
+<!--                                        <div><img src="../../assets/gg-icon/leave-active.svg">-->
+<!--                                            <div style="display: inline-block; font-size: 16px;">Leave <ion-icon name="warning-outline"></ion-icon></div>-->
+<!--                                            <ion-icon name="caret-forward-outline"-->
+<!--                                                style="float: right; padding-top: 12px; padding-right: 10px;">-->
+<!--                                            </ion-icon>-->
+<!--                                        </div>-->
+<!--                                    </h5>-->
+<!--                                </div>-->
+<!--                            </ion-label>-->
+<!--                        </ion-item>-->
+<!--                    </ion-col>-->
+<!--                </ion-row>-->
+
+<!--                <ion-row>-->
+<!--                    <ion-col size="12">-->
+<!--                        <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">-->
+<!--                            <ion-label class="productorderlist">-->
+<!--                                <div class="productdetail">-->
+<!--                                    <h5 class="txt400" style="margin-top: 0;">-->
+<!--                                        <div><img src="../../assets/gg-icon/sop-active.svg">-->
+<!--                                            <div style="display: inline-block; font-size: 16px;">SOP <ion-icon name="warning-outline"></ion-icon></div>-->
+<!--                                            <ion-icon name="caret-forward-outline"-->
+<!--                                                style="float: right; padding-top: 12px; padding-right: 10px;">-->
+<!--                                            </ion-icon>-->
+<!--                                        </div>-->
+<!--                                    </h5>-->
+<!--                                </div>-->
+<!--                            </ion-label>-->
+<!--                        </ion-item>-->
+<!--                    </ion-col>-->
+<!--                </ion-row>-->
+
+<!--                <ion-row>-->
+<!--                    <ion-col size="12">-->
+<!--                        <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">-->
+<!--                            <ion-label class="productorderlist">-->
+<!--                                <div class="productdetail">-->
+<!--                                    <h5 class="txt400" style="margin-top: 0;">-->
+<!--                                        <div><img src="../../assets/gg-icon/benefit-active.svg">-->
+<!--                                            <div style="display: inline-block; font-size: 16px;">Benefit Handbook <ion-icon name="warning-outline"></ion-icon></div>-->
+<!--                                            <ion-icon name="caret-forward-outline"-->
+<!--                                                style="float: right; padding-top: 12px; padding-right: 10px;">-->
+<!--                                            </ion-icon>-->
+<!--                                        </div>-->
+<!--                                    </h5>-->
+<!--                                </div>-->
+<!--                            </ion-label>-->
+<!--                        </ion-item>-->
+<!--                    </ion-col>-->
+<!--                </ion-row>-->
+
+<!--                <ion-row>-->
+<!--                    <ion-col size="12">-->
+<!--                        <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">-->
+<!--                            <ion-label class="productorderlist">-->
+<!--                                <div class="productdetail">-->
+<!--                                    <h5 class="txt400" style="margin-top: 0;">-->
+<!--                                        <div><img src="../../assets/gg-icon/kpi-active.svg">-->
+<!--                                            <div style="display: inline-block; font-size: 16px;">KPI <ion-icon name="warning-outline"></ion-icon></div>-->
+<!--                                            <ion-icon name="caret-forward-outline"-->
+<!--                                                style="float: right; padding-top: 12px; padding-right: 10px;">-->
+<!--                                            </ion-icon>-->
+<!--                                        </div>-->
+<!--                                    </h5>-->
+<!--                                </div>-->
+<!--                            </ion-label>-->
+<!--                        </ion-item>-->
+<!--                    </ion-col>-->
+<!--                </ion-row>-->
+
+<!--                <ion-row>-->
+<!--                    <ion-col size="12">-->
+<!--                        <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">-->
+<!--                            <ion-label class="productorderlist">-->
+<!--                                <div class="productdetail">-->
+<!--                                    <h5 class="txt400" style="margin-top: 0;">-->
+<!--                                        <div><img src="../../assets/gg-icon/claim-form-active.svg">-->
+<!--                                            <div style="display: inline-block; font-size: 16px;">Claim Form <ion-icon name="warning-outline"></ion-icon></div>-->
+<!--                                            <ion-icon name="caret-forward-outline"-->
+<!--                                                style="float: right; padding-top: 12px; padding-right: 10px;">-->
+<!--                                            </ion-icon>-->
+<!--                                        </div>-->
+<!--                                    </h5>-->
+<!--                                </div>-->
+<!--                            </ion-label>-->
+<!--                        </ion-item>-->
+<!--                    </ion-col>-->
+<!--                </ion-row>-->
+<!--                <ion-row>-->
+<!--                    <ion-col size="12">-->
+<!--                        <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">-->
+<!--                            <ion-label class="productorderlist">-->
+<!--                                <div class="productdetail">-->
+<!--                                    <h5 class="txt400" style="margin-top: 0;">-->
+<!--                                        <div><img src="../../assets/gg-icon/kokeshi-active.svg">-->
+<!--                                            <div style="display: inline-block; font-size: 16px;">Kokeshi <ion-icon name="warning-outline"></ion-icon></div>-->
+<!--                                            <ion-icon name="caret-forward-outline"-->
+<!--                                                style="float: right; padding-top: 12px; padding-right: 10px;">-->
+<!--                                            </ion-icon>-->
+<!--                                        </div>-->
+<!--                                    </h5>-->
+<!--                                </div>-->
+<!--                            </ion-label>-->
+<!--                        </ion-item>-->
+<!--                    </ion-col>-->
+<!--                </ion-row>-->
+<!--                <ion-row>-->
+<!--                    <ion-col size="12">-->
+<!--                        <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">-->
+<!--                            <ion-label class="productorderlist">-->
+<!--                                <div class="productdetail">-->
+<!--                                    <h5 class="txt400" style="margin-top: 0;">-->
+<!--                                        <div><img src="../../assets/gg-icon/holiday-active.svg">-->
+<!--                                            <div style="display: inline-block; font-size: 16px;">Holiday <ion-icon name="warning-outline"></ion-icon></div>-->
+<!--                                            <ion-icon name="caret-forward-outline"-->
+<!--                                                style="float: right; padding-top: 12px; padding-right: 10px;">-->
+<!--                                            </ion-icon>-->
+<!--                                        </div>-->
+<!--                                    </h5>-->
+<!--                                </div>-->
+<!--                            </ion-label>-->
+<!--                        </ion-item>-->
+<!--                    </ion-col>-->
+<!--                </ion-row>-->
+<!--                <ion-row>-->
+<!--                    <ion-col size="12">-->
+<!--                        <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">-->
+<!--                            <ion-label class="productorderlist">-->
+<!--                                <div class="productdetail">-->
+<!--                                    <h5 class="txt400" style="margin-top: 0;">-->
+<!--                                        <div><img src="../../assets/gg-icon/company-target-active.svg">-->
+<!--                                            <div style="display: inline-block; font-size: 16px;">Company Target <ion-icon name="warning-outline"></ion-icon></div>-->
+<!--                                            <ion-icon name="caret-forward-outline"-->
+<!--                                                style="float: right; padding-top: 12px; padding-right: 10px;">-->
+<!--                                            </ion-icon>-->
+<!--                                        </div>-->
+<!--                                    </h5>-->
+<!--                                </div>-->
+<!--                            </ion-label>-->
+<!--                        </ion-item>-->
+<!--                    </ion-col>-->
+<!--                </ion-row>-->
+<!--                <ion-row>-->
+<!--                    <ion-col size="12">-->
+<!--                        <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">-->
+<!--                            <ion-label class="productorderlist">-->
+<!--                                <div class="productdetail">-->
+<!--                                    <h5 class="txt400" style="margin-top: 0;">-->
+<!--                                        <div><img src="../../assets/gg-icon/daily-cash-active.svg">-->
+<!--                                            <div style="display: inline-block; font-size: 16px;">Daily Cash Arrangement <ion-icon name="warning-outline"></ion-icon></div>-->
+<!--                                            <ion-icon name="caret-forward-outline"-->
+<!--                                                style="float: right; padding-top: 12px; padding-right: 10px;">-->
+<!--                                            </ion-icon>-->
+<!--                                        </div>-->
+<!--                                    </h5>-->
+<!--                                </div>-->
+<!--                            </ion-label>-->
+<!--                        </ion-item>-->
+<!--                    </ion-col>-->
+<!--                </ion-row>-->
+<!--                <ion-row>-->
+<!--                    <ion-col size="12">-->
+<!--                        <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">-->
+<!--                            <ion-label class="productorderlist">-->
+<!--                                <div class="productdetail">-->
+<!--                                    <h5 class="txt400" style="margin-top: 0;">-->
+<!--                                        <div><img src="../../assets/gg-icon/commission-active.svg">-->
+<!--                                            <div style="display: inline-block; font-size: 16px;">Commission Report <ion-icon name="warning-outline"></ion-icon></div>-->
+<!--                                            <ion-icon name="caret-forward-outline"-->
+<!--                                                style="float: right; padding-top: 12px; padding-right: 10px;">-->
+<!--                                            </ion-icon>-->
+<!--                                        </div>-->
+<!--                                    </h5>-->
+<!--                                </div>-->
+<!--                            </ion-label>-->
+<!--                        </ion-item>-->
+<!--                    </ion-col>-->
+<!--                </ion-row>-->
+<!--                <ion-row>-->
+<!--                    <ion-col size="12">-->
+<!--                        <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">-->
+<!--                            <ion-label class="productorderlist">-->
+<!--                                <div class="productdetail">-->
+<!--                                    <h5 class="txt400" style="margin-top: 0;">-->
+<!--                                        <div><img src="../../assets/gg-icon/marketing-report-active.svg">-->
+<!--                                            <div style="display: inline-block; font-size: 16px;">CRM/Marketing Report <ion-icon name="warning-outline"></ion-icon></div>-->
+<!--                                            <ion-icon name="caret-forward-outline"-->
+<!--                                                style="float: right; padding-top: 12px; padding-right: 10px;">-->
+<!--                                            </ion-icon>-->
+<!--                                        </div>-->
+<!--                                    </h5>-->
+<!--                                </div>-->
+<!--                            </ion-label>-->
+<!--                        </ion-item>-->
+<!--                    </ion-col>-->
+<!--                </ion-row>-->
+
+
+
+            <!-- </div>
+        </ion-col> -->
+
+        <ion-col size="12">
+            <h3 class="title" (click)="configData.Task_tab=!configData.Task_tab" style="margin-bottom:10px">Task <ion-badge color="warning"  style="color:white" *ngIf="(bullion_inbox_unread_count+logistic_inbox_unread_count+rider_pending_task_count+rider_redeem_task_count)>0">{{bullion_inbox_unread_count+logistic_inbox_unread_count+rider_pending_task_count+this.rider_redeem_task_count}}</ion-badge></h3>
+
+            <div *ngIf="configData.Task_tab">
+                <ion-row>
+                <!-- <ion-col size="12" [routerLink]="['/inbox/'+'Bullion']">
+                    <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                        <ion-label class="productorderlist">
+                            <div class="productdetail">
+                                <h5 class="txt400" style="margin-top: 0;">
+                                    <div><img src="../../assets/gg-icon/inbox-active.svg">
+                                        <div style="display: inline-block; font-size: 16px;">Bullion Inbox
+                                            <ion-badge slot="end" *ngIf="bullion_inbox_unread_count > 0">
+                                                {{bullion_inbox_unread_count}}
+                                            </ion-badge>
+                                        </div>
+                                        <ion-icon name="caret-forward-outline"
+                                            style="float: right; padding-top: 12px; padding-right: 10px;">
+                                        </ion-icon>
+                                    </div>
+                                </h5>
+                            </div>
+                        </ion-label>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="12" [routerLink]="['/inbox/'+'Logistic']">
+                    <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                        <ion-label class="productorderlist">
+                            <div class="productdetail">
+                                <h5 class="txt400" style="margin-top: 0;">
+                                    <div><img src="../../assets/gg-icon/inbox-active.svg">
+                                        <div style="display: inline-block; font-size: 16px;">Logistic Inbox
+                                            <ion-badge slot="end" *ngIf="logistic_inbox_unread_count > 0">
+                                                {{logistic_inbox_unread_count}}
+                                            </ion-badge>
+                                        </div>
+                                        <ion-icon name="caret-forward-outline"
+                                            style="float: right; padding-top: 12px; padding-right: 10px;">
+                                        </ion-icon>
+                                    </div>
+                                </h5>
+                            </div>
+                        </ion-label>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="12" [routerLink]="['/task']">
+                    <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                        <ion-label class="productorderlist">
+                            <div class="productdetail">
+                                <h5 class="txt400" style="margin-top: 0;">
+                                    <div><img src="../../assets/gg-icon/pending-task-active.svg">
+                                        <div style="display: inline-block; font-size: 16px;">Pending Task
+                                            <ion-badge slot="end" *ngIf="rider_pending_task_count > 0">
+                                                {{ rider_pending_task_count }}</ion-badge>
+                                        </div>
+                                        <ion-icon name="caret-forward-outline"
+                                            style="float: right; padding-top: 12px; padding-right: 10px;">
+                                        </ion-icon>
+                                    </div>
+                                </h5>
+                            </div>
+                        </ion-label>
+                    </ion-item>
+                </ion-col> -->
+                <ion-col size="12" [routerLink]="['/redeem-task']">
+                    <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                        <ion-label class="productorderlist">
+                            <div class="productdetail">
+                                <h5 class="txt400" style="margin-top: 0;">
+                                    <div><img src="../../assets/gg-icon/pending-task-active.svg">
+                                        <div style="display: inline-block; font-size: 16px;">Redeem Task
+                                            <ion-badge slot="end" *ngIf="rider_redeem_task_count > 0">
+                                                {{ rider_redeem_task_count }}</ion-badge>
+                                        </div>
+                                        <ion-icon name="caret-forward-outline"
+                                            style="float: right; padding-top: 12px; padding-right: 10px;">
+                                        </ion-icon>
+                                    </div>
+                                </h5>
+                            </div>
+                        </ion-label>
+                    </ion-item>
+                </ion-col>
+                  <ion-col size="12" [routerLink]="['/personal-dashboard']">
+                    <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                      <ion-label class="productorderlist">
+                        <div class="productdetail">
+                          <h5 class="txt400" style="margin-top: 0;">
+                            <div><img src="../../assets/gg-icon/pending-task-active.svg">
+                              <div style="display: inline-block; font-size: 16px;">Personal Dashboard
+                                <ion-badge slot="end" *ngIf="rider_redeem_task_count > 0">
+                                  {{ scheduled_count }}</ion-badge>
+                              </div>
+                              <ion-icon name="caret-forward-outline"
+                                        style="float: right; padding-top: 12px; padding-right: 10px;">
+                              </ion-icon>
+                            </div>
+                          </h5>
+                        </div>
+                      </ion-label>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="12" [routerLink]="['/redeem-cdo']">
+                    <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                      <ion-label class="productorderlist">
+                        <div class="productdetail">
+                          <h5 class="txt400" style="margin-top: 0;">
+                            <div><img src="../../assets/gg-icon/pending-task-active.svg">
+                              <div style="display: inline-block; font-size: 16px;">Redeem CDO
+                                <ion-badge slot="end" *ngIf="cdo_redeem_count > 0">
+                                  {{ cdo_redeem_count }}</ion-badge>
+                              </div>
+                              <ion-icon name="caret-forward-outline"
+                                        style="float: right; padding-top: 12px; padding-right: 10px;">
+                              </ion-icon>
+                            </div>
+                          </h5>
+                        </div>
+                      </ion-label>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="12" [routerLink]="['/cdo-tasks']">
+                    <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                      <ion-label class="productorderlist">
+                        <div class="productdetail">
+                          <h5 class="txt400" style="margin-top: 0;">
+                            <div><img src="../../assets/gg-icon/pending-task-active.svg">
+                              <div style="display: inline-block; font-size: 16px;">CDO Tasks
+                                <ion-badge slot="end" *ngIf="cdo_tasks_count > 0">
+                                  {{ cdo_tasks_count }}</ion-badge>
+                              </div>
+                              <ion-icon name="caret-forward-outline"
+                                        style="float: right; padding-top: 12px; padding-right: 10px;">
+                              </ion-icon>
+                            </div>
+                          </h5>
+                        </div>
+                      </ion-label>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+            </div>
+
+        </ion-col>
+
+
+        <ion-col size="12" style="margin-bottom:10px" *ngIf="app_access_bullion == 1">
+            <h3 class="title" (click)="configData.Bull_tab=!configData.Bull_tab" style="margin-bottom:10px">Bullion <ion-badge color="warning" style="color:white" *ngIf="configData.total_reminder_bullion>0">{{configData.total_reminder_bullion}}</ion-badge></h3>
+
+            <div *ngIf="configData.Bull_tab">
+                <ion-row>
+                    <ion-col size="12" [routerLink]="['/customer-list']">
+                        <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                            <ion-label class="productorderlist">
+                                <div class="productdetail">
+                                    <h5 class="txt400" style="margin-top: 0;">
+                                        <div><img src="../../assets/gg-icon/pending-job-active.svg">
+                                            <div style="display: inline-block; font-size: 16px;">Customer List<ion-badge
+                                                    slot="end">
+                                                    </ion-badge>
+                                            </div>
+                                            <ion-icon name="caret-forward-outline"
+                                                style="float: right; padding-top: 12px; padding-right: 10px;">
+                                            </ion-icon>
+                                        </div>
+                                    </h5>
+                                </div>
+                            </ion-label>
+                        </ion-item>
+                    </ion-col>
+                  <ion-col size="12" [routerLink]="['/gold-shipment-list']">
+                    <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                      <ion-label class="productorderlist">
+                        <div class="productdetail">
+                          <h5 class="txt400" style="margin-top: 0;">
+                            <div><img src="../../assets/gg-icon/pending-job-active.svg">
+                              <div style="display: inline-block; font-size: 16px;">Gold Shipment<ion-badge
+                                slot="end">
+                              </ion-badge>
+                              </div>
+                              <ion-icon name="caret-forward-outline"
+                                        style="float: right; padding-top: 12px; padding-right: 10px;">
+                              </ion-icon>
+                            </div>
+                          </h5>
+                        </div>
+                      </ion-label>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="12" [routerLink]="['/assay-report-clock-in']">
+                    <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                      <ion-label class="productorderlist">
+                        <div class="productdetail">
+                          <h5 class="txt400" style="margin-top: 0;">
+                            <div><img src="../../assets/gg-icon/pending-job-active.svg">
+                              <div style="display: inline-block; font-size: 16px;">Assay Report Clock In<ion-badge
+                                slot="end">
+                              </ion-badge>
+                              </div>
+                              <ion-icon name="caret-forward-outline"
+                                        style="float: right; padding-top: 12px; padding-right: 10px;">
+                              </ion-icon>
+                            </div>
+                          </h5>
+                        </div>
+                      </ion-label>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="12" [routerLink]="['/exchange-note-list']">
+                    <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                      <ion-label class="productorderlist">
+                        <div class="productdetail">
+                          <h5 class="txt400" style="margin-top: 0;">
+                            <div><img src="../../assets/gg-icon/pending-job-active.svg">
+                              <div style="display: inline-block; font-size: 16px;">Exchange Note List<ion-badge
+                                slot="end">
+                              </ion-badge>
+                              </div>
+                              <ion-icon name="caret-forward-outline"
+                                        style="float: right; padding-top: 12px; padding-right: 10px;">
+                              </ion-icon>
+                            </div>
+                          </h5>
+                        </div>
+                      </ion-label>
+                    </ion-item>
+                  </ion-col>
+<!--                  <ion-col size="12" [routerLink]="['/melting-job-wizard-list']">-->
+<!--                    <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">-->
+<!--                      <ion-label class="productorderlist">-->
+<!--                        <div class="productdetail">-->
+<!--                          <h5 class="txt400" style="margin-top: 0;">-->
+<!--                            <div><img src="../../assets/gg-icon/pending-job-active.svg">-->
+<!--                              <div style="display: inline-block; font-size: 16px;">Melting Job Wizard List<ion-badge-->
+<!--                                slot="end">-->
+<!--                              </ion-badge>-->
+<!--                              </div>-->
+<!--                              <ion-icon name="caret-forward-outline"-->
+<!--                                        style="float: right; padding-top: 12px; padding-right: 10px;">-->
+<!--                              </ion-icon>-->
+<!--                            </div>-->
+<!--                          </h5>-->
+<!--                        </div>-->
+<!--                      </ion-label>-->
+<!--                    </ion-item>-->
+<!--                  </ion-col>-->
+                  <ion-col size="12" [routerLink]="['/melting-job-list']">
+                    <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                      <ion-label class="productorderlist">
+                        <div class="productdetail">
+                          <h5 class="txt400" style="margin-top: 0;">
+                            <div><img src="../../assets/gg-icon/pending-job-active.svg">
+                              <div style="display: inline-block; font-size: 16px;">Melting Job List<ion-badge
+                                slot="end">
+                              </ion-badge>
+                              </div>
+                              <ion-icon name="caret-forward-outline"
+                                        style="float: right; padding-top: 12px; padding-right: 10px;">
+                              </ion-icon>
+                            </div>
+                          </h5>
+                        </div>
+                      </ion-label>
+                    </ion-item>
+                  </ion-col>
+                    <ion-col size="12" [routerLink]="['/pending-order/'+'collection']">
+                        <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                            <ion-label class="productorderlist">
+                                <div class="productdetail">
+                                    <h5 class="txt400" style="margin-top: 0;">
+                                        <div><img src="../../assets/gg-icon/pending-job-active.svg">
+                                            <div style="display: inline-block; font-size: 16px;">Pending Job <ion-badge
+                                                    slot="end">
+                                                    {{ bullion_pending_order_count }}</ion-badge>
+                                            </div>
+                                            <ion-icon name="caret-forward-outline"
+                                                style="float: right; padding-top: 12px; padding-right: 10px;">
+                                            </ion-icon>
+                                        </div>
+                                    </h5>
+                                </div>
+                            </ion-label>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size="12" [routerLink]="['/request-order/'+'collection']" *ngIf="is_admin == '-1' || is_admin == '1'">
+                        <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                            <ion-label class="productorderlist">
+                                <div class="productdetail">
+                                    <h5 class="txt400" style="margin-top: 0;">
+                                        <div><img src="../../assets/gg-icon/pending-job-active.svg">
+                                            <div style="display: inline-block; font-size: 16px;">Requested Job<ion-badge
+                                                    slot="end">
+                                                    {{ bullion_request_job_count }}</ion-badge>
+                                            </div>
+                                            <ion-icon name="caret-forward-outline"
+                                                style="float: right; padding-top: 12px; padding-right: 10px;">
+                                            </ion-icon>
+                                        </div>
+                                    </h5>
+                                </div>
+                            </ion-label>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size="12" [routerLink]="['/collection-supplier']">
+                        <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                            <ion-label class="productorderlist">
+                                <div class="productdetail">
+                                    <h5 class="txt400" style="margin-top: 0;">
+                                        <div><img src="../../assets/gg-icon/order-job-active.svg">
+                                            <div style="display: inline-block; font-size: 16px;">Order Job <ion-badge
+                                                    slot="end">
+                                                    {{ supplierList }}</ion-badge>
+                                            </div>
+                                            <ion-icon name="caret-forward-outline"
+                                                style="float: right; padding-top: 12px; padding-right: 10px;">
+                                            </ion-icon>
+                                        </div>
+                                    </h5>
+                                </div>
+                            </ion-label>
+                        </ion-item>
+                    </ion-col>
+
+
+
+                    <ion-col size="12" [routerLink]="['/make-po-customer']">
+                        <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                            <ion-label class="productorderlist">
+                                <div class="productdetail">
+                                    <h5 class="txt400" style="margin-top: 0;">
+                                        <div><img src="../../assets/gg-icon/make-po-active.svg">
+                                            <div style="display: inline-block; font-size: 16px;">Make PO for Customer
+                                            </div>
+                                            <ion-icon name="caret-forward-outline"
+                                                style="float: right; padding-top: 12px; padding-right: 10px;">
+                                            </ion-icon>
+                                        </div>
+                                    </h5>
+                                </div>
+                            </ion-label>
+                        </ion-item>
+                    </ion-col>
+
+                  <h3 class="title" (click)="configData.Office_tab=!configData.Office_tab" style="margin-bottom:10px">Office Task</h3>
+
+                  <div *ngIf="configData.Office_tab">
+                    <ion-row>
+                      <ion-col size="12" [routerLink]="['/weight']">
+                        <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                          <ion-label class="productorderlist">
+                            <div class="productdetail">
+                              <h5 class="txt400" style="margin-top: 0;">
+                                <div><img src="../../assets/gg-icon/pending-reweight.svg">
+                                  <div style="display: inline-block; font-size: 16px;">Pending Weight
+                                    <ion-badge slot="end">{{ bullion_pending_weight_count }}</ion-badge>
+                                  </div>
+                                  <ion-icon name="caret-forward-outline"
+                                            style="float: right; padding-top: 12px; padding-right: 10px;">
+                                  </ion-icon>
+                                </div>
+                              </h5>
+                            </div>
+                          </ion-label>
+                        </ion-item>
+                      </ion-col>
+
+                      <ion-col size="12" [routerLink]="['/test']">
+                        <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                          <ion-label class="productorderlist">
+                            <div class="productdetail">
+                              <h5 class="txt400" style="margin-top: 0;">
+                                <div><img src="../../assets/gg-icon/pending-test-active.svg">
+                                  <div style="display: inline-block; font-size: 16px;">Pending Test<ion-badge
+                                    slot="end">
+                                    {{ bullion_pending_test_count }}</ion-badge>
+                                  </div>
+                                  <ion-icon name="caret-forward-outline"
+                                            style="float: right; padding-top: 12px; padding-right: 10px;">
+                                  </ion-icon>
+                                </div>
+                              </h5>
+                            </div>
+                          </ion-label>
+                        </ion-item>
+                      </ion-col>
+
+                      <ion-col size="12" [routerLink]="['/bullion-pending-reweight']">
+                        <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                          <ion-label class="productorderlist">
+                            <div class="productdetail">
+                              <h5 class="txt400" style="margin-top: 0;">
+                                <div><img src="../../assets/gg-icon/pending-reweight.svg">
+                                  <div style="display: inline-block; font-size: 16px;">Pending Reweight
+                                    <ion-badge slot="end">
+                                      {{ bullion_pending_reweight_count }}</ion-badge>
+                                  </div>
+                                  <ion-icon name="caret-forward-outline"
+                                            style="float: right; padding-top: 12px; padding-right: 10px;">
+                                  </ion-icon>
+                                </div>
+                              </h5>
+                            </div>
+                          </ion-label>
+                        </ion-item>
+                      </ion-col>
+
+                      <ion-col size="12" [routerLink]="['/bullion-pending-check']">
+                        <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                          <ion-label class="productorderlist">
+                            <div class="productdetail">
+                              <h5 class="txt400" style="margin-top: 0;">
+                                <div><img src="../../assets/gg-icon/pending-checked.svg">
+                                  <div style="display: inline-block; font-size: 16px;">Pending QC
+                                    <ion-badge slot="end">
+                                      {{ bullion_pending_check_count }}</ion-badge>
+                                  </div>
+                                  <ion-icon name="caret-forward-outline"
+                                            style="float: right; padding-top: 12px; padding-right: 10px;">
+                                  </ion-icon>
+                                </div>
+                              </h5>
+                            </div>
+                          </ion-label>
+                        </ion-item>
+                      </ion-col>
+
+                      <ion-col size="12" [routerLink]="['/bullion-pending-tbc']">
+                        <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                          <ion-label class="productorderlist">
+                            <div class="productdetail">
+                              <h5 class="txt400" style="margin-top: 0;">
+                                <div><img src="../../assets/gg-icon/pending-checked.svg">
+                                  <div style="display: inline-block; font-size: 16px;">Pending TBC
+                                    <ion-badge slot="end">
+                                      {{ bullion_pending_tbc_count }}</ion-badge>
+                                  </div>
+                                  <ion-icon name="caret-forward-outline"
+                                            style="float: right; padding-top: 12px; padding-right: 10px;">
+                                  </ion-icon>
+                                </div>
+                              </h5>
+                            </div>
+                          </ion-label>
+                        </ion-item>
+                      </ion-col>
+                    </ion-row>
+
+                  </div>
+                </ion-row>
+            </div>
+        </ion-col>
+        <!-- <ion-col size="12" style="margin-bottom:10px" *ngIf="app_access_logistic == 1">
+            <h3 class="title" (click)="configData.Logi_tab=!configData.Logi_tab" style="margin-bottom:10px">Logistic <ion-badge color="warning" style="color:white">{{configData.total_reminder_logistic}}</ion-badge></h3>
+
+            <div *ngIf="configData.Logi_tab">
+                <ion-row> -->
+                    <!-- <ion-col size="12" [routerLink]="['/pending-order/'+'pickup']">
+                        <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                            <ion-label class="productorderlist">
+                                <div class="productdetail">
+                                    <h5 class="txt400" style="margin-top: 0;">
+                                        <div><img src="../../assets/gg-icon/pending-job-active.svg">
+                                            <div style="display: inline-block; font-size: 16px;">Pending Job <ion-badge
+                                                    slot="end">
+                                                    {{ logistic_customized_job_count }}</ion-badge>
+                                            </div>
+                                            <ion-icon name="caret-forward-outline"
+                                                style="float: right; padding-top: 12px; padding-right: 10px;">
+                                            </ion-icon>
+                                        </div>
+                                    </h5>
+                                </div>
+                            </ion-label>
+                        </ion-item>
+                    </ion-col> -->
+
+                    <!-- <ion-col size="12" [routerLink]="['/request-order/'+'pickup']" *ngIf="is_admin == '-1' || is_admin == '1'">
+                        <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                            <ion-label class="productorderlist">
+                                <div class="productdetail">
+                                    <h5 class="txt400" style="margin-top: 0;">
+                                        <div><img src="../../assets/gg-icon/pending-job-active.svg">
+                                            <div style="display: inline-block; font-size: 16px;">Requested Job<ion-badge
+                                                    slot="end">
+                                                    {{ logistic_request_job_count }}</ion-badge>
+                                            </div>
+                                            <ion-icon name="caret-forward-outline"
+                                                style="float: right; padding-top: 12px; padding-right: 10px;">
+                                            </ion-icon>
+                                        </div>
+                                    </h5>
+                                </div>
+                            </ion-label>
+                        </ion-item>
+                    </ion-col> -->
+
+                    <!-- <ion-col size="12" [routerLink]="['/pickup']">
+                        <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                            <ion-label class="productorderlist">
+                                <div class="productdetail">
+                                    <h5 class="txt400" style="margin-top: 0;">
+                                        <div><img src="../../assets/gg-icon/pickup-active.svg">
+                                            <div style="display: inline-block; font-size: 16px;">Pick Up <ion-badge
+                                                    slot="end">
+                                                    {{ riderList_pickup?.length }}</ion-badge>
+                                            </div>
+                                            <ion-icon name="caret-forward-outline"
+                                                style="float: right; padding-top: 12px; padding-right: 10px;">
+                                            </ion-icon>
+                                        </div>
+                                    </h5>
+                                </div>
+                            </ion-label>
+                        </ion-item>
+                    </ion-col> -->
+
+
+                    <!-- <ion-col size="12" [routerLink]="['/delivery']">
+                        <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                            <ion-label class="productorderlist">
+                                <div class="productdetail">
+                                    <h5 class="txt400" style="margin-top: 0;">
+                                        <div><img src="../../assets/gg-icon/delivery-active.svg">
+                                            <div style="display: inline-block; font-size: 16px;">Delivery <ion-badge
+                                                    slot="end">
+                                                    {{ riderList?.length }}</ion-badge>
+                                            </div>
+                                            <ion-icon name="caret-forward-outline"
+                                                style="float: right; padding-top: 12px; padding-right: 10px;">
+                                            </ion-icon>
+                                        </div>
+                                    </h5>
+                                </div>
+                            </ion-label>
+                        </ion-item>
+                    </ion-col> -->
+
+                    <!-- <ion-col size="12" [routerLink]="['/job-log']">
+                        <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                            <ion-label class="productorderlist">
+                                <div class="productdetail">
+                                    <h5 class="txt400" style="margin-top: 0;">
+                                        <div><img src="../../assets/gg-icon/job-log.svg">
+                                            <div style="display: inline-block; font-size: 16px;">Job Log History
+                                            </div>
+                                            <ion-icon name="caret-forward-outline"
+                                                style="float: right; padding-top: 12px; padding-right: 10px;">
+                                            </ion-icon>
+                                        </div>
+                                    </h5>
+                                </div>
+                            </ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+            </div>
+        </ion-col> -->
+
+
+    </ion-row>
+
+    <!-- <ion-row *ngIf="app_access_logistic == 1">
+        <ion-col size="12">
+            <h3 class="title">Logistics</h3>
+        </ion-col>
+        <ion-col size="12" [routerLink]="['/pickup']">
+            <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                <ion-label class="productorderlist">
+                    <div class="productdetail">
+                        <h5 class="txt400" style="margin-top: 0;">
+                            <div><img src="../../assets/gg-icon/pickup-active.svg">
+                                <div style="display: inline-block; font-size: 16px;">Pick Up <ion-badge slot="end">
+                                        {{ riderList_pickup?.length }}</ion-badge>
+                                </div>
+                                <ion-icon name="caret-forward-outline"
+                                    style="float: right; padding-top: 12px; padding-right: 10px;">
+                                </ion-icon>
+                            </div>
+                        </h5>
+                    </div>
+                </ion-label>
+            </ion-item>
+        </ion-col>
+
+
+        <ion-col size="12" [routerLink]="['/delivery']">
+            <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                <ion-label class="productorderlist">
+                    <div class="productdetail">
+                        <h5 class="txt400" style="margin-top: 0;">
+                            <div><img src="../../assets/gg-icon/delivery-active.svg">
+                                <div style="display: inline-block; font-size: 16px;">Delivery <ion-badge slot="end">
+                                        {{ riderList?.length }}</ion-badge>
+                                </div>
+                                <ion-icon name="caret-forward-outline"
+                                    style="float: right; padding-top: 12px; padding-right: 10px;">
+                                </ion-icon>
+                            </div>
+                        </h5>
+                    </div>
+                </ion-label>
+            </ion-item>
+        </ion-col>
+
+        <ion-col size="12" [routerLink]="['/job-log-history']">
+            <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                <ion-label class="productorderlist">
+                    <div class="productdetail">
+                        <h5 class="txt400" style="margin-top: 0;">
+                            <div><img src="../../assets/gg-icon/delivery.svg">
+                                <div style="display: inline-block; font-size: 16px;">Job Log History
+                                </div>
+                                <ion-icon name="caret-forward-outline"
+                                    style="float: right; padding-top: 12px; padding-right: 10px;">
+                                </ion-icon>
+                            </div>
+                        </h5>
+                    </div>
+                </ion-label>
+            </ion-item>
+        </ion-col>
+    </ion-row>
+
+
+    <ion-row *ngIf="app_access_bullion == 1">
+        <ion-col size="12">
+            <h3 class="title">Bullion</h3>
+        </ion-col>
+        <ion-col size="12" [routerLink]="['/collection']">
+            <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                <ion-label class="productorderlist">
+                    <div class="productdetail">
+                        <h5 class="txt400" style="margin-top: 0;">
+                            <div><img src="../../assets/gg-icon/bullion-active.svg">
+                                <div style="display: inline-block; font-size: 16px;">Collection <ion-badge slot="end">
+                                        {{ collectionList?.length }}</ion-badge>
+                                </div>
+                                <ion-icon name="caret-forward-outline"
+                                    style="float: right; padding-top: 12px; padding-right: 10px;">
+                                </ion-icon>
+                            </div>
+                        </h5>
+                    </div>
+                </ion-label>
+            </ion-item>
+        </ion-col>
+
+        <ion-col size="12" [routerLink]="['/bullion-pending-reweight']">
+            <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                <ion-label class="productorderlist">
+                    <div class="productdetail">
+                        <h5 class="txt400" style="margin-top: 0;">
+                            <div><img src="../../assets/gg-icon/bullion-active.svg">
+                                <div style="display: inline-block; font-size: 16px;">Pending Reweight <ion-badge slot="end">
+                                        {{ bullion_pending_reweight_count }}</ion-badge>
+                                </div>
+                                <ion-icon name="caret-forward-outline"
+                                    style="float: right; padding-top: 12px; padding-right: 10px;">
+                                </ion-icon>
+                            </div>
+                        </h5>
+                    </div>
+                </ion-label>
+            </ion-item>
+        </ion-col>
+
+        <ion-col size="12" [routerLink]="['/bullion-pending-check']">
+            <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                <ion-label class="productorderlist">
+                    <div class="productdetail">
+                        <h5 class="txt400" style="margin-top: 0;">
+                            <div><img src="../../assets/gg-icon/bullion-active.svg">
+                                <div style="display: inline-block; font-size: 16px;">Pending Check <ion-badge slot="end">
+                                        {{ bullion_pending_check_count }}</ion-badge>
+                                </div>
+                                <ion-icon name="caret-forward-outline"
+                                    style="float: right; padding-top: 12px; padding-right: 10px;">
+                                </ion-icon>
+                            </div>
+                        </h5>
+                    </div>
+                </ion-label>
+            </ion-item>
+        </ion-col>
+
+        <!-- <ion-col size="12" [routerLink]="['/qc']" >
+            <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none" >
+              <ion-label class="productorderlist">
+                  <div class="productdetail">
+                      <h5 class="txt400" style="margin-top: 0;">
+                          <div><img src="../../assets/gg-icon/bullion-active.svg"> <div style="display: inline-block; font-size: 16px;">QC List</div> <ion-icon name="caret-forward-outline" style="float: right; padding-top: 12px; padding-right: 10px;"></ion-icon></div>
+                      </h5>
+                  </div>
+              </ion-label>
+            </ion-item>
+        </ion-col> --
+
+    </ion-row>
+
+    <ion-row>
+
+        <ion-col size="12" [routerLink]="['/punch-card']">
+            <ion-item class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+                <ion-label class="productorderlist">
+                    <div class="productdetail">
+                        <h5 class="txt400" style="margin-top: 0;">
+                            <div><img src="../../assets/gg-icon/bullion-active.svg">
+                                <div style="display: inline-block; font-size: 16px;">Punch Card</div>
+                                <ion-icon name="caret-forward-outline"
+                                    style="float: right; padding-top: 12px; padding-right: 10px;">
+                                </ion-icon>
+                            </div>
+                        </h5>
+                    </div>
+                </ion-label>
+            </ion-item>
+        </ion-col>
+    </ion-row> -->
+
+</ion-content>
+
+<mytab></mytab>

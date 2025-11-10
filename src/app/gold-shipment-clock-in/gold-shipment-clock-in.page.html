@@ -1,0 +1,376 @@
+<app-common-header [pageSource]="'gold-shipment-clock-in'" [headerTitle]="'Gold Shipment ClockIn'"></app-common-header>
+
+<style>
+  .form-title {
+    font-size: 1.8em;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .input-group {
+    margin-bottom: 20px;
+  }
+
+  .input-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .input-field {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ccc;  /* Border around input field */
+    border-radius: 5px;      /* Rounded corners */
+    padding: 10px;           /* Padding inside the input */
+  }
+
+  ion-textarea {
+    border: 1px solid #ccc;  /* Border around textarea */
+    border-radius: 5px;      /* Rounded corners */
+    padding: 10px;           /* Padding inside the textarea */
+  }
+
+  .upload-button {
+    width: 100%;
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+  }
+
+  .remarks-field {
+    margin-top: 20px;
+  }
+
+  .deleteImageBtn {
+    font-size: 30px;
+    border-radius: 50%;
+    padding: 5px 8px;
+    top: 5%;
+    right: 3%;
+  }
+
+  ion-content {
+    --padding-bottom: 80px; /* Ensure content doesn't overlap with the footer */
+  }
+
+  ion-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+</style>
+
+<ion-content>
+
+  <div class="input-group" style="margin-left: 10px; margin-right: 10px;">
+    <div class="input-label">Barcode</div>
+    <ion-input class="input-field" [(ngModel)]="barcode" placeholder="Leave Blank For Auto Generate" type="text" disabled></ion-input>
+  </div>
+
+
+  <div class="input-group" style="margin-left: 10px; margin-right: 10px;">
+    <div class="input-label">Customer</div>
+    <ion-select value="variation" interface="action-sheet" cancelText='Cancel' class="pickupselect"
+                [(ngModel)]="customer_id">
+      <ion-select-option *ngFor="let x of customerList"
+                         value="{{x.customer_id}}">{{x.name}}
+      </ion-select-option>
+    </ion-select>
+  </div>
+
+  <div class="input-group" style="margin-left: 10px; margin-right: 10px; margin-top: 10px;">
+    <div class="input-label">Low Purity</div>
+    <ion-input class="input-field" [(ngModel)]="lowPurityWeight" placeholder="Enter weight (g)" type="number"></ion-input>
+    <ion-button class="upload-button" (click)="openActionSheet('lowPurityPhoto')">Upload Photo</ion-button>
+    <ion-row>
+      <ion-col size="12" class="ion-align-self-center" *ngIf="isLoading.lowPurityPhoto">
+        <ion-spinner name="crescent" style="height: 50px; width: 50px;"></ion-spinner>
+      </ion-col>
+      <ion-col size="12" >
+        <ion-slides pager="true">
+          <!-- Item Image::Start -->
+          <ion-slide class="item-slide" *ngFor="let tng_img of lowPurityPhoto"><!-- List item images -->
+            <div class="image-slide-content" [ngStyle]="{'border': showLowPurityPhoto === tng_img ? '3px solid red' : 'none'}">
+              <img [src]="tng_img" (click)="showLowPurityPhoto = (showLowPurityPhoto == ''? tng_img : (showLowPurityPhoto == tng_img? '': tng_img))" class="itemImage">
+            </div>
+            <button (click)="delete_img_tng(tng_img, 'lowPurityPhoto')" class="deleteImageBtn">x</button>
+          </ion-slide>
+          <!-- Item Image::End -->
+        </ion-slides>
+      </ion-col>
+      <ion-col size="12" class="ion-align-self-center" *ngIf="showLowPurityPhoto">
+        <img [src]="showLowPurityPhoto" style="width: 100%;" class="logoimg">
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <div class="input-group" style="margin-left: 10px; margin-right: 10px;">
+    <div class="input-label">916</div>
+    <ion-input class="input-field" [(ngModel)]="purity916Weight" placeholder="Enter weight (g)" type="number"></ion-input>
+    <ion-button class="upload-button" (click)="openActionSheet('purity916Photo')">Upload Photo</ion-button>
+    <ion-row>
+      <ion-col size="12" class="ion-align-self-center" *ngIf="isLoading.purity916Photo">
+        <ion-spinner name="crescent" style="height: 50px; width: 50px;"></ion-spinner>
+      </ion-col>
+      <ion-col size="12" >
+        <ion-slides pager="true">
+          <!-- Item Image::Start -->
+          <ion-slide class="item-slide" *ngFor="let tng_img of purity916Photo"><!-- List item images -->
+            <div class="image-slide-content" [ngStyle]="{'border': showPurity916Photo === tng_img ? '3px solid red' : 'none'}">
+              <img [src]="tng_img" (click)="showPurity916Photo = (showPurity916Photo == ''? tng_img : (showPurity916Photo == tng_img? '': tng_img))" class="itemImage">
+            </div>
+            <button (click)="delete_img_tng(tng_img, 'purity916Photo')" class="deleteImageBtn">x</button>
+          </ion-slide>
+          <!-- Item Image::End -->
+        </ion-slides>
+      </ion-col>
+      <ion-col size="12" class="ion-align-self-center" *ngIf="showPurity916Photo">
+        <img [src]="showPurity916Photo" style="width: 100%;" class="logoimg">
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <div class="input-group" style="margin-left: 10px; margin-right: 10px;">
+    <div class="input-label">High Purity</div>
+    <ion-input class="input-field" [(ngModel)]="highPurityWeight" placeholder="Enter weight (g)" type="number"></ion-input>
+    <ion-button class="upload-button" (click)="openActionSheet('highPurityPhoto')">Upload Photo</ion-button>
+    <ion-row>
+      <ion-col size="12" class="ion-align-self-center" *ngIf="isLoading.highPurityPhoto">
+        <ion-spinner name="crescent" style="height: 50px; width: 50px;"></ion-spinner>
+      </ion-col>
+      <ion-col size="12" >
+        <ion-slides pager="true">
+          <!-- Item Image::Start -->
+          <ion-slide class="item-slide" *ngFor="let tng_img of highPurityPhoto"><!-- List item images -->
+            <div class="image-slide-content" [ngStyle]="{'border': showHighPurityPhoto === tng_img ? '3px solid red' : 'none'}">
+              <img [src]="tng_img" (click)="showHighPurityPhoto = (showHighPurityPhoto == ''? tng_img : (showHighPurityPhoto == tng_img? '': tng_img))" class="itemImage">
+            </div>
+            <button (click)="delete_img_tng(tng_img, 'highPurityPhoto')" class="deleteImageBtn">x</button>
+          </ion-slide>
+          <!-- Item Image::End -->
+        </ion-slides>
+      </ion-col>
+      <ion-col size="12" class="ion-align-self-center" *ngIf="showHighPurityPhoto">
+        <img [src]="showHighPurityPhoto" style="width: 100%;" class="logoimg">
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <div class="input-group" style="margin-left: 10px; margin-right: 10px;">
+    <div class="input-label">Gold Bead</div>
+    <ion-input class="input-field" [(ngModel)]="goldBead" placeholder="Enter weight (g)" type="number"></ion-input>
+    <ion-button class="upload-button" (click)="openActionSheet('goldBeadPhoto')">Upload Photo</ion-button>
+    <ion-row>
+      <ion-col size="12" class="ion-align-self-center" *ngIf="isLoading.goldBeadPhoto">
+        <ion-spinner name="crescent" style="height: 50px; width: 50px;"></ion-spinner>
+      </ion-col>
+      <ion-col size="12" >
+        <ion-slides pager="true">
+          <!-- Item Image::Start -->
+          <ion-slide class="item-slide" *ngFor="let tng_img of goldBeadPhoto"><!-- List item images -->
+            <div class="image-slide-content" [ngStyle]="{'border': showGoldBeadPhoto === tng_img ? '3px solid red' : 'none'}">
+              <img [src]="tng_img" (click)="showGoldBeadPhoto = (showGoldBeadPhoto == ''? tng_img : (showGoldBeadPhoto == tng_img? '': tng_img))" class="itemImage">
+            </div>
+            <button (click)="delete_img_tng(tng_img, 'goldBeadPhoto')" class="deleteImageBtn">x</button>
+          </ion-slide>
+          <!-- Item Image::End -->
+        </ion-slides>
+      </ion-col>
+      <ion-col size="12" class="ion-align-self-center" *ngIf="showGoldBeadPhoto">
+        <img [src]="showGoldBeadPhoto" style="width: 100%;" class="logoimg">
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <div class="input-group" style="margin-left: 10px; margin-right: 10px;">
+    <div class="input-label">Total Mix</div>
+    <ion-input class="input-field" [(ngModel)]="totalMix" placeholder="Enter weight (g)" type="number"></ion-input>
+    <ion-button class="upload-button" (click)="openActionSheet('totalMixPhoto')">Upload Photo</ion-button>
+    <ion-row>
+      <ion-col size="12" class="ion-align-self-center" *ngIf="isLoading.totalMixPhoto">
+        <ion-spinner name="crescent" style="height: 50px; width: 50px;"></ion-spinner>
+      </ion-col>
+      <ion-col size="12" >
+        <ion-slides pager="true">
+          <!-- Item Image::Start -->
+          <ion-slide class="item-slide" *ngFor="let tng_img of totalMixPhoto"><!-- List item images -->
+            <div class="image-slide-content" [ngStyle]="{'border': showTotalMixPhoto === tng_img ? '3px solid red' : 'none'}">
+              <img [src]="tng_img" (click)="showTotalMixPhoto = (showTotalMixPhoto == ''? tng_img : (showTotalMixPhoto == tng_img? '': tng_img))" class="itemImage">
+            </div>
+            <button (click)="delete_img_tng(tng_img, 'totalMixPhoto')" class="deleteImageBtn">x</button>
+          </ion-slide>
+          <!-- Item Image::End -->
+        </ion-slides>
+      </ion-col>
+      <ion-col size="12" class="ion-align-self-center" *ngIf="showTotalMixPhoto">
+        <img [src]="showTotalMixPhoto" style="width: 100%;" class="logoimg">
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <div class="input-group" style="margin-left: 10px; margin-right: 10px;">
+    <div class="input-label">Bar</div>
+    <ion-input class="input-field" [(ngModel)]="bar" placeholder="Enter weight (g)" type="number"></ion-input>
+    <ion-button class="upload-button" (click)="openActionSheet('barPhoto')">Upload Photo</ion-button>
+    <ion-row>
+      <ion-col size="12" class="ion-align-self-center" *ngIf="isLoading.barPhoto">
+        <ion-spinner name="crescent" style="height: 50px; width: 50px;"></ion-spinner>
+      </ion-col>
+      <ion-col size="12" >
+        <ion-slides pager="true">
+          <!-- Item Image::Start -->
+          <ion-slide class="item-slide" *ngFor="let tng_img of barPhoto"><!-- List item images -->
+            <div class="image-slide-content" [ngStyle]="{'border': showBarPhoto === tng_img ? '3px solid red' : 'none'}">
+              <img [src]="tng_img" (click)="showBarPhoto = (showBarPhoto == ''? tng_img : (showBarPhoto == tng_img? '': tng_img))" class="itemImage">
+            </div>
+            <button (click)="delete_img_tng(tng_img, 'barPhoto')" class="deleteImageBtn">x</button>
+          </ion-slide>
+          <!-- Item Image::End -->
+        </ion-slides>
+      </ion-col>
+      <ion-col size="12" class="ion-align-self-center" *ngIf="showBarPhoto">
+        <img [src]="showBarPhoto" style="width: 100%;" class="logoimg">
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <div class="input-group" style="margin-left: 10px; margin-right: 10px;">
+    <div class="input-label">Sample</div>
+    <ion-input class="input-field" [(ngModel)]="sample" placeholder="Enter weight (g)" type="number"></ion-input>
+    <ion-button class="upload-button" (click)="openActionSheet('samplePhoto')">Upload Photo</ion-button>
+    <ion-row>
+      <ion-col size="12" class="ion-align-self-center" *ngIf="isLoading.samplePhoto">
+        <ion-spinner name="crescent" style="height: 50px; width: 50px;"></ion-spinner>
+      </ion-col>
+      <ion-col size="12" >
+        <ion-slides pager="true">
+          <!-- Item Image::Start -->
+          <ion-slide class="item-slide" *ngFor="let tng_img of samplePhoto"><!-- List item images -->
+            <div class="image-slide-content" [ngStyle]="{'border': showBarPhoto === tng_img ? '3px solid red' : 'none'}">
+              <img [src]="tng_img" (click)="showBarPhoto = (showBarPhoto == ''? tng_img : (showBarPhoto == tng_img? '': tng_img))" class="itemImage">
+            </div>
+            <button (click)="delete_img_tng(tng_img, 'samplePhoto')" class="deleteImageBtn">x</button>
+          </ion-slide>
+          <!-- Item Image::End -->
+        </ion-slides>
+      </ion-col>
+      <ion-col size="12" class="ion-align-self-center" *ngIf="showBarPhoto">
+        <img [src]="showBarPhoto" style="width: 100%;" class="logoimg">
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <div class="input-group" style="margin-left: 10px; margin-right: 10px;">
+    <div class="input-label">Sample Return</div>
+    <ion-input class="input-field" [(ngModel)]="sampleReturn" placeholder="Enter weight (g)" type="number"></ion-input>
+    <ion-button class="upload-button" (click)="openActionSheet('sampleReturnPhoto')">Upload Photo</ion-button>
+    <ion-row>
+      <ion-col size="12" class="ion-align-self-center" *ngIf="isLoading.sampleReturnPhoto">
+        <ion-spinner name="crescent" style="height: 50px; width: 50px;"></ion-spinner>
+      </ion-col>
+      <ion-col size="12" >
+        <ion-slides pager="true">
+          <!-- Item Image::Start -->
+          <ion-slide class="item-slide" *ngFor="let tng_img of sampleReturnPhoto"><!-- List item images -->
+            <div class="image-slide-content" [ngStyle]="{'border': showSampleReturnPhoto === tng_img ? '3px solid red' : 'none'}">
+              <img [src]="tng_img" (click)="showSampleReturnPhoto = (showSampleReturnPhoto == ''? tng_img : (showSampleReturnPhoto == tng_img? '': tng_img))" class="itemImage">
+            </div>
+            <button (click)="delete_img_tng(tng_img, 'sampleReturnPhoto')" class="deleteImageBtn">x</button>
+          </ion-slide>
+          <!-- Item Image::End -->
+        </ion-slides>
+      </ion-col>
+      <ion-col size="12" class="ion-align-self-center" *ngIf="showSampleReturnPhoto">
+        <img [src]="showSampleReturnPhoto" style="width: 100%;" class="logoimg">
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <div class="input-group" style="margin-left: 10px; margin-right: 10px;">
+    <div class="input-label">Purity</div>
+    <ion-input class="input-field" [(ngModel)]="purity" placeholder="Enter weight (g)" type="number"></ion-input>
+    <ion-button class="upload-button" (click)="openActionSheet('purityPhoto')">Upload Photo</ion-button>
+    <ion-row>
+      <ion-col size="12" class="ion-align-self-center" *ngIf="isLoading.purityPhoto">
+        <ion-spinner name="crescent" style="height: 50px; width: 50px;"></ion-spinner>
+      </ion-col>
+      <ion-col size="12" >
+        <ion-slides pager="true">
+          <!-- Item Image::Start -->
+          <ion-slide class="item-slide" *ngFor="let tng_img of purityPhoto"><!-- List item images -->
+            <div class="image-slide-content" [ngStyle]="{'border': showPurityPhoto === tng_img ? '3px solid red' : 'none'}">
+              <img [src]="tng_img" (click)="showPurityPhoto = (showPurityPhoto == ''? tng_img : (showPurityPhoto == tng_img? '': tng_img))" class="itemImage">
+            </div>
+            <button (click)="delete_img_tng(tng_img, 'purityPhoto')" class="deleteImageBtn">x</button>
+          </ion-slide>
+          <!-- Item Image::End -->
+        </ion-slides>
+      </ion-col>
+      <ion-col size="12" class="ion-align-self-center" *ngIf="showPurityPhoto">
+        <img [src]="showPurityPhoto" style="width: 100%;" class="logoimg">
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <div class="input-group" style="margin-left: 10px; margin-right: 10px;">
+    <div class="input-label">Out Stock</div>
+    <ion-input class="input-field" [(ngModel)]="outStock" placeholder="Enter weight (g)" type="number"></ion-input>
+    <ion-button class="upload-button" (click)="openActionSheet('outStockPhoto')">Upload Photo</ion-button>
+    <ion-row>
+      <ion-col size="12" class="ion-align-self-center" *ngIf="isLoading.outStockPhoto">
+        <ion-spinner name="crescent" style="height: 50px; width: 50px;"></ion-spinner>
+      </ion-col>
+      <ion-col size="12" >
+        <ion-slides pager="true">
+          <!-- Item Image::Start -->
+          <ion-slide class="item-slide" *ngFor="let tng_img of outStockPhoto"><!-- List item images -->
+            <div class="image-slide-content" [ngStyle]="{'border': showOutStockPhoto === tng_img ? '3px solid red' : 'none'}">
+              <img [src]="tng_img" (click)="showOutStockPhoto = (showOutStockPhoto == ''? tng_img : (showOutStockPhoto == tng_img? '': tng_img))" class="itemImage">
+            </div>
+            <button (click)="delete_img_tng(tng_img, 'outStockPhoto')" class="deleteImageBtn">x</button>
+          </ion-slide>
+          <!-- Item Image::End -->
+        </ion-slides>
+      </ion-col>
+      <ion-col size="12" class="ion-align-self-center" *ngIf="showOutStockPhoto">
+        <img [src]="showOutStockPhoto" style="width: 100%;" class="logoimg">
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <div class="input-group" style="margin-left: 10px; margin-right: 10px;">
+    <div class="input-label">Balance</div>
+    <ion-input class="input-field" [(ngModel)]="balance" placeholder="Enter weight (g)" type="number"></ion-input>
+    <ion-button class="upload-button" (click)="openActionSheet('balancePhoto')">Upload Photo</ion-button>
+    <ion-row>
+      <ion-col size="12" class="ion-align-self-center" *ngIf="isLoading.balancePhoto">
+        <ion-spinner name="crescent" style="height: 50px; width: 50px;"></ion-spinner>
+      </ion-col>
+      <ion-col size="12" >
+        <ion-slides pager="true">
+          <!-- Item Image::Start -->
+          <ion-slide class="item-slide" *ngFor="let tng_img of balancePhoto"><!-- List item images -->
+            <div class="image-slide-content" [ngStyle]="{'border': showBalancePhoto === tng_img ? '3px solid red' : 'none'}">
+              <img [src]="tng_img" (click)="showBalancePhoto = (showBalancePhoto == ''? tng_img : (showBalancePhoto == tng_img? '': tng_img))" class="itemImage">
+            </div>
+            <button (click)="delete_img_tng(tng_img, 'balancePhoto')" class="deleteImageBtn">x</button>
+          </ion-slide>
+          <!-- Item Image::End -->
+        </ion-slides>
+      </ion-col>
+      <ion-col size="12" class="ion-align-self-center" *ngIf="showBalancePhoto">
+        <img [src]="showBalancePhoto" style="width: 100%;" class="logoimg">
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <div class="input-group remarks-field" style="margin-left: 10px; margin-right: 10px;">
+    <div class="input-label">Remarks</div>
+    <ion-textarea [(ngModel)]="remarks" placeholder="Enter any remarks here"></ion-textarea>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-button class="submit-button" expand="block" (click)="submitClockIn()">Submit Clock-in</ion-button>
+</ion-footer>

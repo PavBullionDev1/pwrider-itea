@@ -1,0 +1,29 @@
+<app-common-header [pageSource]="'punching'" [headerTitle]="'Clock In'"></app-common-header>
+
+<ion-content class="specialcontent whitepage" appSwipe (swipeLeft)="onSwipeLeft($event)" mode="ios">
+	<ion-item>
+		<ion-grid>
+			<ion-row>
+				<ion-col size="12" style="text-align:center">
+					<ion-img src="../../assets/avatar-default.svg" style="width:200px;margin:0 auto" *ngIf="!formData.selfie"></ion-img>
+					<img [src]="formData.selfie" style="width:200px;margin:0 auto" *ngIf="formData.selfie">
+					<div>
+						<ion-button (click)="openCamera()">Upload</ion-button>
+					</div>
+				</ion-col>				
+			</ion-row>
+			<ion-row>
+				<ion-col size="12" style="text-align:center">
+					<ion-img src="../../assets/google-maps.png" style="width:150px;margin:0 auto" *ngIf="!formData.geolocation_photo"></ion-img>					
+					<img [src]="formData.geolocation_photo" style="width:150px;margin:0 auto" *ngIf="formData.geolocation_photo">
+					<div>
+						<ion-button (click)="getGeolocation()">Get Locate</ion-button>
+					</div>
+				</ion-col>				
+			</ion-row>
+		</ion-grid>
+	</ion-item>
+	<ion-button expand="full" [disabled]="!formData.selfie || !formData.geolocation_lat || !formData.geolocation_lng" (click)="submit_now()">Submit</ion-button>
+
+</ion-content>
+<mytab></mytab>

@@ -1,0 +1,435 @@
+<app-common-header [pageSource]="'collection-detail'" [headerTitle]="'Order Job Detail'"></app-common-header>
+
+
+<div vertical="top" slot="fixed" style="width: 100%; top: 53px; background: #ededed !important;" mode="ios">
+    <div class="ion-padding-top">
+        <div class="totalxauandgram">
+            <ion-row style="width:100%;">
+              <ion-col size="12" style="text-align: center">
+                <h3>Customer: {{customer_name }}</h3>
+              </ion-col>
+                <ion-col size="6" style="padding-right: 0; margin-right: -12px;">
+                    <h3>Total XAU</h3>
+                    <h2>
+                        <span id="total_XAU_amount_desc"
+                            style="color:{{priceUpdate()['total_XAU_amount']>=thisRoundShouldCollectXAUAmount?'green':'orange'}}">{{priceUpdate()['total_XAU_amount']
+                            | number:'.3'}}</span>
+                        / <span id="">{{thisRoundShouldCollectXAUAmount | number:'.3'}}</span>
+
+                        <ion-popover trigger="total_XAU_amount_desc" triggerAction="click">
+                            <ng-template>
+                              <ion-content class="ion-padding">Current Collection total XAU is: {{priceUpdate()['total_XAU_amount']
+                                | number:'.3'}}</ion-content>
+                            </ng-template>
+                        </ion-popover>
+
+                    </h2>
+                    <div id="moreless_desc" [class]="priceUpdate()['total_XAU_amount'] > thisRoundShouldCollectXAUAmount ? 'diffmore' : 'diffless'"
+                        *ngIf="priceUpdate()['total_XAU_amount'] != thisRoundShouldCollectXAUAmount">
+                        {{priceUpdate()['total_XAU_amount'] - thisRoundShouldCollectXAUAmount | number: '.3'}}
+                    </div>
+                    <ion-popover trigger="moreless_desc" triggerAction="click">
+                        <ng-template>
+                          <ion-content *ngIf="priceUpdate()['total_XAU_amount'] > customer_balance_XAU" class="ion-padding">You collect more than you required this round: {{priceUpdate()['total_XAU_amount'] - customer_balance_XAU | number: '.3'}}</ion-content>
+                          <ion-content *ngIf="priceUpdate()['total_XAU_amount'] < customer_balance_XAU" class="ion-padding">You collect less than you required this round: {{priceUpdate()['total_XAU_amount'] - customer_balance_XAU | number: '.3'}}</ion-content>
+                        </ng-template>
+                    </ion-popover>
+                </ion-col>
+                <!-- <ion-col size="6" style="border-left:1px dotted #ccc; padding-left:12px; padding-right:0;">
+                    <div *ngIf="priceUpdate()['total_should_pay']>0">
+                        <h3>Total Payment</h3>
+                        <h2>RM {{priceUpdate()['total_should_pay'] | number: '.2'}}</h2>
+                    </div>
+                </ion-col> -->
+                <ion-col size="6" style="border-left:1px dotted #ccc; padding-left:12px; padding-right:0;">
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col>
+                                <label class="checkbox-label">
+                                    <ion-checkbox #takeAndGoCheckbox [(ngModel)]="is_tng"
+                                    (ionChange)="handleCheckboxChange('is_tng')"></ion-checkbox>
+                                    <h2 id="tng_desc"><ion-icon name="log-out-outline"></ion-icon></h2>
+                                </label>
+                                <ion-popover trigger="tng_desc" triggerAction="click">
+                                    <ng-template>
+                                      <ion-content class="ion-padding">Take and Go means rider just take and go, no need to weight at the store front</ion-content>
+
+                                    </ng-template>
+                                </ion-popover>
+                            </ion-col>
+                            <ion-col>
+                                <label class="checkbox-label">
+                                    <ion-checkbox #normalGRNCheckbox [(ngModel)]="is_grn"
+                                        (ionChange)="handleCheckboxChange('is_grn')"></ion-checkbox>
+                                    <h2 id="normalgrn_desc"><ion-icon name="scale-outline"></ion-icon></h2>
+                                </label>
+                                <ion-popover trigger="normalgrn_desc" triggerAction="click">
+                                    <ng-template>
+                                      <ion-content class="ion-padding">Normal GRN means rider need to inspect the item and weight carefully</ion-content>
+
+                                    </ng-template>
+                                </ion-popover>
+                            </ion-col>
+
+                        </ion-row>
+                        <ion-row>
+                            <ion-col>
+                                Bal: <span id="customer_balance_XAU_desc">{{customer_balance_XAU - priceUpdate()['total_XAU_amount'] | number: '.3'}}</span>
+                                <ion-popover trigger="customer_balance_XAU_desc" triggerAction="click">
+                                    <ng-template>
+                                      <ion-content class="ion-padding">The amount of Customer Balance XAU since opening balance is: {{customer_balance_XAU - priceUpdate()['total_XAU_amount'] | number: '.3'}}</ion-content>
+                                    </ng-template>
+                                </ion-popover>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+
+                </ion-col>
+            </ion-row>
+        </div>
+    </div>
+</div>
+
+<ion-content class="ordelist">
+
+    <ion-grid>
+
+        <div class="grnlistidplay">
+            <!-- Current PO and other assign to you order -->
+            <ion-col size="12">
+                <h3 class="grntitle">Item List</h3>
+            </ion-col>
+            <div *ngIf="grnList.length == 0" style="padding: 15px 5%; border-radius: 5px; border: 1.5px solid lightgray; margin: 0px 2%; font-size: 13px;">There is no Item in this Purchase Order.</div>
+            <div *ngIf="grnList.length > 0">
+                <table class="table" border="1" cellpadding="10" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>ITEM</th>
+                            <th>g</th>
+                            <th>%</th>
+                            <th>XAU</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of grnList;let i = index ;">
+                            <td (click)="view_detail(item)" [style.backgroundColor]="getWarehouseColor(item.warehouse_id)">
+                                <span *ngIf="item.MultipleImageUrl.length == 0">{{item.gold_name}}</span>
+                                <span *ngIf="item.MultipleImageUrl.length > 0" style="text-decoration: underline;" >{{item.gold_name}}</span>
+
+                                <!-- <div class="main" *ngIf="item.warehouse_id=='1'">
+                                    main
+                                </div>
+                                <div class="tbc" *ngIf="item.warehouse_id=='3'">
+                                    tbc
+                                </div>
+                                <div class="exchange" *ngIf="item.warehouse_id=='4'">
+                                    exc
+                                </div> -->
+                            </td>
+                            <td (click)="view_detail(item)">{{item.gram | number :'.2'}}</td>
+                            <td (click)="view_detail(item)">{{item.gold_pure_percent}}</td>
+                            <td (click)="view_detail(item)">
+                                {{item.XAU_amount | number :'.3'}}
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Total</th>
+                            <th>{{priceUpdate()['total_gram'] | number: '.2'}}</th>
+                            <th></th>
+                            <th>{{priceUpdate()['total_XAU_amount'] | number: '.3'}}</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <ion-col size="12">
+                <ion-button color="warning" mode="ios" (click)="addItem()" expand="block">Add Item
+                </ion-button>
+            </ion-col>
+        </div>
+
+        <!-- To occupy the space -->
+        <div class="grnlistidplay">
+            <h3 class="grntitle" *ngIf="is_tng">Take And Go</h3>
+        </div>
+
+
+        <ion-item *ngIf="is_tng" class="ion-no-padding" mode="ios" lines="none">
+            <ion-row>
+                <ion-col size="12">
+
+                    <ion-label>Estimated XAU</ion-label>
+                    <ion-input labelPlacement="stacked" type="number" [clearInput]="true" [(ngModel)]="estimated_XAU" style="border:1px solid black" placeholder="E.g, 100.000" ></ion-input>
+
+                </ion-col>
+            </ion-row>
+        </ion-item>
+
+        <ion-item *ngIf="is_tng" class="ion-no-padding" mode="ios" lines="none">
+
+            <ion-row class="productorderlist " style="width: 100%;">
+
+                <ion-col size="12" class="productdetail ion-align-self-center">
+                    <h2>Upload Photos</h2>
+                </ion-col>
+
+                <ion-col size="12" class="productdetailinfor">
+                    <div class="ion-align-items-center">
+                        <ion-button color="warning" mode="ios" [disabled]="estimated_XAU<=0" (click)="openActionSheet_tng(0)" expand="block">
+                            <span style="padding: 10px;">Upload TNG Photos</span>
+                        </ion-button>
+                    </div>
+
+                    <ion-row>
+                        <ion-col size="12" >
+                            <ion-slides pager="true" [options]="slideOpts">
+                                <!-- Item Image::Start -->
+                                <ion-slide class="item-slide" *ngFor="let tng_img of MultipleImageUrl_tng"><!-- List item images -->
+                                    <div class="image-slide-content" [ngStyle]="{'border': ShowImageUrl_tng === tng_img ? '3px solid red' : 'none'}">
+                                        <img [src]="tng_img" (click)="ShowImageUrl_tng = (ShowImageUrl_tng == ''? tng_img : (ShowImageUrl_tng == tng_img? '': tng_img))" class="itemImage">
+                                    </div>
+                                    <button (click)="delete_img_tng(tng_img, 0)" class="deleteImageBtn">x</button>
+                                </ion-slide>
+                                <!-- Item Image::End -->
+                            </ion-slides>
+                        </ion-col>
+                        <ion-col size="12" class="ion-align-self-center" *ngIf="ShowImageUrl_tng">
+                            <img [src]="ShowImageUrl_tng" style="width: 100%;" class="logoimg">
+                            <button class="deleteImageBtn" (click)="delete_img_tng(ShowImageUrl_tng, 0)" style="font-size: 30px; border-radius: 50%; padding: 5px 8px; top: 5%; right: 3%;">
+                                <ion-icon name="trash-outline"></ion-icon>
+                            </button>
+                        </ion-col>
+                    </ion-row>
+                    <!-- </ion-list> -->
+                </ion-col>
+            </ion-row>
+        </ion-item>
+
+        <ion-item class="ion-no-padding" mode="ios" lines="none">
+
+            <ion-row class="productorderlist " style="width: 100%;">
+
+                <ion-col size="12" class="productdetail ion-align-self-center">
+                    <h2>Upload DO</h2>
+                </ion-col>
+
+                <ion-col size="12" class="productdetailinfor">
+                    <div class="ion-align-items-center">
+                        <ion-button color="warning" mode="ios" (click)="openActionSheet_tng(1)" expand="block">
+                            <span style="padding: 10px;">Upload DO Photo</span>
+                        </ion-button>
+                    </div>
+
+                    <ion-row>
+                        <ion-col size="12" >
+                            <ion-slides pager="true" [options]="slideOpts">
+                                <!-- Item Image::Start -->
+                                <ion-slide class="item-slide" *ngFor="let do_img of MultipleImageUrl_DO"><!-- List item images -->
+                                    <div class="image-slide-content" [ngStyle]="{'border': ShowImageUrl_do === do_img ? '3px solid red' : 'none'}">
+                                        <img [src]="do_img" (click)="ShowImageUrl_do = (ShowImageUrl_do == ''? do_img : (ShowImageUrl_do == do_img? '': do_img))" class="itemImage">
+                                    </div>
+                                    <button (click)="delete_img_tng(do_img, 1)" class="deleteImageBtn">x</button>
+                                </ion-slide>
+                                <!-- Item Image::End -->
+                            </ion-slides>
+                        </ion-col>
+                        <ion-col size="12" class="ion-align-self-center" *ngIf="ShowImageUrl_do">
+                            <img [src]="ShowImageUrl_do" style="width: 100%;" class="logoimg">
+                            <button class="deleteImageBtn" (click)="delete_img_tng(ShowImageUrl_do, 1)" style="font-size: 30px; border-radius: 50%; padding: 5px 8px; top: 5%; right: 3%;">
+                                <ion-icon name="trash-outline"></ion-icon>
+                            </button>
+                        </ion-col>
+                    </ion-row>
+                    <!-- </ion-list> -->
+                </ion-col>
+            </ion-row>
+        </ion-item>
+
+        <ion-item *ngIf="is_grn && haveItemImages" class="ion-no-padding" mode="ios" lines="none">
+            <ion-row class="productorderlist " style="width: 100%;">
+                <ion-col size="12" class="productdetail ion-align-self-center">
+                    <p><strong>Item Photos</strong></p>
+                </ion-col>
+                <ion-col size="12" class="productdetailinfor">
+                    <!-- Item Image List::Start -->
+                    <div *ngFor="let item of grnList; let i = index;">
+                        <ion-row *ngIf="item.MultipleImageUrl.length !== 0">
+                            <div style="font-size: 15px; color: gray; font-weight: 600;">Image for {{item.gold_name}} ({{item.gold_pure_percent}}%)</div>
+                            <ion-col size="12" >
+                                <ion-slides pager="true" [options]="slideOpts">
+                                    <!-- Item Image::Start -->
+                                    <ion-slide class="item-slide" *ngFor="let x of item.MultipleImageUrl"><!-- List item images -->
+                                        <div class="image-slide-content" [ngStyle]="{'border': item.showImage === x ? '3px solid red' : 'none'}">
+                                            <img [src]="x.image" (click)="item.showImage = (item.showImage == ''? x : (item.showImage == x? '': x))" class="itemImage">
+                                        </div>
+                                        <button (click)="delete_img(x,i)" class="deleteImageBtn">x</button>
+                                    </ion-slide>
+                                    <!-- Item Image::End -->
+                                </ion-slides>
+                            </ion-col>
+                            <ion-col size="12" class="ion-align-self-center" *ngIf="item.showImage">
+                                <img [src]="item.showImage" style="width: 100%;" class="logoimg">
+                                <button class="deleteImageBtn" (click)="delete_img(item.showImage,i)" style="font-size: 30px; border-radius: 50%; padding: 5px 8px; top: 5%; right: 3%;">
+                                    <ion-icon name="trash-outline"></ion-icon>
+                                </button>
+                            </ion-col>
+                        </ion-row>
+                    </div>
+                    <!-- Item Image List::End -->
+                </ion-col>
+            </ion-row>
+        </ion-item>
+        <!-- Total gram and add item -->
+
+        <div class="polistitem" *ngIf="is_grn" style="padding: 20px;">
+            <div style="display: flex; align-items: center;">
+                <ion-checkbox [(ngModel)]="update_po_item"></ion-checkbox>
+                <div style="display: flex; align-items: center; font-weight: 700; margin-left: 10px; color: #243a76;">
+                    <div>Also Update Back PW Item List</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="polistitem" *ngIf="is_grn">
+                <ion-row class="productorderlist ion-align-items-center">
+                    <ion-col size="12">
+                        <ion-label>Rounding XAU</ion-label>
+                        <ion-input labelPlacement="stacked" type="number" [clearInput]="true" [disabled]="is_admin === 0" [(ngModel)]="rounding_xau" style="border:1px solid black" placeholder="E.g, 0.065"></ion-input>
+                    </ion-col>
+                </ion-row>
+        </div>
+
+        <!-- <div class="polistitem">
+            <ion-row class="productorderlist">
+
+                <ion-col size="12">
+                    <ion-button mode="ios" color="warning" (click)="presentAlert()"
+                        expand="block">Make PO
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+        </div> -->
+
+        <div class="polistitem" style="padding: 20px;">
+            <div style="display: flex; align-items: center;" (click)="payCash? payCash=false : payCash=true">
+                <ion-checkbox [(ngModel)]="payCash" (click)="payCash? payCash=false : payCash=true"></ion-checkbox>
+                <div style="display: flex; align-items: center; font-weight: 700; margin-left: 10px; color: #243a76;">
+                    <div>Make Payment</div>
+                </div>
+                <ion-icon style="margin-left:10px; font-size: 25px;" id="payment" name="alert-circle-outline"></ion-icon>
+                <ion-popover trigger="payment" triggerAction="click">
+                    <ng-template>
+                        <ion-content class="ion-padding">Cash payment for the customer's purchase order.</ion-content>
+                    </ng-template>
+                </ion-popover>
+            </div>
+            <div *ngIf="payCash" style=" border-top: 1px solid lightgray; margin-top: 5px;">
+                <div style="font-size: 12px;">Please provide all payment details below.</div>
+
+                <div style="margin-top: 10px;">
+                    <div style="font-size: 15px; font-weight: 600;">Purchase Order</div>
+                    <table style="border: 2px solid lightgray; border-radius: 10px;" width="100%" border="1">
+                        <thead>
+                            <tr>
+                                <th width="10%">No.</th>
+                                <th width="60%">Purchase Order</th>
+                                <th width="30%">Amount</th>
+                            </tr>
+                        </thead>
+                        <tr style="text-align: center; font-size: 13px;" *ngFor="let po_item of all_po_data; let i = index ;">
+                            <td>{{ i+1 }}</td>
+                            <td style="padding: 5px 0;">{{ po_item.purchase_order_serial }} ({{ po_item.purchase_order_id }})</td>
+                            <td>{{ po_item.total_amount | number:".2" }}</td>
+                        </tr>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th style="text-align: end; padding-right: 5px;">Total Amount</th>
+                                <th style="text-align: center;">{{ total_pos_amount | number:'.2' }}</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div style="margin-top: 10px;">
+                    <div style="font-size: 15px; font-weight: 600;">Payment Amount</div>
+                    <ion-input labelPlacement="stacked" type="number" [clearInput]="true" [(ngModel)]="payment.amount" style="border:1px solid lightgray; border-radius: 5px;" placeholder="E.g, 10000.00"></ion-input>
+                </div>
+                <div style="margin-top: 10px;">
+                    <div style="font-size: 15px; font-weight: 600;">Payment Remark</div>
+                    <h2 style="margin:0; border: 1px solid lightgray; border-radius: 5px;">
+                        <ion-textarea type="text" [(ngModel)]="payment.remark" rows="3"></ion-textarea>
+                    </h2>
+                </div>
+                <div style="margin-top: 10px;">
+                    <div style="font-size: 15px; font-weight:600;">Payment Image</div>
+                    <img *ngIf="payment.image != 0" [src]="payment.image" style="width: 100%; border: 1px solid lightgray; border-radius: 10px;" class="logoimg">
+                    <ion-button *ngIf="payment.image !== ''" style="margin: 0; font-size: 14px;" color="danger" mode="ios" (click)="delete_img_tng(payment.image, 2)"
+                        expand="block">Remove Payment Image</ion-button>
+                    <ion-button style="margin: 0; font-size: 14px;" color="warning" mode="ios" (click)="openActionSheet_tng(2)"
+                        expand="block">Upload Payment Image</ion-button>
+                </div>
+                <div style="margin-top: 10px;">
+                    <div style="font-size: 15px; font-weight:600;">Customer Signature</div>
+                    <img *ngIf="payment.signature != 0" [src]="payment.signature" style="width: 100%; border: 1px solid lightgray; border-radius: 10px;" class="logoimg">
+                    <ion-button style="margin: 0; font-size: 14px;" color="warning" mode="ios" (click)="openModalSign()"
+                        expand="block">Sign</ion-button>
+                </div>
+            </div>
+        </div>
+
+        <div class="polistitem">
+            <ion-row class="productorderlist " style="width: 100%;">
+                <ion-row class="ion-align-items-center">
+                    <ion-col size="12">
+                        <h3 class="grntitle">Customer Remarks <ion-icon name="chevron-down-circle-outline" (click)="customerRemarkShow=!customerRemarkShow"></ion-icon></h3>
+                    </ion-col>
+                    <ion-col *ngIf="customerRemarkShow" size="12" class="ion-align-self-center">
+                        <h2 class="totaltitle" style="border: 1px solid black;">
+                            <ion-textarea type="text" [(ngModel)]="customer_remark" rows="3"></ion-textarea>
+                        </h2>
+                    </ion-col>
+                </ion-row>
+            </ion-row>
+        </div>
+
+        <div class="polistitem">
+            <ion-row class="productorderlist">
+                <ion-col size="12">
+                    <h3 class="grntitle">Internal Remarks <ion-icon name="chevron-down-circle-outline" (click)="internalRemarkShow=!internalRemarkShow"></ion-icon></h3>
+                </ion-col>
+                <ion-col *ngIf="internalRemarkShow" size="12" class="ion-align-self-center">
+                    <h2 class="totaltitle" style="border: 1px solid black;">
+                        <ion-textarea type="text" [(ngModel)]="remark" rows="3"></ion-textarea>
+                    </h2>
+                </ion-col>
+
+            </ion-row>
+        </div>
+
+        <div class="polistitem" *ngIf="rounding_xau < -0.065">
+            <ion-row class="productorderlist">
+                <ion-col size="12" style="margin-bottom: 10px;">
+                    <h3 class="grntitle" style="margin-bottom: -10px;">Alert</h3>
+                </ion-col>
+                <ion-col size="12" class="ion-align-self-center">
+                    <div style="padding: 10px; border-radius: 10px; background-color: lightgray; font-size: 14px;">Please be aware that the current XAU is less than 0.065 of total XAU.</div>
+                </ion-col>
+
+            </ion-row>
+        </div>
+
+        <div style="width: 95%; margin: 0 auto;">
+            <ion-button class="buttontheme-orange" mode="ios" [disabled] ="submitted" (click)="normal_submit_grn()"
+                expand="block">Submit
+            </ion-button>
+        </div>
+
+
+    </ion-grid>
+
+    <!-- </div> -->
+    <div class="spacer" style="height: 40px"></div>
+</ion-content>
+<mytab></mytab>

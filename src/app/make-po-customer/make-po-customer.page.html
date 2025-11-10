@@ -1,0 +1,28 @@
+<app-common-header [pageSource]="'make-po-customer'" [headerTitle]="'Making Purchase Order for Customer'"></app-common-header>
+
+
+<ion-content>
+  <div class="grnlist">
+    <ion-col size="12">
+      <ion-searchbar [(ngModel)]="searchText" placeholder="Search Customer Name"></ion-searchbar>
+    </ion-col>
+    <ion-col size="12">
+      <h3>Select a Customer</h3>
+      <ion-select value="variation" interface="action-sheet" cancelText='Cancel' class="pickupselect"
+          [(ngModel)]="customer_id">
+          <ion-select-option *ngFor="let x of customerList | search: searchText"
+              value="{{x.customer_id}}">{{x.name}}
+          </ion-select-option>
+      </ion-select>
+    </ion-col>
+  </div>
+  <div class="polistitem">
+    <ion-row class="productorderlist">
+      <ion-col size="12">
+        <ion-button class="buttontheme-orange" mode="ios" [routerLink]="isValidCustomer() ? ['/make-po', customer_id] : null"
+        expand="block">Submit
+    </ion-button>
+      </ion-col>
+    </ion-row>
+</div>
+</ion-content>

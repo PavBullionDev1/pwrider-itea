@@ -1,0 +1,48 @@
+<app-common-header [pageSource]="'redeem-cdo'" [headerTitle]="'Redeem CDO'"></app-common-header>
+
+<ion-content class="ordelist ion-padding-top">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-searchbar placeholder="Search by CDO No, Customer, City..." [(ngModel)]="searchTerm" (ionInput)="filterList()"></ion-searchbar>
+  
+  <ion-item *ngIf="stateGroups.length > 0">
+    <ion-label>State Group</ion-label>
+    <ion-select [(ngModel)]="selectedStateGroupId" (ionChange)="onStateGroupChange()" placeholder="All States">
+      <ion-select-option value="">All States</ion-select-option>
+      <ion-select-option *ngFor="let group of stateGroups" [value]="group.state_group_id">
+        {{group.title}}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <div *ngIf="isLoading" class="loading-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Loading CDO list...</p>
+  </div>
+
+  <div *ngIf="!isLoading && cdoList.length === 0" class="empty-state">
+    <ion-icon name="document-outline" size="large"></ion-icon>
+    <p>No CDO available for redemption</p>
+  </div>
+
+  <ion-list *ngIf="!isLoading && cdoList.length > 0">
+    <ion-item *ngFor="let cdo of cdoList" (click)="selectCdo(cdo)" lines="full" detail="true">
+      <ion-label>
+        <h2><strong>{{cdo.serial_no}}</strong></h2>
+        <h3>{{cdo.customer_name}}</h3>
+        <p>{{cdo.delivery_address}}</p>
+        <p><strong>{{cdo.total_xau}} XAU</strong></p>
+      </ion-label>
+      <ion-note slot="end" *ngIf="cdo.state_group_name">
+        {{cdo.state_group_name}}
+      </ion-note>
+    </ion-item>
+  </ion-list>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMore($event)" *ngIf="!isLoading && hasMore">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more CDOs...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

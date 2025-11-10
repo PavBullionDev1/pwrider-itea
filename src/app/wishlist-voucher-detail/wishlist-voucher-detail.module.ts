@@ -1,0 +1,25 @@
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+import { IonicModule } from '@ionic/angular';
+
+import { WishlistVoucherDetailPageRoutingModule } from './wishlist-voucher-detail-routing.module';
+
+import { WishlistVoucherDetailPage } from './wishlist-voucher-detail.page';
+import { InboxComponent } from '../inbox/inbox.component';
+import { SwipeModule } from '../swipe/swipe.module';
+import { SharedModule } from '../shared/shared.module';
+@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    WishlistVoucherDetailPageRoutingModule,
+    SwipeModule,
+    SharedModule
+  ],
+  declarations: [WishlistVoucherDetailPage],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+})
+export class WishlistVoucherDetailPageModule {}

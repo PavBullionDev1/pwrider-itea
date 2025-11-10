@@ -1,0 +1,514 @@
+<app-common-header [pageSource]="'melting-job-wizard'" [headerTitle]="'Melting Job Wizard'"></app-common-header>
+
+<style>
+  /* Add horizontal scrolling for tables */
+  .ion-table-container {
+    overflow-x: auto; /* Enables horizontal scrolling */
+    width: 100%; /* Ensures the table container spans full width */
+  }
+
+
+  ion-content {
+    --background: #f7f8fc;
+    padding: 20px;
+  }
+
+  .form-container {
+    max-width: 600px;
+    margin: auto;
+  }
+
+  .input-group {
+    margin-bottom: 20px;
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .input-label {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 5px;
+    color: #333;
+  }
+
+  .input-field {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1rem;
+    margin-top: 5px;
+    width: 100%;
+  }
+
+  ion-select,
+  ion-textarea {
+    margin-top: 8px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1rem;
+  }
+
+  ion-label {
+    font-weight: 600;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 15px;
+    display: block;
+  }
+
+  .ion-table {
+    width: 100%;
+    margin-top: 20px;
+    background: #fff;
+    border-radius: 10px;
+    border-collapse: collapse;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .ion-table thead {
+    background-color: #007bff;
+    color: white;
+  }
+
+  .ion-table th,
+  .ion-table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+  }
+
+  .ion-table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+  }
+
+  .submit-button {
+    background-color: #007bff;
+    color: white;
+    border-radius: 10px;
+    padding: 15px;
+    font-size: 1.2rem;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+  }
+
+  .submit-button:hover {
+    background-color: #0056b3;
+  }
+
+  .clicked {
+    background-color: green; /* 青色 */
+  }
+
+  .default {
+    background-color: red; /* 红色 */
+  }
+
+  .diff {
+    background-color: red;
+  }
+
+.editable {
+    outline: 2px dashed #007bff; /* Blue dashed outline to indicate editability */
+    padding: 10px; /* Padding to make it easier to click and edit */
+    border-radius: 5px; /* Rounded corners for better aesthetics */
+    transition: background-color 0.3s ease-in-out; /* Smooth transition for background color */
+}
+
+.editable:focus {
+    background-color: #e7f1ff; /* Light blue background when focused */
+    outline: none; /* Remove default outline */
+}
+
+
+  @media screen and (max-width: 600px) {
+    .ion-table th,
+    .ion-table td {
+      font-size: 0.9rem;
+    }
+
+    .input-group {
+      padding: 10px;
+    }
+
+    .submit-button {
+      font-size: 1rem;
+    }
+  }
+</style>
+
+<ion-content>
+  <div class="form-container">
+    <!-- Customer Name -->
+    <div class="input-group">
+      <div class="input-label">Customer Name</div>
+      <ion-select value="variation" interface="action-sheet" cancelText='Cancel' class="pickupselect"
+                  [(ngModel)]="customer_id">
+        <ion-select-option *ngFor="let x of customerList"
+                           value="{{x.customer_id}}">{{ x.name }}
+        </ion-select-option>
+      </ion-select>
+    </div>
+
+    <!-- Serial Number -->
+    <!--    <div class="input-group">-->
+    <!--      <div class="input-label">Serial No</div>-->
+    <!--      <ion-input class="input-field" [(ngModel)]="serial_no" placeholder="Enter Serial No" value="E240701"-->
+    <!--                 disabled></ion-input>-->
+    <!--    </div>-->
+
+    <!-- Status -->
+    <!--    <div class="input-group">-->
+    <!--      <div class="input-label">Status</div>-->
+    <!--      <ion-radio-group [(ngModel)]="status" class="radio-group">-->
+    <!--        <ion-row>-->
+    <!--          <ion-col>-->
+    <!--            <ion-item>-->
+    <!--              <ion-label>Cancelled</ion-label>-->
+    <!--              <ion-radio slot="start" value="0"></ion-radio>-->
+    <!--            </ion-item>-->
+    <!--          </ion-col>-->
+    <!--          <ion-col>-->
+    <!--            <ion-item>-->
+    <!--              <ion-label>Completed</ion-label>-->
+    <!--              <ion-radio slot="start" value="1"></ion-radio>-->
+    <!--            </ion-item>-->
+    <!--          </ion-col>-->
+    <!--          <ion-col>-->
+    <!--            <ion-item>-->
+    <!--              <ion-label>Booked</ion-label>-->
+    <!--              <ion-radio slot="start" value="2"></ion-radio>-->
+    <!--            </ion-item>-->
+    <!--          </ion-col>-->
+    <!--          <ion-col>-->
+    <!--            <ion-item>-->
+    <!--              <ion-label>On The Way</ion-label>-->
+    <!--              <ion-radio slot="start" value="3"></ion-radio>-->
+    <!--            </ion-item>-->
+    <!--          </ion-col>-->
+    <!--          <ion-col>-->
+    <!--            <ion-item>-->
+    <!--              <ion-label>In Progress</ion-label>-->
+    <!--              <ion-radio slot="start" value="4"></ion-radio>-->
+    <!--            </ion-item>-->
+    <!--          </ion-col>-->
+    <!--        </ion-row>-->
+    <!--      </ion-radio-group>-->
+    <!--    </div>-->
+
+    <!-- PW Total Weight -->
+    <div class="input-group">
+      <table class="ion-table">
+        <tbody>
+        <tr>
+          <td>Oder Date</td>
+          <td>{{ order_date }}</td>
+        </tr>
+        <tr>
+          <td>Factory Code</td>
+          <td>{{ factory_code }}</td>
+        </tr>
+        <tr>
+          <td>Serial No</td>
+          <td>{{ serial_no }}</td>
+        </tr>
+        <tr>
+          <td>Status</td>
+          <td>{{ statusList[status] }} <span *ngIf="status != 2">-> <span style="color: red">{{ statusList[next_status] }}</span></span></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+<!--    <div class="input-group">-->
+<!--      <div class="input-label">Total Weight(g)</div>-->
+<!--      <ion-input class="input-field" [(ngModel)]="total_weight" placeholder="Total Weight"></ion-input>-->
+<!--    </div>-->
+
+<!--    <div class="input-group">-->
+<!--      <div class="input-label">Gold Purity(%)</div>-->
+<!--      <ion-input class="input-field" [(ngModel)]="avg_percentage" placeholder="Gold Purity(%)"></ion-input>-->
+<!--    </div>-->
+
+<!--    <div class="input-group">-->
+<!--      <div class="input-label">Total XAU</div>-->
+<!--      <ion-input class="input-field" [(ngModel)]="total_XAU" placeholder="Total XAU"></ion-input>-->
+<!--    </div>-->
+
+    <div class="input-group" *ngIf="next_status == 2">
+      <div class="input-label"><span style="color:red;">Assay Sample Weight</span></div>
+      <ion-input class="input-field" [(ngModel)]="assay_sample_final_data" (ionBlur)="calculateAssaySampleXAU()" placeholder="Assay Sample Weight(G)"></ion-input>
+    </div>
+
+    <div class="input-group" *ngIf="next_status == 2">
+      <div class="input-label"><span style="color:red;">Assay Sample XAU</span></div>
+      <ion-input class="input-field" [(ngModel)]="assay_sample_XAU_data" placeholder="Assay Sample XAU" readonly></ion-input>
+    </div>
+
+<!--    <div class="input-group">-->
+<!--      <ion-row class="productorderlist " style="width: 100%;">-->
+
+<!--        <ion-col size="12" class="productdetail ion-align-self-center">-->
+<!--          <h2>Upload Photos</h2>-->
+<!--        </ion-col>-->
+
+<!--        <ion-col size="12" class="productdetailinfor">-->
+<!--          <div class="ion-align-items-center">-->
+<!--            <ion-button color="warning" mode="ios" (click)="openActionSheet_tng(0)" expand="block">-->
+<!--              <span style="padding: 10px;">Upload Issued By Photos</span>-->
+<!--            </ion-button>-->
+<!--          </div>-->
+
+<!--          <ion-row>-->
+<!--            <ion-col size="12" >-->
+<!--              <ion-slides pager="true" [options]="slideOpts">-->
+<!--                &lt;!&ndash; Item Image::Start &ndash;&gt;-->
+<!--                <ion-slide class="item-slide" *ngFor="let tng_img of issued_by_img">&lt;!&ndash; List item images &ndash;&gt;-->
+<!--                  <div class="image-slide-content" [ngStyle]="{'border': ShowImageUrl_issued_by === tng_img ? '3px solid red' : 'none'}">-->
+<!--                    <img [src]="tng_img" (click)="ShowImageUrl_issued_by = (ShowImageUrl_issued_by == ''? tng_img : (ShowImageUrl_issued_by == tng_img? '': tng_img))" class="itemImage">-->
+<!--                  </div>-->
+<!--                  <button (click)="delete_img_tng(tng_img, 0)" class="deleteImageBtn">x</button>-->
+<!--                </ion-slide>-->
+<!--                &lt;!&ndash; Item Image::End &ndash;&gt;-->
+<!--              </ion-slides>-->
+<!--            </ion-col>-->
+<!--            <ion-col size="12" class="ion-align-self-center" *ngIf="ShowImageUrl_issued_by">-->
+<!--              <img [src]="ShowImageUrl_issued_by" style="width: 100%;" class="logoimg">-->
+<!--              <button class="deleteImageBtn" (click)="delete_img_tng(ShowImageUrl_issued_by, 0)" style="font-size: 30px; border-radius: 50%; padding: 5px 8px; top: 5%; right: 3%;">-->
+<!--                <ion-icon name="trash-outline"></ion-icon>-->
+<!--              </button>-->
+<!--            </ion-col>-->
+<!--          </ion-row>-->
+<!--          &lt;!&ndash; </ion-list> &ndash;&gt;-->
+<!--        </ion-col>-->
+<!--      </ion-row>-->
+<!--    </div>-->
+
+<!--    <div class="input-group">-->
+<!--      <ion-row class="productorderlist " style="width: 100%;">-->
+
+<!--        <ion-col size="12" class="productdetail ion-align-self-center">-->
+<!--          <h2>Upload Photos</h2>-->
+<!--        </ion-col>-->
+
+<!--        <ion-col size="12" class="productdetailinfor">-->
+<!--          <div class="ion-align-items-center">-->
+<!--            <ion-button color="warning" mode="ios" (click)="openActionSheet_tng(1)" expand="block">-->
+<!--              <span style="padding: 10px;">Upload Checked By Photos</span>-->
+<!--            </ion-button>-->
+<!--          </div>-->
+
+<!--          <ion-row>-->
+<!--            <ion-col size="12" >-->
+<!--              <ion-slides pager="true" [options]="slideOpts">-->
+<!--                &lt;!&ndash; Item Image::Start &ndash;&gt;-->
+<!--                <ion-slide class="item-slide" *ngFor="let tng_img of checked_by_img">&lt;!&ndash; List item images &ndash;&gt;-->
+<!--                  <div class="image-slide-content" [ngStyle]="{'border': ShowImageUrl_checked_by === tng_img ? '3px solid red' : 'none'}">-->
+<!--                    <img [src]="tng_img" (click)="ShowImageUrl_checked_by = (ShowImageUrl_checked_by == ''? tng_img : (ShowImageUrl_checked_by == tng_img? '': tng_img))" class="itemImage">-->
+<!--                  </div>-->
+<!--                  <button (click)="delete_img_tng(tng_img, 0)" class="deleteImageBtn">x</button>-->
+<!--                </ion-slide>-->
+<!--                &lt;!&ndash; Item Image::End &ndash;&gt;-->
+<!--              </ion-slides>-->
+<!--            </ion-col>-->
+<!--            <ion-col size="12" class="ion-align-self-center" *ngIf="ShowImageUrl_checked_by">-->
+<!--              <img [src]="ShowImageUrl_checked_by" style="width: 100%;" class="logoimg">-->
+<!--              <button class="deleteImageBtn" (click)="delete_img_tng(ShowImageUrl_checked_by, 1)" style="font-size: 30px; border-radius: 50%; padding: 5px 8px; top: 5%; right: 3%;">-->
+<!--                <ion-icon name="trash-outline"></ion-icon>-->
+<!--              </button>-->
+<!--            </ion-col>-->
+<!--          </ion-row>-->
+<!--          &lt;!&ndash; </ion-list> &ndash;&gt;-->
+<!--        </ion-col>-->
+<!--      </ion-row>-->
+<!--    </div>-->
+
+    <!-- Remark -->
+    <div class="input-group">
+      <div class="input-label">Remark</div>
+      <ion-textarea class="input-field" [(ngModel)]="remark" placeholder="Enter Remark"></ion-textarea>
+    </div>
+
+
+<!--    <div class="input-group">-->
+<!--      <div class="input-label">Gold Shipment<span style="color: red">*</span></div>-->
+<!--      <ion-select value="variation" interface="action-sheet" cancelText='Cancel' class="pickupselect"-->
+<!--                  [(ngModel)]="gold_shipment_id">-->
+<!--        <ion-select-option *ngFor="let x of gold_shipment_list"-->
+<!--                           value="{{x.gold_shipment_id}}">{{ x.doc_no }}<span *ngIf="x.remark">-</span>{{ x.remark }}-->
+<!--        </ion-select-option>-->
+<!--      </ion-select>-->
+<!--    </div>-->
+
+    <div class="input-group">
+<!--      <table class="ion-table">-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--          <th></th>-->
+<!--          <th>(gm)</th>-->
+<!--          <th>(Purity)</th>-->
+<!--          <th>(XAU)</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--&lt;!&ndash;        <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;          <td>Jewellery</td>&ndash;&gt;-->
+<!--&lt;!&ndash;          <td><ion-input type="number" [class]="'editable'" [(ngModel)]="jewellery_scale_weight" (ionBlur)="recalculate()" (click)="selectAll($event)"></ion-input></td>&ndash;&gt;-->
+<!--&lt;!&ndash;          <td>{{avg_percentage}}</td>&ndash;&gt;-->
+<!--&lt;!&ndash;          <td>{{jewellery_estimated_XAU}}</td>&ndash;&gt;-->
+<!--&lt;!&ndash;        </tr>&ndash;&gt;-->
+<!--&lt;!&ndash;        <tr *ngIf="next_status > 0">&ndash;&gt;-->
+<!--&lt;!&ndash;          <td>Scrap Bar</td>&ndash;&gt;-->
+<!--&lt;!&ndash;          <td><ion-input type="number" [class]="'editable'" [(ngModel)]="scrapbar_scale_weight" (ionBlur)="recalculate()" (click)="selectAll($event)"></ion-input></td>&ndash;&gt;-->
+<!--&lt;!&ndash;          <td rowspan="5"><ion-input type="number" [class]="'editable'" [(ngModel)]="final_purity" (ionBlur)="recalculate()" (click)="selectAll($event)"></ion-input></td>&ndash;&gt;-->
+<!--&lt;!&ndash;          <td>{{scrapbar_estimated_XAU}}</td>&ndash;&gt;-->
+<!--&lt;!&ndash;        </tr>&ndash;&gt;-->
+<!--&lt;!&ndash;        <tr *ngIf="next_status > 0">&ndash;&gt;-->
+<!--&lt;!&ndash;          <td>Loss (B-J)</td>&ndash;&gt;-->
+<!--&lt;!&ndash;          <td>{{loss}}</td>&ndash;&gt;-->
+<!--&lt;!&ndash;          <td></td>&ndash;&gt;-->
+<!--&lt;!&ndash;        </tr>&ndash;&gt;-->
+<!--&lt;!&ndash;        <tr *ngIf="next_status > 0">&ndash;&gt;-->
+<!--&lt;!&ndash;          <td>Assay Sample</td>&ndash;&gt;-->
+<!--&lt;!&ndash;          <td><ion-input type="number" [class]="'editable'" [(ngModel)]="assay_sample_weight" (ionBlur)="recalculate()" (click)="selectAll($event)"></ion-input></td>&ndash;&gt;-->
+<!--&lt;!&ndash;          <td>{{assay_sample_XAU}}</td>&ndash;&gt;-->
+<!--&lt;!&ndash;        </tr>&ndash;&gt;-->
+<!--        <tr *ngIf="next_status > 0">-->
+<!--          <td>Bar Final</td>-->
+<!--          <td><ion-input type="number" [class]="'editable'" [(ngModel)]="bar_final_weight" (ionBlur)="recalculate()" (click)="selectAll($event)"></ion-input></td>-->
+<!--          <td>{{bar_final_XAU}}</td>-->
+<!--        </tr>-->
+<!--        <tr *ngIf="next_status > 0">-->
+<!--          <td>G/L</td>-->
+<!--          <td></td>-->
+<!--          <td>{{GL}}</td>-->
+<!--        </tr>-->
+<!--        <tr *ngIf="next_status > 0">-->
+<!--          <td>Final G/L</td>-->
+<!--          <td></td>-->
+<!--          <td></td>-->
+<!--          <td>{{finalGL}}</td>-->
+<!--        </tr>-->
+<!--        <tr *ngIf="next_status > 0">-->
+<!--          <td>Minor Loss</td>-->
+<!--          <td>{{minor_loss}}</td>-->
+<!--          <td></td>-->
+<!--          <td></td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--      </table>-->
+
+      <table>
+        <thead>
+        <tr>
+          <th>Title</th>
+          <th>Weight</th>
+          <th>Remark</th>
+          <th>Images</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Scrap Bar</td>
+            <td><ion-input type="number" [class]="'editable'" [(ngModel)]="scrapbar_scale_weight" (ionBlur)="recalculate()" (click)="selectAll($event)"></ion-input></td>
+            <td><ion-textarea [(ngModel)]="scrapbar_scale_remark" placeholder="Enter any remarks here"></ion-textarea></td>
+            <td>
+              <ion-button class="upload-button" (click)="openActionSheetForItem(scrapbar_scale_image,scrapbar_scale_is_loading)">
+                <ion-icon name="camera-outline"></ion-icon>
+              </ion-button>
+              <div *ngIf="scrapbar_scale_is_loading == true" class="loading-icon">
+                <ion-spinner></ion-spinner>
+              </div>
+              <ion-slides pager="true">
+                <ion-slide *ngFor="let tng_img of scrapbar_scale_image">
+                  <div class="image-slide-content">
+                    <img [src]="tng_img" class="itemImage">
+                    <button (click)="deleteImage(scrapbar_scale_image, tng_img)" class="deleteImageBtn">x</button>
+                  </div>
+                </ion-slide>
+              </ion-slides>
+            </td>
+          </tr>
+
+          <tr>
+            <td>Assay Sample</td>
+            <td><ion-input type="number" [class]="'editable'" [(ngModel)]="assay_sample_weight" (ionBlur)="recalculate()" (click)="selectAll($event)"></ion-input></td>
+            <td><ion-textarea [(ngModel)]="assay_sample_remark" placeholder="Enter any remarks here"></ion-textarea></td>
+            <td>
+              <ion-button class="upload-button" (click)="openActionSheetForItem(assay_sample_image,assay_sample_is_loading)">
+                <ion-icon name="camera-outline"></ion-icon>
+              </ion-button>
+              <div *ngIf="assay_sample_is_loading == true" class="loading-icon">
+                <ion-spinner></ion-spinner>
+              </div>
+              <ion-slides pager="true">
+                <ion-slide *ngFor="let tng_img of assay_sample_image">
+                  <div class="image-slide-content">
+                    <img [src]="tng_img" class="itemImage">
+                    <button (click)="deleteImage(assay_sample_image, tng_img)" class="deleteImageBtn">x</button>
+                  </div>
+                </ion-slide>
+              </ion-slides>
+            </td>
+          </tr>
+
+          <tr>
+            <td>Bar Final</td>
+            <td><ion-input type="number" [class]="'editable'" [(ngModel)]="bar_final_weight" (ionBlur)="recalculate()" (click)="selectAll($event)"></ion-input></td>
+            <td><ion-textarea [(ngModel)]="bar_final_remark" placeholder="Enter any remarks here"></ion-textarea></td>
+            <td>
+              <ion-button class="upload-button" (click)="openActionSheetForItem(bar_final_image,bar_final_is_loading)">
+                <ion-icon name="camera-outline"></ion-icon>
+              </ion-button>
+              <div *ngIf="bar_final_is_loading == true" class="loading-icon">
+                <ion-spinner></ion-spinner>
+              </div>
+              <ion-slides pager="true">
+                <ion-slide *ngFor="let tng_img of bar_final_image">
+                  <div class="image-slide-content">
+                    <img [src]="tng_img" class="itemImage">
+                    <button (click)="deleteImage(bar_final_image, tng_img)" class="deleteImageBtn">x</button>
+                  </div>
+                </ion-slide>
+              </ion-slides>
+            </td>
+          </tr>
+
+          <tr>
+            <td>Final Purity</td>
+            <td><ion-input type="number" [class]="'editable'" [(ngModel)]="final_purity" (ionBlur)="recalculate()" (click)="selectAll($event)"></ion-input></td>
+            <td><ion-textarea [(ngModel)]="final_purity_remark" placeholder="Enter any remarks here"></ion-textarea></td>
+            <td>
+              <ion-button class="upload-button" (click)="openActionSheetForItem(final_purity_image,final_purity_is_loading)">
+                <ion-icon name="camera-outline"></ion-icon>
+              </ion-button>
+              <div *ngIf="final_purity_is_loading == true" class="loading-icon">
+                <ion-spinner></ion-spinner>
+              </div>
+              <ion-slides pager="true">
+                <ion-slide *ngFor="let tng_img of final_purity_image">
+                  <div class="image-slide-content">
+                    <img [src]="tng_img" class="itemImage">
+                    <button (click)="deleteImage(final_purity_image, tng_img)" class="deleteImageBtn">x</button>
+                  </div>
+                </ion-slide>
+              </ion-slides>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-button class="submit-button" expand="block"
+              (click)="submitMeltingJob()">Submit
+  </ion-button>
+</ion-footer>

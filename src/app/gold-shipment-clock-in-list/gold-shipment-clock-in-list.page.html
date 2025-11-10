@@ -1,0 +1,77 @@
+<style>
+  ion-footer {
+    position: fixed;
+    bottom: 85px;
+    left: 0;
+    right: 0;
+  }
+</style>
+
+<app-common-header [pageSource]="'collection'" [headerTitle]="'Gold Shipment Clock In List'"></app-common-header>
+
+<ion-content class="ordelist ion-padding-top">
+
+  <ion-progress-bar *ngIf="isLoading" type="indeterminate" color="primary"></ion-progress-bar>
+
+	<ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+		<ion-refresher-content></ion-refresher-content>
+	</ion-refresher>
+
+
+
+	<ion-row class="ion-align-items-center">
+		<ion-col size="12">
+			<h5 style="margin-top: 5px; margin-left: 12px;font-weight: 600;">Total: {{dataList?.length}}
+			</h5>
+		</ion-col>
+	</ion-row>
+
+  <div>
+    <div class="eachSupplier"
+    *ngFor="let item of dataList; let i = index;"
+    >
+    <div>
+        <ion-grid [routerLink]="['/gold-shipment-clock-in/'+item.gold_shipment_clock_in_id]">
+          <ion-row>
+            <ion-col>  <strong>{{item.barcode}}</strong> </ion-col>
+          </ion-row>
+        </ion-grid>
+
+
+        <div class="label" [routerLink]="['/gold-shipment-clock-in/'+item.gold_shipment_clock_in_id]">{{item.user_name}}</div>
+    </div>
+
+
+    </div>
+  </div>
+
+
+
+
+	<!--
+<ion-row style="width:100%;">
+    <ion-col size="12" class="ion-text-center">
+      <div class="noitemincart ion-margin-top">
+        <img src="../../assets/gg-icon/attention-icon.svg" style="width: 100px;">
+        <h2 class="" style="color: #1A1A1A; font-weight: 600;">No any location</h2>
+      </div>
+    </ion-col>
+  </ion-row>
+-->
+
+	<!-- <ion-list> -->
+	<!-- <ion-col size="4" style="padding: 5px;">
+            <ion-item (click)="searchWishList()" lines="none" class="ion-no-padding">
+            <img src="../../assets/add-icon.svg" style="margin-top: 2px; width: 100%;">
+            </ion-item>
+        </ion-col>    -->
+
+	<!-- </div> -->
+	<div class="spacer" style="height: 40px"></div>
+</ion-content>
+
+<mytab></mytab>
+
+<ion-footer>
+  <ion-button class="submit-button" expand="block" [routerLink]="['/gold-shipment-clock-in']" >Create Clock-in</ion-button>
+</ion-footer>

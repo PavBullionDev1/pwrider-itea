@@ -1,0 +1,223 @@
+<app-common-header [pageSource]="'bullion-add-change-request'" [headerTitle]="'Change Request Items'"></app-common-header>
+
+<ion-content>
+    <ion-grid>
+
+        <div class="grnlist" style="margin-top: 10px; margin-bottom: 20px;">
+            <ion-row class="productorderlist">
+                <ion-col size="12" class="ion-align-self-center">
+                    <div style="font-size: 15px; font-weight: 600; margin-top: 10px;">Request Title</div>
+                    <h2 class="totaltitle" style="border: 1px solid lightgray; border-radius: 3px;">
+                        <!-- <ion-input type="text" [(ngModel)]="formData.title" style="border:1px solid lightgray; font-size: 15px;" placeholder="Request Title"></ion-input> -->
+                        <div style="padding: 10px 20px;" (click)="formData.title[1] = !formData.title[1]">
+                            <div style="display: flex; align-items: center;">
+                                <ion-checkbox style="font-size:12px;" [(ngModel)]="formData.title[1]" (click)="formData.title[1] = !formData.title[1]"></ion-checkbox>
+                                <div style="font-size:12px; display: flex; align-items: center; font-weight: 700; margin-left: 10px; color: #243a76;">Change Item</div>
+                            </div>
+                        </div>
+                        <div style="padding: 10px 20px;" (click)="formData.title[2] = !formData.title[2]">
+                            <div style="display: flex; align-items: center;">
+                                <ion-checkbox style="font-size:12px;" [(ngModel)]="formData.title[2]" (click)="formData.title[2] = !formData.title[2]"></ion-checkbox>
+                                <div style="font-size:12px; display: flex; align-items: center; font-weight: 700; margin-left: 10px; color: #243a76;">Remove stone / color / spring</div>
+                            </div>
+                        </div>
+                        <div style="padding: 10px 20px;" (click)="formData.title[3] = !formData.title[3]">
+                            <div style="display: flex; align-items: center;">
+                                <ion-checkbox style="font-size:12px;" [(ngModel)]="formData.title[3]" (click)="formData.title[3] = !formData.title[3]"></ion-checkbox>
+                                <div style="font-size:12px; display: flex; align-items: center; font-weight: 700; margin-left: 10px; color: #243a76;">Remove Pin</div>
+                            </div>
+                        </div>
+                    </h2>
+                </ion-col>
+            </ion-row>
+        </div>
+
+        <div class="grnlist">
+            <ion-row class="polistitemv2">
+                <ion-col size="12">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 2px solid lightgray;">
+                        <div style="font-size: 15px; font-weight: 600;">Before Items</div>
+                    </div>
+                    <table class="table" border="1" cellpadding="10" cellspacing="0" >
+                        <thead>
+                            <tr>
+                                <th style="width: 30%;">ITEM</th>
+                                <th style="width: 20%;">%</th>
+                                <th style="width: 20%;">g</th>
+                                <th style="width: 30%;">XAU</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{ formData.gold_name_from }}</td>
+                                <td>{{ formData.gold_pure_percentage_from }}</td>
+                                <td>{{ formData.weight_from }}</td>
+                                <td>{{ formData.XAU_from }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </ion-col>
+            </ion-row>
+        </div>
+
+        <div class="grnlist" style="margin-top: 10px;">
+            <ion-row class="polistitemv2">
+                <ion-col size="12">
+                    <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 10px;">
+                        <div>GainLoss XAU</div>
+                        <div>{{ formData.gainLoss_XAU | number:'1.3-3' }} 
+                            <span *ngIf="formData.gainLoss_XAU > 0" style="color: green;">▲</span>
+                            <span *ngIf="formData.gainLoss_XAU < 0" style="color: red;">▼</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: space-between; border-top: 2px dotted lightgray; padding-top: 10px;">
+                        <div>GainLoss Weight</div>
+                        <div>{{ total_weight | number:'1.2-2' }}g 
+                            <span *ngIf="total_weight > 0" style="color: green;">▲</span>
+                            <span *ngIf="total_weight < 0" style="color: red;">▼</span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; border-radius: 5px; border: 1px solid lightgray; padding: 10px 15px; font-size:12px; color:red;" *ngIf="total_weight < -0.01 || total_weight > 0.03">The total after weight should not exceed the range from -0.01 to 0.03.</div>
+                </ion-col>
+            </ion-row>
+        </div>
+        
+
+        <div class="grnlist" *ngFor="let item of formData.ItemList; let i = index ;" style="margin-top: 10px;">
+            <ion-row class="polistitemv2">
+                <ion-col size="12">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 2px solid lightgray;">
+                        <div style="font-size: 15px; font-weight: 600;">After Items 0{{ i+1 }}</div>
+                    </div>
+                    <table class="table" border="1" cellpadding="10" cellspacing="0" >
+                        <thead>
+                            <tr>
+                                <th style="width: 30%;">ITEM</th>
+                                <th style="width: 20%;">%</th>
+                                <th style="width: 20%;">g</th>
+                                <th style="width: 30%;">XAU</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td (click)="modify_request(item, i)">{{ item.is_gold == 0? 'Not Gold':item.gold_name_to }}</td>
+                                <td (click)="modify_request(item, i)">{{ item.gold_pure_percentage_to | number:'1.2-2' }}</td>
+                                <td (click)="modify_request(item, i)">{{ item.weight_to | number:'1.2-2' }}</td>
+                                <td (click)="modify_request(item, i)">{{ item.XAU_to | number:'1.3-3' }} 
+                                    <span *ngIf="formData.gold_name_from !== item.gold_name_to" style="color: green; font-weight: 900;">+</span>
+                                    <span *ngIf="item.is_gold == '0'" style="color: red;">▼</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </ion-col>
+
+                <ion-col size="12" class="ion-align-self-center">
+                    <div style="font-size: 15px; font-weight: 600; margin-top: 10px;">Remarks</div>
+                    <h2 class="totaltitle" style="border: 1px solid lightgray; border-radius: 3px;">
+                        <ion-textarea style="text-align: start;" type="text" [(ngModel)]="item.remark" rows="2"></ion-textarea>
+                    </h2>
+                </ion-col>
+            </ion-row>
+
+            <div class="grnlist" style="margin: 0;">
+                <ion-row class="productorderlist">
+                    <ion-col size="12" class="ion-align-self-center">
+                        <div style="font-size: 15px; font-weight: 600; margin-top: 10px;">Item 0{{ i+1 }} Images</div>
+                        <div class="productdetailinfor">
+                            <!-- Item Image List::Start -->
+                            <ion-row>
+                                <ion-col size="12">
+                                    <ion-slides pager="true" [options]="slideOpts1">
+                                        <!-- Weight Image::Start -->
+                                        <ion-slide class="item-slide"><!-- List item images -->
+                                            <div style="width: 100%;">
+                                                <div style="display: flex; align-items: center; margin-bottom: 10px; justify-content: space-between;">
+                                                    <div class="ImageTitle">Weight Image</div>
+                                                    <button *ngIf="item.image_list[0].img" (click)="delete_img(0,i)" class="deleteImageBtn">x</button>
+                                                </div>
+                                                <div *ngIf="item.image_list[0].img" class="image-slide-content" style="min-height: 315px;">
+                                                    <img [src]="item.image_list[0].img" class="itemImage">
+                                                </div>
+                                                <button *ngIf="!item.image_list[0].img" style="padding: 150px 0; width:100%; background-color: lightgray; border-radius: 10px;" (click)="openActionSheet(0, i)">Upload Image</button>
+                                                <ion-button *ngIf="item.image_list[0].img" color="primary" mode="ios" (click)="openActionSheet(0, i)" expand="block">Change Image</ion-button>
+                                                <ion-button color="primary" mode="ios" (click)="DisplaySelectIMG[i] = !DisplaySelectIMG[i]; selectedIMG_type[i] = 0; ShowImageUrl_select[i] = '';" expand="block">Select Image</ion-button>
+                                            </div>
+                                        </ion-slide>
+                                        <!-- Weight Image::End -->
+                                        <!-- Chop Image::Start -->
+                                        <ion-slide class="item-slide"><!-- List item images -->
+                                            <div style="width: 100%;">
+                                                <div style="display: flex; align-items: center; margin-bottom: 10px; justify-content: space-between;">
+                                                    <div class="ImageTitle">Chop Image</div>
+                                                    <button *ngIf="item.image_list[1].img" (click)="delete_img(1,i)" class="deleteImageBtn">x</button>
+                                                </div>
+                                                <div *ngIf="item.image_list[1].img" class="image-slide-content" style="min-height: 315px;">
+                                                    <img [src]="item.image_list[1].img" class="itemImage">
+                                                </div>
+                                                <button *ngIf="!item.image_list[1].img" style="padding: 150px 0; width:100%; background-color: lightgray; border-radius: 10px;" (click)="openActionSheet(1, i)">Upload Image</button>
+                                                <ion-button *ngIf="item.image_list[1].img" color="primary" mode="ios" (click)="openActionSheet(1, i)" expand="block">Change Image</ion-button>
+                                                <ion-button color="primary" mode="ios" (click)="DisplaySelectIMG[i] = !DisplaySelectIMG[i]; selectedIMG_type[i] = 1; ShowImageUrl_select[i] = '';" expand="block">Select Image</ion-button>
+                                            </div>
+                                        </ion-slide>
+                                        <!-- Chop Image::End -->
+                                        <!-- Machine Image::Start -->
+                                        <ion-slide class="item-slide"><!-- List item images -->
+                                            <div style="width: 100%;">
+                                                <div style="display: flex; align-items: center; margin-bottom: 10px; justify-content: space-between;">
+                                                    <div class="ImageTitle">Machine Image</div>
+                                                    <button *ngIf="item.image_list[2].img" (click)="delete_img(2,i)" class="deleteImageBtn">x</button>
+                                                </div>
+                                                <div *ngIf="item.image_list[2].img" class="image-slide-content" style="min-height: 315px;">
+                                                    <img [src]="item.image_list[2].img" class="itemImage">
+                                                </div>
+                                                <button *ngIf="!item.image_list[2].img" style="padding: 150px 0; width: 100%; background-color: lightgray; border-radius: 10px;" (click)="openActionSheet(2, i)">Upload Image</button>
+                                                <ion-button *ngIf="item.image_list[2].img" color="primary" mode="ios" (click)="openActionSheet(2, i)" expand="block">Change Image</ion-button>
+                                                <ion-button color="primary" mode="ios" (click)="DisplaySelectIMG[i] = !DisplaySelectIMG[i]; selectedIMG_type[i] = 2; ShowImageUrl_select[i] = '';" expand="block">Select Image</ion-button>
+                                            </div>
+                                        </ion-slide>
+                                        <!-- Machine Image::End -->
+                                    </ion-slides>
+                                </ion-col>
+                                <ion-col size="12" *ngIf="DisplaySelectIMG[i]">
+                                    <div style="font-size: 15px; font-weight: 600; margin-top: 10px;">Select GRND Images ({{ selectedIMG_type[i] == 0 ? 'Weight' : (selectedIMG_type[i] == 1? 'Chop': 'Machine') }})</div>
+                                    <ion-slides pager="true" [options]="slideOpts2">
+                                        <!-- Item Image::Start -->
+                                        <ion-slide class="item-slide" *ngFor="let GRND_img of GRND_Images"><!-- List item images -->
+                                            <div class="image-slide-content" [ngStyle]="{'border': ShowImageUrl_select[i] === GRND_img.image ? '3px solid #253b75' : 'none'}">
+                                                <img [src]="GRND_img.image" (click)="ShowImageUrl_select[i] = (ShowImageUrl_select[i] == ''? GRND_img.image : (ShowImageUrl_select[i] == GRND_img.image? '': GRND_img.image))" class="itemImage">
+                                            </div>
+                                        </ion-slide>
+                                        <!-- Item Image::End -->
+                                    </ion-slides>
+                                </ion-col>
+                                <ion-col size="12" class="ion-align-self-center" *ngIf="ShowImageUrl_select[i]">
+                                    <img [src]="ShowImageUrl_select[i]" style="width: 100%;" class="logoimg">
+                                    <button style="padding: 5px 15px; width: 100%; background-color: #253b75; color: white; border-radius: 10px;" 
+                                            (click)="DisplaySelectIMG[i] = !DisplaySelectIMG[i]; item.image_list[selectedIMG_type[i]].img = ShowImageUrl_select[i]; ShowImageUrl_select[i] = '';">Confirm</button>
+                                    <button style="margin-top:10px; padding: 5px 15px; width: 100%; background-color: lightgray; border-radius: 10px;" (click)="DisplaySelectIMG[i] = !DisplaySelectIMG[i]">Close</button>
+                                </ion-col>
+                            </ion-row>
+                            <!-- Item Image List::End -->
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </div>
+        </div>
+
+        <ion-col size="12">
+            <div style="padding: 0px 10px;">
+                <ion-button color="warning" mode="ios" (click)="addItem()" expand="block">Add Item</ion-button>
+            </div>
+        </ion-col>
+
+    </ion-grid>
+</ion-content>
+<ion-footer>
+    <div style="padding: 5px;">
+        <ion-button class="buttontheme-orange" mode="ios" (click)="submit_now()"expand="block">
+            <span *ngIf="mode == '0'">Submit</span>
+            <span *ngIf="mode !== '0'">Save and Submit</span>
+        </ion-button>
+    </div>
+</ion-footer>

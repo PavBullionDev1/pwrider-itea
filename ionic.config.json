@@ -1,0 +1,7 @@
+{
+  "name": "PWGROUP-RIDER-PORTAL",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

@@ -1,0 +1,96 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<app-common-header [pageSource]="'profile'" [headerTitle]="'Search'"></app-common-header>
+<ion-content class="ordelist">
+
+
+  <!-- <ion-row class="detailinfor">
+      <ion-col size="12">
+           <h2 class="opensanLBold700 txtgreen-light">{{locationList.storefront_name}}</h2>
+           <p>{{locationList.address}}</p>
+      </ion-col>
+  </ion-row> -->
+
+<!-- <button ion-button (click)="scanBarcode()">Scan ... </button>
+<div *ngIf="scanData">
+    <p>Scanned Text : </p>
+    <p>Scanned Format : </p>
+
+</div> -->
+
+<ion-item class="ion-no-padding" mode="ios" lines="none">
+  <ion-row class="productorderlist ">
+
+    <ion-col size="12" class="productdetail ion-align-self-center">
+        <h2>
+            Scan Barcode
+        </h2>
+        <!-- <p>detail</p> -->
+    </ion-col>
+
+    <ion-col size="12" class="productdetailinfor">
+      <ion-row class="ion-align-items-center">
+          <ion-col size="12" style="padding-bottom:0;">
+
+            <ion-img src="../assets/gg-icon/scanqrcode.svg" style="width: 120px; margin-left:auto; margin-right:auto; "></ion-img>
+
+
+            <ion-button (click)="scanBarcode()" class="buttontheme-orange" expand="block" mode="ios" >Scan</ion-button>
+            <ion-button [routerLink]="['/batch-scan']" class="buttontheme-orange" expand="block" mode="ios" >Batch Scan</ion-button>
+          </ion-col>
+      </ion-row>
+    </ion-col>
+
+  </ion-row>
+</ion-item>
+
+<ion-item class="ion-no-padding" mode="ios" lines="none">
+  <ion-row class="productorderlist ">
+
+    <ion-col size="12" class="productdetail ion-align-self-center">
+        <h2>
+            Search CN No
+        </h2>
+        <!-- <p>detail</p> -->
+    </ion-col>
+
+    <ion-col size="12" class="productdetailinfor">
+      <ion-row class="ion-align-items-center">
+
+      <!-- <ion-row class="ion-align-items-center"> -->
+
+        <ion-col size="12" style="margin-bottom:0;" class="password">
+             <ion-input [(ngModel)]="cn_no" placeholder="Type CN No here. eg.MJB202204081800597269" (keyup.enter)="search()"></ion-input>
+        </ion-col>
+
+
+      </ion-row>
+
+      <ion-row class="ion-align-items-center">
+          <ion-col size="12" style="padding-bottom:0;">
+            <ion-button (click)="search()" class="buttontheme-orange" expand="block" mode="ios" [disabled]="cn_no==''">Search</ion-button>
+          </ion-col>
+      </ion-row>
+    </ion-col>
+
+  </ion-row>
+</ion-item>
+
+<ion-item class="ion-no-padding" mode="ios" lines="none">
+  <ion-row class="productorderlist ">
+
+    <ion-col size="12" class="productdetail ion-align-self-center">
+        <h2>
+            Upload Photo (Have QR code)
+            <ion-icon (click)="openActionSheet('scan')" name="add-circle-outline" style="float: right; background-color: #243a76; color: #fbd23c;font-size: 25px; border-radius: 6px; vertical-align: middle; margin-left: 10px;"></ion-icon>
+        </h2>
+
+        <!-- <p>detail</p> -->
+    </ion-col>
+
+  </ion-row>
+</ion-item>
+
+<!-- </div> -->
+<div class="spacer" style="height: 40px"></div>
+</ion-content>
+<mytab></mytab>

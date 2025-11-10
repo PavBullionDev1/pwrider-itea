@@ -1,0 +1,44 @@
+h2{
+    color: #eb008b;
+    font-size: 20px;
+}
+
+ion-toggle{
+    --background-checked:#f6921e;
+    --handle-background-checked:#fff;
+}
+
+.fbicon{
+   color: #3c5b9a;
+    font-size: 20px;
+        vertical-align: middle;
+}
+
+.twicon{
+background-color: #1da1f2;
+    width: 15px;
+    border-radius: 50%;
+    color: #fff;
+    padding: 2px;
+    font-size: 15px;
+    height: 15px;
+        vertical-align: middle;
+}
+
+.googleicon{
+    background-color: #dc5246;
+    width: 15px;
+    border-radius: 50%;
+    color: #fff;
+    padding: 2px;
+    font-size: 15px;
+    height: 15px;
+        vertical-align: middle;
+}
+
+.mailto{
+    color: #231f20;
+    font-weight: 500;
+    text-decoration: none;
+    font-size: 14px;
+}

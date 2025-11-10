@@ -1,0 +1,95 @@
+<ion-header>
+	<div>
+		<ion-toolbar class="varitaionslect ion-no-padding ion-no-margin" style="padding-top: 10px !important;">
+			<ion-item class="ion-no-padding ion-no-margin" style="--inner-padding-end: 0 !important;" no-padding>
+				<ion-row class="ion-align-items-end">
+					<ion-col>
+						<div class="txt500"><b>New Request Item</b></div>
+					</ion-col>
+				</ion-row>
+			</ion-item>
+
+			<ion-buttons slot="end">
+				<ion-button (click)="dismiss()" class="closemodal" mode="ios" style=" bottom: 35px; right: 0;">
+					<ion-icon name="close-outline" style="color: #999;"></ion-icon>
+				</ion-button>
+			</ion-buttons>
+		</ion-toolbar>
+	</div>
+</ion-header>
+
+<ion-content>
+  <div class="grnlist">
+    <ion-row class="polistitemv2">
+        <ion-col size="6">
+            <h3>Change Type </h3>
+            <ion-select value="variation" class="pickupselect"
+                [(ngModel)]="modalData.is_gold" (ionChange)="recalculate(modalData)">
+                <ion-select-option value="0">Not Gold</ion-select-option>
+                <ion-select-option value="1">Is Gold</ion-select-option>
+                <ion-select-option value="2">Remain Unchange</ion-select-option>
+            </ion-select>
+        </ion-col>
+
+        <ion-col size="6">
+            <h3>Select Item Type</h3>
+            <ion-select value="variation" interface="action-sheet" cancelText='Cancel' class="pickupselect"
+                [(ngModel)]="modalData.item_type_id_to" (ionChange)="recalculate(modalData)" [disabled]="modalData.is_gold == 0">
+                <ion-select-option *ngFor="let x of customerBItemTypeList"
+                    value="{{x.item_type_id}}">{{x.title}}
+                </ion-select-option>
+            </ion-select>
+        </ion-col>
+
+        <ion-col size="6">
+            <h3>Select Item</h3>
+            <ion-select value="variation" class="pickupselect" [disabled]="modalData.is_gold == 0"
+                [(ngModel)]="modalData.gold_pure_id_to" (ionChange)="recalculate(modalData)">
+                <ion-select-option *ngFor="let x of customerGoldPurityList" value="{{x.gold_pure_id}}">{{x.gold_name}}
+                    ({{x.override_gold_pure_percent}}%)</ion-select-option>
+            </ion-select>
+        </ion-col>
+
+        <ion-col size="6">
+            <h3>Weight</h3>
+            <h2>
+                <ion-input type="number" style="font-weight: 300; font-size: 18px;" [(ngModel)]="modalData.weight_to" (ionChange)="recalculate(modalData)"></ion-input>
+            </h2>
+        </ion-col>
+
+        <ion-col size="6" *ngIf="modalData.is_editable == 0">
+            <h3>Purity</h3>
+            <h2>
+                <ion-input type="number" style="font-weight: 300; font-size: 18px;" [(ngModel)]="modalData.gold_pure_percentage_to" disabled="disabled"></ion-input>
+            </h2>
+        </ion-col>
+
+        <ion-col size="6" *ngIf="modalData.is_editable == 1">
+            <h3>Purity</h3>
+            <h2>
+                <ion-input type="number" style="font-weight: 300; font-size: 18px;" [(ngModel)]="modalData.gold_pure_percentage_to" (ionBlur)="recalculate(modalData)"></ion-input>
+            </h2>
+        </ion-col>
+
+        <ion-col size="6">
+            <h3>XAU</h3>
+            <h2>
+                <ion-input type="number" style="font-weight: 300; font-size: 18px;" [(ngModel)]="modalData.XAU_to" disabled="disabled"></ion-input>
+            </h2>
+        </ion-col>
+
+
+        <ion-row style="border-top: 2px solid #cbcbcb; margin-top: 10px; width:100%">
+            <ion-col size="12">
+                <ion-button class="buttontheme-orange" mode="ios" (click)="dismiss()"
+                    expand="block">Submit
+                </ion-button>
+            </ion-col>
+        </ion-row>
+
+    </ion-row>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-button color="danger" mode="ios" (click)="deleteItem()" expand="block">Delete Item</ion-button>
+</ion-footer>

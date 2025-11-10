@@ -1,0 +1,46 @@
+<ion-header>
+	<div>
+		<ion-toolbar class="varitaionslect ion-no-padding ion-no-margin" style="padding-top: 10px !important;">
+			<ion-item class="ion-no-padding ion-no-margin" style="--inner-padding-end: 0 !important;" no-padding>
+				<ion-row class="ion-align-items-end">
+					<ion-col>
+						<div class="txt500">Sign Here</div>
+					</ion-col>
+				</ion-row>
+			</ion-item>
+
+			<ion-buttons slot="end">
+				<ion-button (click)="dismiss()" class="closemodal" mode="ios" style=" bottom: 35px; right: 0;"><ion-icon name="close-outline" style="color: #999;"></ion-icon></ion-button>
+			</ion-buttons>
+		</ion-toolbar>
+	</div>
+</ion-header>
+
+<ion-content>
+	<ion-item class="ion-no-padding itemspecial" mode="ios" lines="none">
+		<ion-row class="productorderlist ">
+
+			<ion-col size="12" class="productdetailinfor">
+				<ion-row class="ion-align-items-center">
+					<ion-col size="12" style="padding-bottom:0;">
+						<ion-title>
+							Signature Pad
+						</ion-title>
+						<div class="spacer" style="height: 10px"></div>
+						<canvas class="signature-pad-canvas" #canvas width="900" height="400" style="touch-action: none;"></canvas>
+					</ion-col>
+				</ion-row>
+			</ion-col>
+
+		</ion-row>
+	</ion-item>
+</ion-content>
+
+<ion-footer lines="none">
+	<ion-toolbar class="ion-no-padding" lines="none">
+		<div class="fixbuttonbottom" mode="md" style="background-color: #fff; padding-left: 5px; padding-right: 5px;">
+			<ion-button (click)="clear()" [disabled]="isCanvasBlank()" expand="block" >Clear <ion-icon name="close-circle-outline"></ion-icon> </ion-button >
+			<ion-button (click)="submit()" [disabled]="isCanvasBlank()" expand="block" >Submit <ion-icon name="chevron-forward-outline"></ion-icon> </ion-button >
+		</div>
+	</ion-toolbar>
+</ion-footer>

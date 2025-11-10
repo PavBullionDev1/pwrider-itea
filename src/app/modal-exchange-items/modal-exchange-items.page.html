@@ -1,0 +1,167 @@
+<ion-header>
+  <div>
+    <ion-toolbar class="varitaionslect ion-no-padding ion-no-margin" style="padding-top: 10px !important;">
+      <ion-item class="ion-no-padding ion-no-margin" style="--inner-padding-end: 0 !important;" no-padding>
+        <ion-row class="ion-align-items-end">
+          <ion-col>
+            <div class="txt500"><b>Item Detail</b></div>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+
+      <ion-buttons slot="end">
+        <ion-button (click)="dismiss()" class="closemodal" mode="ios" style=" bottom: 35px; right: 0;">
+          <ion-icon name="close-outline" style="color: #999;"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </div>
+</ion-header>
+
+<ion-content>
+  <div class="grnlist">
+    <ion-row class="polistitemv2">
+      <ion-col size="6">
+        <h3>Select Item Type</h3>
+        <ion-select value="variation" interface="action-sheet" cancelText='Cancel' class="pickupselect"
+                    [(ngModel)]="item_type_id" (ionChange)="recalculate()">
+          <ion-select-option *ngFor="let x of itemTypeList"
+                             value="{{x.id}}">{{x.title}}
+          </ion-select-option>
+        </ion-select>
+      </ion-col>
+
+      <ion-col size="6">
+        <h3>Select Item Code</h3>
+        <ion-select value="variation" class="pickupselect"
+                    [(ngModel)]="gold_pure_id" (ionChange)="recalculateJewel()">
+          <ion-select-option *ngFor="let x of selectionGoldPureList" value="{{x.gold_pure_id}}">{{x.gold_name}}
+            ({{x.gold_pure_percent}}%)</ion-select-option>
+        </ion-select>
+      </ion-col>
+<!--      <ion-col size="6" *ngIf="item_type_id != 1">-->
+<!--        <h3>Select Item Code</h3>-->
+<!--        <ion-select value="variation" class="pickupselect"-->
+<!--                    [(ngModel)]="gold_pure_id" (ionChange)="recalculateJewel()">-->
+<!--          <ion-select-option *ngFor="let x of selectionGoldPureList" value="{{x.gold_pure_id}}">{{x.gold_name}}-->
+<!--            ({{x.gold_pure_percent}}%)</ion-select-option>-->
+<!--        </ion-select>-->
+<!--      </ion-col>-->
+
+      <ion-col size="6">
+        <h3>Purity</h3>
+        <h2 class="totaltitle">
+          <ion-input type="number" [(ngModel)]="percentage" (ionChange)="recalculate()"></ion-input>
+          <!-- (ionChange)="recalculate1(items)" -->
+        </h2>
+      </ion-col>
+
+      <ion-col size="6">
+        <h3>XAU</h3>
+        <h2>
+          <ion-input type="number" [(ngModel)]="XAU"
+                     disabled="disabled"></ion-input>
+        </h2>
+      </ion-col>
+
+<!--      <ion-col size="6">-->
+<!--        <h3>Customer Purity</h3>-->
+<!--        <h2 class="totaltitle">-->
+<!--          <ion-input type="number" [(ngModel)]="customer_percentage" (ionChange)="recalculate()"></ion-input>-->
+<!--          &lt;!&ndash; (ionChange)="recalculate1(items)" &ndash;&gt;-->
+<!--        </h2>-->
+<!--      </ion-col>-->
+
+<!--      <ion-col size="6">-->
+<!--        <h3>XAU</h3>-->
+<!--        <h2>-->
+<!--          <ion-input type="number" [(ngModel)]="customer_XAU"-->
+<!--                     disabled="disabled"></ion-input>-->
+<!--        </h2>-->
+<!--      </ion-col>-->
+
+
+      <ion-row style="border-top: 2px solid #cbcbcb; width:100%">
+
+        <ion-col size="6" class=" ion-align-self-end">
+          <h3 class="totaltitle">GRAM</h3>
+        </ion-col>
+        <ion-col size="6">
+          <h2 class="totaltitle" style="border: 1px solid black;">
+            <ion-input type="number" [(ngModel)]="weight" (ionChange)="recalculate()" #gramInput
+                       (click)="gramInput.value = ''"
+            ></ion-input>
+          </h2>
+        </ion-col>
+
+        <ion-col size="6" class=" ion-align-self-end" *ngIf="is_editable == 1">
+          <h3 class="totaltitle">Barcode</h3>
+        </ion-col>
+        <ion-col size="6">
+          <h2 class="totaltitle" style="border: 1px solid black;" *ngIf="is_editable == 1">
+            <ion-input type="text" [(ngModel)]="barcode" #gramInput
+            ></ion-input>
+          </h2>
+        </ion-col>
+
+        <ion-col size="12">
+          <ion-button class="buttontheme-orange" mode="ios" (click)="submit()"
+                      expand="block" [disabled]="is_editable && (item_type_id == 2 && !barcode)">Submit
+          </ion-button>
+        </ion-col>
+
+        <ion-col size="12">
+          <ion-button color="primary" mode="ios" (click)="openActionSheet()"
+                      expand="block">Upload Photos
+          </ion-button>
+        </ion-col>
+
+        <h1 *ngIf="isLoading">Uploading.. please wait..</h1>
+        <ion-col size="12" >
+          <ion-row *ngIf="image.length !== 0">
+            <ion-col size="12" >
+              <ion-slides pager="true" [options]="slideOpts">
+                <!-- Item Image::Start -->
+                <ion-slide class="item-slide" *ngFor="let x of image"><!-- List item images -->
+                  <div class="image-slide-content">
+                    <img [src]="x" class="itemImage">
+                  </div>
+                  <button (click)="delete_img(x)" class="deleteImageBtn">x</button>
+                </ion-slide>
+                <!-- Item Image::End -->
+              </ion-slides>
+            </ion-col>
+          </ion-row>
+          <!-- <ion-grid>
+            <ion-row>
+              <ion-col size="4" *ngFor="let item of modalData.MultipleImageUrl">
+                <img [src]="item" style="width: 100%;" class="logoimg">
+              </ion-col>
+            </ion-row>
+          </ion-grid>             -->
+        </ion-col>
+        <ion-col *ngIf="showImage">
+          <ion-row *ngIf="showImage">
+            <ion-col >
+
+              <img [src]="showImageData" class="itemImage">
+              <button (click)="show_img(showImageData)" class="deleteImageBtn">x</button>
+
+            </ion-col>
+          </ion-row>
+          <!-- <ion-grid>
+            <ion-row>
+              <ion-col size="4" *ngFor="let item of modalData.MultipleImageUrl">
+                <img [src]="item" style="width: 100%;" class="logoimg">
+              </ion-col>
+            </ion-row>
+          </ion-grid>             -->
+        </ion-col>
+
+      </ion-row>
+    </ion-row>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-button color="danger" mode="ios" (click)="deleteItem(items)" expand="block">Delete Item</ion-button>
+</ion-footer>

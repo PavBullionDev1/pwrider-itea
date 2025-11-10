@@ -1,0 +1,91 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<app-common-header [pageSource]="'job-log'" [headerTitle]="'Job Log'"></app-common-header>
+
+<ion-content class="ordelist ion-padding-top">
+
+	<ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+		<ion-refresher-content></ion-refresher-content>
+	</ion-refresher>
+
+	<ion-row class="ion-align-items-center">
+		<ion-col size="5">
+			<h5 style="margin-top: 5px; margin-left: 12px;font-weight: 600;">Total Count: {{sales_order_List?.length}}
+			</h5>
+		</ion-col>
+	</ion-row>
+
+  <ion-item>
+		<ion-label position="floating">Search by Tracking Number/Name/HP</ion-label>
+		<ion-input type="search" clearInput [(ngModel)]="filterText"></ion-input>
+	</ion-item>
+
+	<ion-accordion-group>
+		<ion-accordion value="{{item.tracking_no}}{{i}}" class="ion-no-padding" *ngFor="let item of sales_order_List|filter:{ tracking_no: filterText, recipient_name: filterText, sender_name: filterText, customer_name: filterText, recipient_telephone: filterText, sender_telephone: filterText} : false;let i = index;">
+			<ion-item slot="header" class="ion-no-padding ion-no-margin" mode="ios" lines="none" style="margin-left: 15px;">
+        <ion-label>
+          <ion-row class="productorderlist">
+            <div *ngIf="item.delivery_status==0">
+              <ion-badge color="warning">Pending</ion-badge>
+            </div>
+            <div *ngIf="item.delivery_status==1">
+              <ion-badge color="success">Completed</ion-badge>
+            </div>
+            <div *ngIf="item.delivery_status==2">
+              <ion-badge color="danger">Returned</ion-badge>
+            </div>
+            <div *ngIf="item.cod_collect_amount>0">
+              <ion-badge color="tertiary">COD</ion-badge>
+            </div>
+            <div *ngIf="item.is_urgent==1">
+              <ion-badge color="danger">!</ion-badge>
+            </div>
+            <div *ngIf="item.is_urgent==2">
+              <ion-badge color="danger">! !</ion-badge>
+            </div>
+
+            <ion-col size="12" class="productdetail">
+              <div>
+                <h5 class="txt400" style="margin-top: 0;">Tracking No:
+                  <div>{{item.tracking_no}}</div>
+                </h5>
+                <h5 class="txt400">Status:
+                  <div>{{item.delivery_status_text}}</div>
+								</h5>
+                <h5 class="txt400">Service Type:
+                  <div>{{item.service_type}}</div>
+								</h5>
+                <h5 class="txt400">Ordered By:
+                  <div>{{item.customer_name}}</div>
+								</h5>
+                <h5 class="txt400">Receiver Name:
+                  <div>{{item.recipient_name}}</div>
+								</h5>
+              </div>
+            </ion-col>
+          </ion-row>
+				</ion-label>
+			</ion-item>
+
+			<ion-list slot="content">
+				<ion-item
+					style="margin-left: 0 !important;margin-top: 0;border-top: 1px dashed #b4b4b4; margin-left: -5px !important;">
+					<ion-row class="productorderlist">
+						<ion-col size="12" class="productdetail" style="padding:0;">
+              <div class="buttonaction">
+                <ion-row>
+                    <ion-col size="4">
+                    <ion-button class="joblogdetail" [routerLink]="['/job-log-history/'+item.sales_order_id]">Detail </ion-button>
+                    </ion-col>
+                </ion-row>
+            </div>
+						</ion-col>
+					</ion-row>
+				</ion-item>
+			</ion-list>
+		</ion-accordion>
+	</ion-accordion-group>
+
+	<div class="spacer" style="height: 40px"></div>
+</ion-content>
+
+<mytab></mytab>

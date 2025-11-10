@@ -1,0 +1,211 @@
+<!-- page.html -->
+<ion-header>
+  <div>
+    <ion-toolbar class="varitaionslect ion-no-padding ion-no-margin" style="padding-top: 10px !important;">
+      <ion-item class="ion-no-padding ion-no-margin" style="--inner-padding-end: 0 !important;" no-padding>
+        <ion-row class="ion-align-items-end">
+          <ion-col *ngIf="task_id">
+            <div class="txt500" *ngIf="job_type == '2'"><b>Delivery Order - {{task_id}}</b></div>
+            <div class="txt500" *ngIf="job_type == '3'"><b>Purchase Order - {{task_id}}</b></div>
+            <div class="txt500" *ngIf="job_type == '4'"><b>Customize Task - {{task_id}}</b></div>
+            <div class="txt500" *ngIf="job_type == '0'"><b>Logistic Task - {{task_id}}</b></div>
+          </ion-col>
+          <ion-col *ngIf="!task_id">
+            <div class="txt500"><b>Customize Task</b></div>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+
+      <ion-buttons slot="end">
+        <ion-button (click)="dismiss()" class="closemodal" mode="ios" style="bottom: 35px; right: 0;">
+          <ion-icon name="close-outline" style="color: #999;"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </div>
+</ion-header>
+
+<ion-content>
+  <div class="grnlist" *ngIf="job_type == '4'">
+    <div class="address-details" *ngIf="task_id && taskData">
+      <h5>Address:</h5>
+      <p>{{taskData.address1}}</p>
+      <p>{{taskData.address2}}</p>
+      <p>{{taskData.postcode}}, {{taskData.city}}</p>
+      <p>{{taskData.state}}</p>
+    </div>
+    <ion-row>
+      <ion-col size="3" style="margin-top: 10px;">
+        <ion-label style="font-size: 13px; color: #999;">Title:</ion-label>
+      </ion-col>
+      <ion-col size="9">
+        <ion-input [(ngModel)]="title" type="text" placeholder="Enter Title" style="font-size: 13px;" [disabled]="!task_id"></ion-input>
+      </ion-col>
+    </ion-row>
+
+
+    <!-- Remark Section -->
+    <ion-row *ngIf="task_id">
+      <ion-col size="3" style="margin-top: 10px;">
+        <ion-label style="font-size: 13px; color: #999;">Remark:</ion-label>
+      </ion-col>
+      <ion-col size="9">
+        <ion-textarea [(ngModel)]="remark" placeholder="Enter Remark" style="font-size: 13px; border: 1px solid #ccc; border-radius: 4px; padding: 8px;" rows="4"></ion-textarea>
+      </ion-col>
+    </ion-row>
+
+
+    <!-- Add Photo Section -->
+    <ion-col size="12" class="productdetailinfor" *ngIf="title == 'Eat' || task_id > 0">
+      <div class="ion-align-items-center">
+        <ion-button color="warning" mode="ios" (click)="openActionSheet()" expand="block">
+          <span style="padding: 10px;">Upload Photo</span>
+        </ion-button>
+      </div>
+      <ion-row style="text-align: center">
+        <ion-col size="12" class="ion-align-self-center" *ngIf="isLoading">
+          <ion-spinner name="crescent" style="height: 50px; width: 50px;"></ion-spinner>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12" class="ion-align-self-center" *ngIf="photo">
+          <img [src]="photo" style="width: 100%;" class="logoimg">
+          <button class="deleteImageBtn" (click)="deletePhoto()" style="font-size: 30px; border-radius: 50%; padding: 5px 8px; top: 5%; right: 3%;">
+            <ion-icon name="trash-outline"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </div>
+
+  <div class="grnlist" *ngIf="job_type == '0'">
+    <div class="address-details" *ngIf="task_id > 0">
+      <h5>Address:</h5>
+      <p>{{taskData.address1}}</p>
+      <p>{{taskData.address2}}</p>
+      <p>{{taskData.postcode}}, {{taskData.city}}</p>
+      <p>{{taskData.state}}</p>
+    </div>
+    <ion-row>
+      <ion-col>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Recipient Information</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <p><strong>Name:</strong> {{selectedTaskData.recipient_name}}</p>
+            <p><strong>Address 1:</strong> {{selectedTaskData.recipient_address1}}</p>
+            <p><strong>Address 2:</strong> {{selectedTaskData.recipient_address2}}</p>
+            <p><strong>State:</strong> {{selectedTaskData.recipient_state}}</p>
+            <p><strong>Postcode:</strong> {{selectedTaskData.recipient_postcode}}</p>
+            <p><strong>Country:</strong> {{selectedTaskData.recipient_country}}</p>
+            <p><strong>Phone:</strong> {{selectedTaskData.recipient_mobile}}</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Sender Information</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <p><strong>Name:</strong> {{selectedTaskData.sender_name}}</p>
+            <p><strong>Address 1:</strong> {{selectedTaskData.sender_address1}}</p>
+            <p><strong>Address 2:</strong> {{selectedTaskData.sender_address2}}</p>
+            <p><strong>State:</strong> {{selectedTaskData.sender_state}}</p>
+            <p><strong>Postcode:</strong> {{selectedTaskData.sender_postcode}}</p>
+            <p><strong>Country:</strong> {{selectedTaskData.sender_country}}</p>
+            <p><strong>Phone:</strong> {{selectedTaskData.sender_mobile}}</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <div class="grnlist" *ngIf="selectedTasks.length > 0 && job_type != '4'">
+    <ion-row class="polistitemv2" style="padding: 10px; margin-top: 10px;">
+      <div class="address-details" *ngIf="task_id > 0">
+        <h5>Address:</h5>
+        <p>{{taskData.address1}}</p>
+        <p>{{taskData.address2}}</p>
+        <p>{{taskData.postcode}}, {{taskData.city}}</p>
+        <p>{{taskData.state}}</p>
+      </div>
+      <table class="table" border="1" cellpadding="10" cellspacing="0" >
+        <thead>
+        <tr>
+          <th style="width: 20%;">No.</th>
+          <th style="width: 40%;">Serial No</th>
+          <th style="width: 40%;">Total XAU</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of selectedTasks; let i = index;" >
+          <td style="font-size: 14px;"><ion-checkbox [(ngModel)]="item.selected" *ngIf="selectedTasks.length > 1" (ionChange)="chosenTask(selectedTasks)"></ion-checkbox> {{ i + 1 }}</td>
+          <td style="font-size: 12px;">{{ item.serial_no }}</td>
+          <td style="font-size: 14px;">{{ item.XAU_amount }}</td>
+        </tr>
+        </tbody>
+      </table>
+      <div *ngIf="remark_pic">
+        <label>Remark Pic:</label>
+        <ion-row>
+          <ion-col *ngFor="let item of remark_pic; let i = index;" size="4">
+            <ion-img [src]="item.img"></ion-img>
+          </ion-col>
+        </ion-row>
+      </div>
+    </ion-row>
+  </div>
+  <div class="grnlist" *ngIf="task_id > 0">
+    <ion-row class="polistitemv2" style="padding: 10px; margin-top: 10px;">
+      <ion-col size="12">
+        <ion-item lines="none">
+          <ion-label style="font-size: 13px; color: #999; ">Action</ion-label>
+          <ion-select [(ngModel)]="taskItemAction" style="font-size: 13px;">
+            <ion-select-option value="">Select Action</ion-select-option>
+            <ion-select-option value="0" *ngIf="is_start == 1 && chosenTaskList.length == 0">Start Job</ion-select-option>
+            <ion-select-option value="1">Reschedule</ion-select-option>
+            <ion-select-option value="2">Transfer</ion-select-option>
+            <ion-select-option value="3">Give Up</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="5" *ngIf="taskItemAction == '1'">
+        <ion-item lines="none">
+          <h5 style="font-size: 13px; margin:0; color: #999; padding-top: 10px;">Job Date:</h5>
+        </ion-item>
+      </ion-col>
+      <ion-col size="3" style="display: flex; justify-content: flex-start; align-items: center;" *ngIf="taskItemAction == '1'">
+        <div style="font-size: 13px; color: black;">{{ selectedTaskItemDate }}</div>
+      </ion-col>
+      <ion-col size="4" style="display: flex; justify-content: flex-start; align-items: center;" *ngIf="taskItemAction == '1'">
+        <ion-button (click)="is_show = !is_show">Change</ion-button>
+      </ion-col>
+      <div style="margin: 0 auto;" *ngIf="is_show == true && taskItemAction == '1'" >
+        <ion-datetime presentation="date" [(ngModel)]="selectedTaskItemDate" id="datetime"></ion-datetime>
+      </div>
+
+      <ion-col size="12">
+        <ion-item lines="none" *ngIf="taskItemAction == '2'">
+          <ion-label style="font-size: 13px; color: #999; ">Transfer To</ion-label>
+          <ion-select [(ngModel)]="taskItemTransferTo" style="font-size: 13px;">
+            <ion-select-option value="">Select Rider</ion-select-option>
+            <ion-select-option *ngFor="let item of userList" value="{{ item.user_id }}">{{ item.name }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+    </ion-row>
+  </div>
+
+
+</ion-content>
+
+<ion-footer>
+  <ion-button color="primary" mode="ios" (click)="submit()" expand="block" [disabled]="title != 'Start Daily Job' && is_start != 1 && task_id == 0">Confirm</ion-button>
+  <ion-button color="danger" mode="ios" (click)="dismiss()" expand="block">Cancel</ion-button>
+</ion-footer>

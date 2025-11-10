@@ -1,0 +1,246 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<app-common-header [pageSource]="'pickup'" [headerTitle]="'Delivery'"></app-common-header>
+
+<ion-content class="ordelist ion-padding-top">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+    <ion-row  class="ion-align-items-center">
+        <ion-col size="5">
+            <h5 style="margin-top: 5px; margin-left: 12px;font-weight: 600;">Total Count: {{riderList.length}}</h5>
+        </ion-col>
+        <ion-col size="7">
+            <ion-button [routerLink]="['/delivery-order']" node="ios" class="arangebutton" expand="block"> Arrange Order <ion-icon name="code-working-outline" class="code-working-outline"></ion-icon></ion-button>
+        </ion-col>
+    </ion-row>
+
+    <ion-accordion-group>
+      <ion-accordion value="{{x.tracking_no}}{{i}}" *ngFor="let x of riderList ; let i = index" class="ion-no-padding">
+
+       <ion-item slot="header" class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+          <ion-label>
+              <ion-row class="productorderlist">
+                <div *ngIf="x.cod_collect_amount>0">
+                  <ion-badge color="tertiary">COD</ion-badge>
+                </div>
+                <div *ngIf="x.is_urgent==1">
+                  <ion-badge color="danger">!</ion-badge>
+                </div>
+                <div *ngIf="x.is_urgent==2">
+                  <ion-badge color="danger">! !</ion-badge>
+                </div>
+                  <ion-col size="12" class="productdetail">
+                    <div>
+                        <h5 class="txt400" style="margin-top: 0;">Ordered By:
+                          <div>{{x.customer_name}}</div>
+                        </h5>
+                        <h5 class="txt400" style="margin-top: 0;">Receiver Name:
+                          <div>{{x.recipient_name}}</div>
+                        </h5>
+                        <h5 class="txt400">Delivery/Receiver Address:
+                          <div>{{x.recipient_address1}},<br/>{{x.recipient_address2}},<br/>{{x.recipient_city}},{{x.recipient_postcode}}</div>
+                        </h5>
+                        <h5 class="txt400" style="margin-top: 0;" *ngIf="x.cod_collect_amount>0">COD Amount:
+                          <div>RM {{x.cod_collect_amount}}</div>
+                        </h5>
+                        <h5 class="txt400" style="margin-top: 0;">Remark:
+                          <div>{{x.remark?x.remark:'-'}}</div>
+                        </h5>
+                    </div>
+                </ion-col>
+            </ion-row>
+            </ion-label>
+        </ion-item>
+
+        <ion-list slot="content">
+          <ion-item style="margin-left: 0 !important;margin-top: 0;border-top: 1px dashed #b4b4b4;">
+            <ion-row class="productorderlist">
+              <ion-col size="12" class="productdetail">
+                <div >
+                  <h5 class="txt400">Tracking No: <div>{{x.tracking_no}}</div></h5>
+                  <h5 class="txt400">Status: <div>{{x.delivery_status_text}}</div></h5>
+                  <h5 class="txt400">Service Type: <div>{{x.service_type}}</div></h5>
+                  <h5 class="txt400">Order Date: <div>{{x.order_date}}</div></h5>
+                  <h5 class="txt400">Delivery Date/Time: <div>{{x.delivery_date}} {{x.delivery_time}}</div></h5>
+                </div>
+
+                <div class="buttonaction">
+                    <ion-row>
+                        <ion-col size="4">
+                        <ion-button class="pickupdetail" [routerLink]="['/delivery-detail/'+x.job_log_id]">Detail </ion-button>
+                        </ion-col>
+                        <ion-col size="2">
+                          <a class="wazebtn" target="_blank" href="https://waze.com/ul?q={{x.recipient_address1}},{{x.recipient_address2}},{{x.recipient_city}},{{x.recipient_postcode}}">   <img src="../../assets/waze.png"></a>
+                        </ion-col>
+                        <ion-col size="2">
+                             <a class="googlemapbtn" target="_blank" href="http://maps.google.com/?q={{x.recipient_address1}},{{x.recipient_address2}},{{x.recipient_city}},{{x.recipient_postcode}}"><img src="../../assets/google-maps.png"></a>
+                        </ion-col>
+                        <ion-col size="2">
+                          <a  class="whatsappbtn" target="_blank" href="https://api.whatsapp.com/send/?phone={{x.recipient_telephone}}&text=Dear+Valued+Customer%2C+RIDER+will+be+delivery+up+your+shipment+within+30mins&app_absent=0"> <ion-icon name="logo-whatsapp"></ion-icon></a>
+                        </ion-col>
+                        <ion-col size="2">
+                             <a target="_blank" class="callbtn" href="tel:{{x.recipient_telephone}}"> <ion-icon name="call"></ion-icon></a>
+                        </ion-col>
+                    </ion-row>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-item>
+
+        </ion-list>
+      </ion-accordion>
+    </ion-accordion-group>
+
+  <!-- <ion-accordion-group>
+    <ion-accordion value="{{x.tracking_no}}{{i}}" *ngFor="let x of riderList ; let i = index" class="ion-no-padding">
+
+     <ion-item slot="header" class="ion-no-padding ion-no-margin" mode="ios" lines="none">
+        <ion-label>
+            <ion-row class="productorderlist">
+              <div *ngIf="x.cod_collect_amount>0">
+                <ion-badge color="tertiary">COD</ion-badge>
+              </div>
+              <div *ngIf="x.is_urgent==1">
+                <ion-badge color="danger">!</ion-badge>
+              </div>
+              <div *ngIf="x.is_urgent==2">
+                <ion-badge color="danger">! !</ion-badge>
+              </div>
+                <ion-col size="12" class="productdetail">
+                  <div>
+                      <h5 class="txt400" style="margin-top: 0;">Tracking No:
+                          <div>{{x.tracking_no}}</div>
+                      </h5>
+
+                      <h5 class="txt400">Delivery/Recipient Address: <div>{{x.recipient_address1}},<br/>{{x.recipient_address2}},<br/>{{x.recipient_city}},{{x.recipient_postcode}}</div></h5>
+                      <h5 class="txt400" style="margin-top: 0;" *ngIf="x.cod_collect_amount>0">COD Amount:
+                        <div>RM {{x.cod_collect_amount}}</div>
+                    </h5>
+                  </div>
+              </ion-col>
+          </ion-row>
+          </ion-label>
+      </ion-item>
+
+      <ion-list slot="content">
+        <ion-item style="margin-left: 0 !important;margin-top: 0;border-top: 1px dashed #b4b4b4;">
+          <ion-row class="productorderlist">
+            <ion-col size="12" class="productdetail">
+              <div >
+
+                  <h5 class="txt400">Status: <div>{{x.delivery_status_text}}</div></h5>
+
+                  <h5 class="txt400">Order Date: <div>{{x.order_date}}</div></h5>
+
+                  <h5 class="txt400">Delivery Date: <div>{{x.delivery_date}}</div></h5>
+
+                  <h5 class="txt400">Delivery Time: <div>{{x.delivery_time}}</div></h5>
+
+                  <h5 class="txt400">Ordered By: <div>{{x.customer_name}}</div></h5>
+
+
+                  <div class="remarkdetail">
+                      <h5 class="txt400">Remark: <div>{{x.remark?x.remark:'-'}}</div></h5>
+                  </div>
+              </div>
+
+              <div class="buttonaction">
+                  <ion-row>
+                      <ion-col size="4">
+                      <ion-button class="pickupdetail" [routerLink]="['/delivery-detail/'+x.job_log_id]">Detail </ion-button>
+                      </ion-col>
+                      <ion-col size="2">
+                        <a class="wazebtn" target="_blank" href="https://waze.com/ul?q={{x.recipient_address1}},{{x.recipient_address2}},{{x.recipient_city}},{{x.recipient_postcode}}">   <img src="../../assets/waze.png"></a>
+                      </ion-col>
+                      <ion-col size="2">
+                           <a class="googlemapbtn" target="_blank" href="http://maps.google.com/?q={{x.recipient_address1}},{{x.recipient_address2}},{{x.recipient_city}},{{x.recipient_postcode}}"><img src="../../assets/google-maps.png"></a>
+                      </ion-col>
+                      <ion-col size="2">
+                        <a  class="whatsappbtn" target="_blank" href="https://api.whatsapp.com/send/?phone={{x.recipient_telephone}}&text=Dear+Valued+Customer%2C+RIDER+will+be+delivery+up+your+shipment+within+30mins&app_absent=0"> <ion-icon name="logo-whatsapp"></ion-icon></a>
+                      </ion-col>
+                      <ion-col size="2">
+                           <a target="_blank" class="callbtn" href="tel:{{x.recipient_telephone}}"> <ion-icon name="call"></ion-icon></a>
+                      </ion-col>
+                  </ion-row>
+
+              </div>
+
+            </ion-col>
+          </ion-row>
+        </ion-item>
+
+      </ion-list>
+    </ion-accordion>
+
+  </ion-accordion-group> -->
+  <!-- <ion-item *ngFor="let x of riderList" class="ion-no-padding" mode="ios" lines="none">
+      <ion-row class="productorderlist">
+        <ion-col size="12" class="productdetail">
+          <div [routerLink]="['/delivery-detail/'+x.job_log_id]">
+              <h2  class="txt500">
+                {{x.serial_no}}
+              </h2>
+
+              <h5 class="txt400">CN. No: <div>{{x.tracking_no}}</div></h5>
+
+              <h5 class="txt400">Status: <div>{{x.delivery_status_text}}</div></h5>
+
+              <h5 class="txt400">Order Date: <div>{{x.order_date}}</div></h5>
+
+              <h5 class="txt400">Pick Up Date: <div>{{x.delivery_date}}</div></h5>
+
+              <h5 class="txt400">Pick Up Time: <div>{{x.delivery_time}}</div></h5>
+
+              <h5 class="txt400">Ordered By: <div>{{x.customer_name}}</div></h5>
+
+              <div class="remarkdetail">
+                  <h5 class="txt400">Remark: <div>{{x.remark?x.remark:'-'}}</div></h5>
+              </div>
+          </div>
+
+
+          <div class="buttonaction">
+              <ion-row>
+                  <ion-col size="4">
+                  <ion-button class="pickupdetail" [routerLink]="['/delivery-detail/'+x.job_log_id]">Detail </ion-button>
+                  </ion-col>
+                  <ion-col size="2">
+                    <a class="wazebtn" target="_blank" href="https://waze.com/ul?q={{x.recipient_address1}},{{x.recipient_address2}},{{x.recipient_city}},{{x.recipient_postcode}}">  <img src="../../assets/waze.png"></a>
+                  </ion-col>
+                  <ion-col size="2">
+                       <a class="googlemapbtn" target="_blank" href="http://maps.google.com/?q={{x.recipient_address1}},{{x.recipient_address2}},{{x.recipient_city}},{{x.recipient_postcode}}"> <img src="../../assets/google-maps.png"></a>
+                  </ion-col>
+                  <ion-col size="2">
+                       <a  class="whatsappbtn" target="_blank" href="https://api.whatsapp.com/send/?phone={{x.recipient_telephone}}&text=Dear+Valued+Customer%2C+RIDER+will+be+delivered+your+shipment+within+30mins&app_absent=0"> <ion-icon name="logo-whatsapp"></ion-icon></a>
+                  </ion-col>
+                  <ion-col size="2">
+                       <a target="_blank" class="callbtn" href="tel:{{x.recipient_telephone}}"> <ion-icon name="call"></ion-icon></a>
+                  </ion-col>
+              </ion-row>
+
+          </div>
+         </ion-col>
+      </ion-row>
+  </ion-item>     -->
+
+  <ion-row style="width:100%;" *ngIf="has_riderlist==0">
+    <ion-col size="12" class="ion-text-center">
+      <div class="noitemincart ion-margin-top">
+        <img src="../../assets/gg-icon/attention-icon.svg" style="width: 100px;">
+        <h2 class="" style="color: #1A1A1A; font-weight: 600;">No any location</h2>
+      </div>
+    </ion-col>
+  </ion-row>
+
+  <!-- <ion-list> -->
+  <!-- <ion-col size="4" style="padding: 5px;">
+            <ion-item (click)="searchWishList()" lines="none" class="ion-no-padding">
+            <img src="../../assets/add-icon.svg" style="margin-top: 2px; width: 100%;">
+            </ion-item>
+        </ion-col>    -->
+
+  <!-- </div> -->
+  <div class="spacer" style="height: 40px"></div>
+</ion-content>
+
+<mytab></mytab>

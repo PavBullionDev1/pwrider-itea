@@ -1,0 +1,69 @@
+@use 'src/global';
+.voucherdetail{
+    
+    img.mainimage{
+        width: 100%;
+        border-radius: 10px;
+    }
+    
+    ion-card-content ion-card-title{
+       @include global.themeorangetxt;  
+            font-size: 20px !important;
+    }
+     
+    
+    ion-card-content h5{
+       @include global.themeorangetxt; 
+       font-size: 13px !important;
+       margin-top: 0;
+    }
+    
+    .desc{
+        font-size: 12px;
+        margin-bottom: 10px;
+        margin-top: 10px; 
+        color: #231f20;
+    }
+    
+    .shopinfomation{
+        
+    }
+    
+    .shopinfomation ul{
+        padding-left: 0 !important;
+    }
+    .shopinfomation ul li {
+        list-style: none;
+        font-size: 12px;
+        margin-bottom: 10px;
+        color: #231f20;
+    }
+    .shopinfomation ul li .iconimg img{
+        width: 13px;
+        margin-right: 3px;
+    }
+    .shopinfomation ul li .iconimg{
+        vertical-align: middle;
+    }
+    
+    h6{
+        margin-top: 20px;
+        font-size: 15px;
+        
+        .txtorange{
+          @include global.themeorangetxt;   
+        }
+    }
+
+    .buttontheme-orange{
+        @include global.btnthemeorange(65%,15px,3px);
+        text-align: left;
+        height: 45px;
+        margin-top: 20px;
+        box-shadow: 0px 0px 5px #b5b5b5;
+        letter-spacing: 0;
+        text-transform: capitalize;
+    }
+    
+    
+}

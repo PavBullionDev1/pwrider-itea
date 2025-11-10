@@ -1,0 +1,190 @@
+@use 'src/global';
+
+.detailicon{
+--color: #243a76;
+    position: absolute;
+    z-index: 5;
+    right: 0;
+    color: #243a76;
+    top: 0;
+    right: 0;
+    font-size: 25px;
+}
+
+.eachSupplier {
+    padding: 10px;
+    margin: 5px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.itemList {
+    font-size: 0.8em;
+}
+
+.buttonaction{
+    .pickupdetail{
+        width: 100%;
+        height: 35px;
+        font-size: 18px;
+        --background: #243a76;
+        color: #fbd23c;
+    }
+    .wazebtn{
+        margin-top:-7px;
+        height:30px;
+        img{
+          height:38px;
+          width:100%;
+        }
+    }
+    .googlemapbtn{
+        margin-top:-11px;
+        height:32px;
+        img{
+          height:40px;
+          width:100%;
+        }
+    }
+    .openmapbtn{
+
+        width: 100%;
+        height: 38px;
+        font-size: 13px;
+        margin-top: 3px;
+        background: #F6B606;
+        text-align: center;
+        padding-top: 11px;
+        border-radius: 6px;
+        ion-icon{
+            color: #fff;
+            float: inherit;
+            margin-top: -2px;
+            margin-right: 1px;
+            font-size: 18px;
+        }
+    }
+
+    .whatsappbtn{
+        display: inline-block;
+        width: 100%;
+        height: 38px;
+        font-size: 13px;
+        margin-top: 3px;
+        background: #29AC00;
+        text-align: center;
+        padding-top: 11px;
+        border-radius: 6px;
+        ion-icon{
+            color: #fff;
+            float: inherit;
+            margin-top: -2px;
+            margin-right: 1px;
+            font-size: 18px;
+        }
+    }
+
+    .callbtn{
+        display: inline-block;
+        width: 100%;
+        height: 38px;
+        font-size: 13px;
+        margin-top: 3px;
+        background: #3f51b5;
+        text-align: center;
+        padding-top: 11px;
+        border-radius: 6px;
+        ion-icon{
+            color: #fff;
+            float: inherit;
+            margin-top: -2px;
+            margin-right: 1px;
+            font-size: 18px;
+        }
+    }
+}
+
+.label {
+    padding: 5px;
+    margin-left: 5px;
+    background-color: rgba(255,0,0,0.5);
+    border-radius: 5px;
+}
+
+.table {
+    width: 100%;
+}
+
+.table td {
+    text-align: center;
+}
+
+.requestButton button{
+    background-color: red;
+    color: white;
+    font-size: 15px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.ordelist{
+    .productorderlist{
+        width: 100%;
+        
+        .productdetail{
+            
+            img{
+                width: 40px;
+                margin-right: 10px;
+            }
+        }
+    }
+    ion-accordion{
+        margin-bottom: 10px;
+    }
+    ion-item{
+        margin-right: 5px !important;
+        //background: #FFFFFF;
+        border-radius: 12px;
+        margin-top: 10px;
+        --inner-padding-end: 0;
+        margin-left: 18px;
+        margin-right: 18px !important;
+    
+    
+        h2{
+            margin-top: 0;
+            font-size: 15px;
+            font-weight: 600;
+            color: #243a76;
+        }
+
+        h5{
+            margin-top: 13px;
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 0;
+            color: #92a2ce;
+            padding-left: 15px;
+            
+            div{
+               color: #243a76;
+               font-weight: 600;
+               font-size: 17px;
+            }
+        }
+        .input-wrapper {
+            display: block !important;
+          }
+    }
+}
+
+h3.title{
+    margin-left: 18px;
+    margin-top: 0;
+    margin-bottom: -10px;
+    font-weight: 600;
+    font-size: 23px;
+    color: #243a76;
+    margin-top: 10px;
+}

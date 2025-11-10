@@ -1,0 +1,453 @@
+<app-common-header [pageSource]="'exchange-note'" [headerTitle]="'Exchange Note'"></app-common-header>
+
+<style>
+  /* Add horizontal scrolling for tables */
+  .ion-table-container {
+    overflow-x: auto; /* Enables horizontal scrolling */
+    width: 100%; /* Ensures the table container spans full width */
+  }
+
+
+  ion-content {
+    --background: #f7f8fc;
+    padding: 20px;
+  }
+
+  .form-container {
+    max-width: 600px;
+    margin: auto;
+  }
+
+  .input-group {
+    margin-bottom: 20px;
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .input-label {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 5px;
+    color: #333;
+  }
+
+  .input-field {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1rem;
+    margin-top: 5px;
+    width: 100%;
+  }
+
+  ion-select,
+  ion-textarea {
+    margin-top: 8px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1rem;
+  }
+
+  ion-label {
+    font-weight: 600;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 15px;
+    display: block;
+  }
+
+  .ion-table {
+    width: 100%;
+    margin-top: 20px;
+    background: #fff;
+    border-radius: 10px;
+    border-collapse: collapse;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .ion-table thead {
+    background-color: #007bff;
+    color: white;
+  }
+
+  .ion-table th,
+  .ion-table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+  }
+
+  .ion-table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+  }
+
+  .submit-button {
+    background-color: #007bff;
+    color: white;
+    border-radius: 10px;
+    padding: 15px;
+    font-size: 1.2rem;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+  }
+
+  .submit-button:hover {
+    background-color: #0056b3;
+  }
+
+  .clicked {
+    background-color: green; /* 青色 */
+  }
+
+  .default {
+    background-color: red; /* 红色 */
+  }
+
+  .diff {
+    background-color: red;
+  }
+
+
+  @media screen and (max-width: 600px) {
+    .ion-table th,
+    .ion-table td {
+      font-size: 0.9rem;
+    }
+
+    .input-group {
+      padding: 10px;
+    }
+
+    .submit-button {
+      font-size: 1rem;
+    }
+  }
+</style>
+
+<ion-content>
+  <div class="form-container">
+    <!-- Customer Name -->
+    <div class="input-group">
+      <div class="input-label">Customer Name</div>
+      <ion-select value="variation" interface="action-sheet" cancelText='Cancel' class="pickupselect"
+                  [(ngModel)]="customer_id">
+        <ion-select-option *ngFor="let x of customerList"
+                           value="{{x.customer_id}}">{{ x.name }}
+        </ion-select-option>
+      </ion-select>
+    </div>
+
+    <!-- Serial Number -->
+    <!--    <div class="input-group">-->
+    <!--      <div class="input-label">Serial No</div>-->
+    <!--      <ion-input class="input-field" [(ngModel)]="serial_no" placeholder="Enter Serial No" value="E240701"-->
+    <!--                 disabled></ion-input>-->
+    <!--    </div>-->
+
+    <!-- Status -->
+    <!--    <div class="input-group">-->
+    <!--      <div class="input-label">Status</div>-->
+    <!--      <ion-radio-group [(ngModel)]="status" class="radio-group">-->
+    <!--        <ion-row>-->
+    <!--          <ion-col>-->
+    <!--            <ion-item>-->
+    <!--              <ion-label>Cancelled</ion-label>-->
+    <!--              <ion-radio slot="start" value="0"></ion-radio>-->
+    <!--            </ion-item>-->
+    <!--          </ion-col>-->
+    <!--          <ion-col>-->
+    <!--            <ion-item>-->
+    <!--              <ion-label>Completed</ion-label>-->
+    <!--              <ion-radio slot="start" value="1"></ion-radio>-->
+    <!--            </ion-item>-->
+    <!--          </ion-col>-->
+    <!--          <ion-col>-->
+    <!--            <ion-item>-->
+    <!--              <ion-label>Booked</ion-label>-->
+    <!--              <ion-radio slot="start" value="2"></ion-radio>-->
+    <!--            </ion-item>-->
+    <!--          </ion-col>-->
+    <!--          <ion-col>-->
+    <!--            <ion-item>-->
+    <!--              <ion-label>On The Way</ion-label>-->
+    <!--              <ion-radio slot="start" value="3"></ion-radio>-->
+    <!--            </ion-item>-->
+    <!--          </ion-col>-->
+    <!--          <ion-col>-->
+    <!--            <ion-item>-->
+    <!--              <ion-label>In Progress</ion-label>-->
+    <!--              <ion-radio slot="start" value="4"></ion-radio>-->
+    <!--            </ion-item>-->
+    <!--          </ion-col>-->
+    <!--        </ion-row>-->
+    <!--      </ion-radio-group>-->
+    <!--    </div>-->
+
+
+
+    <!--    &lt;!&ndash;PW Item List Table &ndash;&gt;-->
+    <!--    <ion-grid>-->
+    <!--      <ion-row>-->
+    <!--        <ion-col size="12">-->
+    <!--          <ion-label>PW Item List</ion-label>-->
+    <!--        </ion-col>-->
+    <!--      </ion-row>-->
+    <!--      <ion-row>-->
+    <!--        <ion-col size="12" class="ion-table-container">-->
+    <!--          <table class="ion-table">-->
+    <!--            <thead>-->
+    <!--            <tr>-->
+    <!--              <th>Item Name</th>-->
+    <!--              <th>Item Type</th>-->
+    <!--              <th>Weight</th>-->
+    <!--              <th>Purity</th>-->
+    <!--              <th>XAU</th>-->
+    <!--            </tr>-->
+    <!--            </thead>-->
+    <!--            <tbody>-->
+    <!--            <tr *ngFor="let item of pw_item_list" (click)="openEditModal(item,0)">-->
+    <!--              <td>{{ item.gold_name }}</td>-->
+    <!--              <td>{{ item.item_type_name }}</td>-->
+    <!--              <td>{{ item.weight }}</td>-->
+    <!--              <td>{{ item.percentage }}</td>-->
+    <!--              <td>{{ item.XAU }}</td>-->
+    <!--            </tr>-->
+    <!--            </tbody>-->
+    <!--          </table>-->
+    <!--        </ion-col>-->
+    <!--      </ion-row>-->
+    <!--      <ion-row>-->
+    <!--        <ion-col size="12" class="ion-table-container" style="text-align: right; margin-top: 10px;">-->
+    <!--          <ion-button (click)="addRowToPWItemList()" color="primary">Add</ion-button>-->
+    <!--        </ion-col>-->
+    <!--      </ion-row>-->
+    <!--    </ion-grid>-->
+
+
+    <!--Customer Item List Table -->
+    <!--    <ion-grid>-->
+    <!--      <ion-row>-->
+    <!--        <ion-col size="12">-->
+    <!--          <ion-label>Customer Item List</ion-label>-->
+    <!--        </ion-col>-->
+    <!--      </ion-row>-->
+    <!--      <ion-row>-->
+    <!--        <ion-col size="12" class="ion-table-container">-->
+    <!--          <table class="ion-table">-->
+    <!--            <thead>-->
+    <!--            <tr>-->
+    <!--              <th>Item Name</th>-->
+    <!--              <th>Item Type</th>-->
+    <!--              <th>Weight</th>-->
+    <!--              <th>Purity</th>-->
+    <!--              <th>XAU</th>-->
+    <!--            </tr>-->
+    <!--            </thead>-->
+    <!--            <tbody>-->
+    <!--            <tr *ngFor="let item of customer_item_list" (click)="openEditModal(item,1)">-->
+    <!--              <td>{{ item.gold_name }}</td>-->
+    <!--              <td>{{ item.item_type_name }}</td>-->
+    <!--              <td>{{ item.weight }}</td>-->
+    <!--              <td>{{ item.percentage }}</td>-->
+    <!--              <td>{{ item.XAU }}</td>-->
+    <!--            </tr>-->
+    <!--            </tbody>-->
+    <!--          </table>-->
+    <!--        </ion-col>-->
+    <!--      </ion-row>-->
+    <!--      <ion-row>-->
+    <!--        <ion-col size="12" class="ion-table-container" style="text-align: right; margin-top: 10px;">-->
+    <!--          <ion-button (click)="addRowToCustomerItemList()" color="primary">Add</ion-button>-->
+    <!--        </ion-col>-->
+    <!--      </ion-row>-->
+    <!--    </ion-grid>-->
+
+
+    <!--Customer Item List Table -->
+    <div class="openEditModalidplay">
+      <!-- Current PO and other assign to you order -->
+      <ion-col size="12">
+        <h3 class="grntitle">Customer Item List<span style="color: red">*</span></h3>
+      </ion-col>
+      <div *ngIf="customer_item_list.length == 0"
+           style="padding: 15px 5%; border-radius: 5px; border: 1.5px solid lightgray; margin: 0px 2%; font-size: 13px;">
+        There is no Item in this Purchase Order.
+      </div>
+      <div *ngIf="customer_item_list.length > 0">
+        <table class="table" border="1" cellpadding="10" cellspacing="0">
+          <thead>
+          <tr>
+            <th>ITEM</th>
+            <th>g</th>
+            <th>%</th>
+            <th>XAU</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of customer_item_list;let i = index ;">
+            <td (click)="openEditModal(item,1)">
+              <span [style.textDecoration]="item.image.length > 0 ? 'underline' : 'none'">{{ item.gold_name }}</span>
+
+              <!-- <div class="main" *ngIf="item.warehouse_id=='1'">
+                  main
+              </div>
+              <div class="tbc" *ngIf="item.warehouse_id=='3'">
+                  tbc
+              </div>
+              <div class="exchange" *ngIf="item.warehouse_id=='4'">
+                  exc
+              </div> -->
+            </td>
+            <td (click)="openEditModal(item,1)">{{ item.weight | number :'.2' }}</td>
+            <td (click)="openEditModal(item,1)">{{ item.percentage }}</td>
+            <td (click)="openEditModal(item,1)">
+              {{ item.XAU | number :'.3' }}
+            </td>
+          </tr>
+          </tbody>
+          <tfoot>
+                    <tr>
+                      <th>Total</th>
+                      <th>{{total_weight | number: '.2'}}</th>
+                      <th></th>
+                      <th>{{total_XAU | number: '.3'}}</th>
+                    </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <ion-col size="12">
+        <ion-button color="warning" mode="ios" (click)="addRowToCustomerItemList()" expand="block">Add
+        </ion-button>
+      </ion-col>
+    </div>
+
+
+    <div class="input-group">
+      <div class="input-label">Gold Shipment<span style="color: red">*</span></div>
+      <ion-select value="variation" interface="action-sheet" cancelText='Cancel' class="pickupselect"
+                  [(ngModel)]="gold_shipment_id" (ngModelChange)="getGoldShipmentDetails(gold_shipment_id)">
+        <ion-select-option *ngFor="let x of gold_shipment_list"
+                           value="{{x.gold_shipment_id}}">{{ x.doc_no }}<span *ngIf="x.remark">-</span>{{ x.remark }}
+        </ion-select-option>
+      </ion-select>
+    </div>
+
+
+    <!--Gold Shipment Detail Table -->
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-label>Gold Shipment Detail List</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <div *ngIf="gold_shipment_detail_list.length == 0"
+               style="padding: 15px 5%; border-radius: 5px; border: 1.5px solid lightgray; margin: 0px 2%; font-size: 13px;">
+            There is no Item in this Gold Shipment Detail List.
+          </div>
+          <div *ngIf="gold_shipment_detail_list.length > 0">
+            <table class="table" border="1" cellpadding="10" cellspacing="0">
+              <thead>
+              <tr>
+                <th>Type</th>
+                <th>Ini.(G)</th>
+                <th>Out</th>
+                <th>After(G)</th>
+                <th>Diff</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of gold_shipment_detail_list;let i = index ;">
+                <td (click)="openEditGSModal(item)">
+                  <span [style.textDecoration]="item.image.length > 0 ? 'underline' : 'none'">{{ item.title }}</span>
+                </td>
+                <td>{{ item.weight | number :'.2' }}</td>
+                <td
+                  [ngClass]="{'clicked': item.clickedFields?.includes('out_weight'), 'default': !item.clickedFields?.includes('out_weight')}"
+                >
+                  <ion-input
+                    type="text"
+                    [(ngModel)]="item.out_weight"
+                    (ngModelChange)="recalculateGoldShipmentDetail()"
+                    (click)="onInputChange(item, 'out_weight')"
+                  ></ion-input>
+                </td>
+                <td
+                  [ngClass]="{'clicked': item.clickedFields?.includes('after_weight'), 'default': !item.clickedFields?.includes('after_weight')}"
+                >
+                  <ion-input
+                    type="text"
+                    [(ngModel)]="item.after_weight"
+                    (ngModelChange)="recalculateGoldShipmentDetail()"
+                    (click)="onInputChange(item, 'after_weight')"
+                  ></ion-input>
+                </td>
+                <td [ngClass]="{'diff': item.difference > 0.1 || item.difference < -0.1}">
+                  {{ item.difference }}
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+    <!-- PW Total Weight -->
+    <div class="input-group">
+      <table class="ion-table">
+        <tbody>
+        <tr>
+          <td>Serial No</td>
+          <td>{{ serial_no }}</td>
+        </tr>
+        <tr>
+          <td>Status</td>
+          <td>{{ status == '0' ? 'Cancelled' : status == '1' ? 'Completed' : status == '2' ? 'Booked' : status == '3' ? 'On The Way' : 'In Progress' }}</td>
+        </tr>
+        <tr style="background-color: lightyellow">
+          <td>PW Total Weight (g)</td>
+          <td>{{ pw_total_weight | number: '.2' }}</td>
+        </tr>
+        <tr style="background-color: lightyellow">
+          <td>PW Total XAU</td>
+          <td>{{ pw_total_XAU | number: '.3' }}</td>
+        </tr>
+        <tr style="background-color: skyblue">
+          <td>Customer Total Weight (g)</td>
+          <td>{{ total_weight | number: '.2' }}</td>
+        </tr>
+        <tr style="background-color: skyblue">
+          <td>Customer Total XAU</td>
+          <td>{{ total_XAU | number: '.3' }}</td>
+        </tr>
+        <tr>
+          <td>Unit Refining Fee</td>
+          <td>{{ unit_refining_fee | number: '.2' }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Remark -->
+    <div class="input-group">
+      <div class="input-label">Remark</div>
+      <ion-textarea class="input-field" [(ngModel)]="remark" placeholder="Enter Remark"></ion-textarea>
+    </div>
+
+
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-button class="submit-button" expand="block" [disabled]="!gold_shipment_id || customer_item_list.length == 0"
+              (click)="submitExchangeNote()">Submit
+  </ion-button>
+</ion-footer>

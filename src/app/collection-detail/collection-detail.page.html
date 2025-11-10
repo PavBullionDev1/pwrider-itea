@@ -1,0 +1,117 @@
+<app-common-header [pageSource]="'collection-detail'" [headerTitle]="'Order Job Detail'"></app-common-header>
+<ion-content class="ordelist ion-padding-top">
+
+
+	<ion-item class="ion-no-padding" mode="ios" lines="none">
+		<ion-row class="productorderlist ">
+
+			<ion-col size="12" class="productdetail ion-align-self-center">
+				<h2>
+					PO No.
+				</h2>
+				<p>{{collectionDetails.serial_no}}</p>
+				<ion-button
+					*ngIf="collectionDetails.order_status == 1 || collectionDetails.order_status == 2 || collectionDetails.order_status == 4"
+					class="btngrn" [routerLink]="['/grn/'+collectionDetails.purchase_order_id]">GRN Update</ion-button>
+				<ion-button *ngIf="collectionDetails.order_status == 3" class="btngrn"
+					[routerLink]="['/qc/'+collectionDetails.purchase_order_id]">QC List</ion-button>
+			</ion-col>
+
+			<ion-col size="12" class="productdetailinfor ion-no-padding">				
+				<ion-row class="ion-align-items-center" style="margin-bottom:7px;">
+					<ion-col size="6" style="padding-bottom:0;">
+						<h3 class="title">Unit Price</h3>
+					</ion-col>
+					<ion-col size="6" style="padding-bottom:0;">
+						<h3 class="desc">{{collectionDetails.price_per_gram_final | number:'.3'}}</h3>
+					</ion-col>
+
+					<ion-col size="6" style="padding-bottom:0;">
+						<h3 class="title">Total XAU</h3>
+					</ion-col>
+					<ion-col size="6" style="padding-bottom:0;">
+						<h3 class="desc">{{collectionDetails.XAU_amount | number:'.3'}}</h3>
+					</ion-col>
+				</ion-row>
+				
+				<!-- <ion-row class="ion-align-items-center" style="margin-bottom:7px;"
+					*ngIf="collectionDetails.payment_method=='Cash'">
+					<ion-col size="6" style="padding-bottom:0;">
+						<h3 class="title" style="font-size: 16px;"><strong>Agreed Price (RM)</strong></h3>
+					</ion-col>
+					<ion-col size="6" style="padding-bottom:0; text-align:right;">
+						<h3 class="desc" style="font-size: 17px;">{{collectionDetails.total_amount | number:'.2'}}</h3>
+					</ion-col>
+				</ion-row> -->
+
+			</ion-col>
+		</ion-row>
+	</ion-item>
+
+
+
+	<ion-item class="ion-no-padding" mode="ios" lines="none">
+		<ion-row class="productorderlist ">
+
+			<ion-col size="12" class="productdetail ion-align-self-center">
+				<h2>
+					Item List
+				</h2>
+			</ion-col>
+
+			<ion-col size="12" class="productdetailinfor">
+				<ion-row class="ion-align-items-center" *ngFor="let item of collectionDetails.itemList">
+					<ion-col size="12" style="padding-bottom:0;">
+						<h3 class="desc">{{item.gold_name}} ({{item.gold_pure_percent}} %) - {{item.gram | number :
+							'.2'}} g , XAU =
+							{{item.XAU_amount | number : '.3'}}</h3>
+					</ion-col>
+				</ion-row>
+
+			</ion-col>
+		</ion-row>
+	</ion-item>
+
+	<ion-item class="ion-no-padding" mode="ios" lines="none">
+		<ion-row class="productorderlist ">
+
+			<ion-col size="12" class="productdetail ion-align-self-center">
+				<h2>
+					Remark
+				</h2>
+			</ion-col>
+
+			<ion-col size="12" class="productdetailinfor">
+				<ion-row class="ion-align-items-center">
+					<ion-col size="12" style="padding-bottom:0;">
+						<h3 class="desc">{{collectionDetails.remark}}</h3>
+					</ion-col>
+				</ion-row>
+
+			</ion-col>
+		</ion-row>
+	</ion-item>
+
+	<ion-item class="ion-no-padding" mode="ios" lines="none">
+		<ion-row class="productorderlist ">
+
+			<ion-col size="12" class="productdetail ion-align-self-center">
+				<h2>
+					Photo
+				</h2>
+			</ion-col>
+
+			<ion-col size="12" class="ion-align-self-center">
+				<div *ngFor="let x of collectionDetails.remark_pic">
+					<img [src]="x.img" style="width: 100%;" class="logoimg">
+				</div>
+			</ion-col>
+
+		</ion-row>
+	</ion-item>
+
+
+	<!-- </div> -->
+	<div class="spacer" style="height: 40px"></div>
+</ion-content>
+<mytab></mytab>

@@ -1,0 +1,101 @@
+<app-common-header [pageSource]="'task'" [headerTitle]="'Task'"></app-common-header>
+
+<ion-content class="ordelist ion-padding-top">
+
+	<ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+		<ion-refresher-content></ion-refresher-content>
+	</ion-refresher>
+
+	<ion-row class="ion-align-items-center">
+		<ion-col size="5">
+			<h5 style="margin-top: 5px; margin-left: 12px;font-weight: 600;">Total Count: {{TaskList?.length}}
+			</h5>
+		</ion-col>
+	</ion-row>
+
+	<ion-accordion-group>
+		<ion-accordion value="{{item.task_id}}{{i}}" class="ion-no-padding"
+			*ngFor="let item of TaskList; let i = index;">
+			<ion-item slot="header" class="ion-no-padding ion-no-margin" mode="ios" lines="none"
+				style="margin-left: 15px;">
+				<div class="status">{{item.task_status_name}}</div>
+				<ion-label>
+					<ion-row class="productorderlist">
+						<ion-col size="12" class="productdetail">
+							<div>
+								<h5 class="txt400" style="margin-top: 0;">Task ID:
+									<div>{{item.task_id}}</div>
+								</h5>
+
+								<h5 class="txt400" style="margin-top: 0;">Task Title:
+									<div>{{item.title}}</div>
+								</h5>
+
+								<h5 class="txt400" style="margin-top: 0;" *ngIf="item.title == 'Rider Delivery Order'">Task Description:
+									<div>{{item.description}}</div>
+								</h5>
+
+								<h5 class="txt400" style="margin-top: 0;">Assigned Date:
+									<div>{{item.job_date}}</div>
+								</h5>
+
+                				<h5 class="txt400" style="margin-top: 0;">Due Date:
+									<div>{{item.due_date}}</div>
+								</h5>
+							</div>
+						</ion-col>
+					</ion-row>
+				</ion-label>
+			</ion-item>
+
+			<ion-list slot="content">
+				<ion-item
+					style="margin-left: 0 !important;margin-top: 0;border-top: 1px dashed #b4b4b4; margin-left: -5px !important;">
+					<ion-row class="productorderlist">
+						<ion-col size="12" class="productdetail" style="padding:0;">
+							<div>
+								<ion-row style="padding:0;">
+									<ion-col size="6">
+										<h5 class="txt400">Job Type: <div>{{item.job_type_name}}</div>
+										</h5>
+									</ion-col>
+									<ion-col size="6">
+										<h5 class="txt400">Job Type Detail: <div>{{item.job_type_detail_name}}</div>
+										</h5>
+									</ion-col>
+									<ion-col size="6">
+										<h5 class="txt400">Participants: <div>{{item.participants}}</div>
+										</h5>
+									</ion-col>
+									<ion-col size="6">
+										<h5 class="txt400">Date Create: <div>{{item.created_date}}</div>
+										</h5>
+									</ion-col>
+
+								</ion-row>
+							</div>
+
+							<div class="buttonaction">
+								<ion-row style="margin-left: -5px">
+									<ion-col size="4">
+										<ion-button class="pickupdetail"
+											[routerLink]="['/task-detail/'+item.task_id]">
+											Detail </ion-button>
+									</ion-col>
+								</ion-row>
+							</div>
+						</ion-col>
+					</ion-row>
+				</ion-item>
+			</ion-list>
+		</ion-accordion>
+
+
+
+
+	</ion-accordion-group>
+
+	<div class="spacer" style="height: 40px"></div>
+</ion-content>
+
+<mytab></mytab>

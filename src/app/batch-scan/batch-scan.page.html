@@ -1,0 +1,404 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<app-common-header
+	[pageSource]="'batch-scan'"
+	[headerTitle]="'Batch Scan'"
+></app-common-header>
+
+<ion-content class="ion-padding">
+	<ion-row>
+		<ion-col size="6">
+			<h5><strong>Total Parcel: {{riderList.length}}</strong></h5>
+		</ion-col>
+		<ion-col size="6">
+			<div class="ion-float-right">
+				<ion-button
+					class="btn"
+					(click)="scanBarcode()"
+					shape="round"
+					mode="ios"
+				>
+					<ion-icon slot="start" name="add-circle"></ion-icon>
+					Scan
+				</ion-button>
+			</div>
+		</ion-col>
+	</ion-row>
+
+	<div class="no-parcel-container" *ngIf="riderList.length == 0">
+		<p><i>Scan to add parcel</i></p>
+	</div>
+
+	<!-- <ion-accordion-group class="accordion-group ion-no-margin">
+    <ion-accordion class="accordion">
+      <ion-item class="accordion-header" slot="header">
+        <ion-label class="accordion-header-label">
+          <h6 class="title">Parcel Detail</h6>
+          <p class="desc">item.tracking_no</p>
+        </ion-label>
+      </ion-item>
+      <ion-item class="accordion-content" slot="content">
+        <ion-label class="accordion-content-label">
+          <ion-row>
+            <ion-col size="5"><span class="title">Status</span></ion-col>
+            <ion-col size="7"><span class="desc">item.delivery_status_text</span></ion-col>
+          </ion-row>
+          <ion-row>
+              <ion-col size="5"><span class="title">Service Type</span></ion-col>
+              <ion-col size="7"><span class="desc">item.service_type</span></ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="5"><span class="title">Ordered By</span></ion-col>
+            <ion-col size="7"><span class="desc">item.customer_name</span></ion-col>
+          </ion-row>
+          <ion-row style="margin-top: 12px;">
+            <ion-col size="12" class="ion-no-padding">
+              <ion-button (click)="removeParcel(i)" color="danger">
+                Remove
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-label>
+      </ion-item>
+    </ion-accordion>
+  </ion-accordion-group> -->
+
+	<ion-accordion-group
+		class="accordion-group ion-no-margin"
+		*ngIf="riderList.length >= 1"
+	>
+		<ion-accordion
+			class="accordion"
+			*ngFor="let item of riderList ; let i = index"
+		>
+			<ion-item class="accordion-header" slot="header">
+				<ion-label class="accordion-header-label">
+					<h6 class="title">Parcel Detail</h6>
+					<p class="desc">{{item.tracking_no}}</p>
+				</ion-label>
+			</ion-item>
+			<ion-item class="accordion-content" slot="content">
+				<ion-label class="accordion-content-label">
+					<ion-row>
+						<ion-col size="5"
+							><span class="title">Status</span></ion-col
+						>
+						<ion-col size="7"
+							><span class="desc"
+								>{{item.delivery_status_text}}</span
+							></ion-col
+						>
+					</ion-row>
+					<ion-row>
+						<ion-col size="5"
+							><span class="title">Service Type</span></ion-col
+						>
+						<ion-col size="7"
+							><span class="desc"
+								>{{item.service_type}}</span
+							></ion-col
+						>
+					</ion-row>
+					<ion-row>
+						<ion-col size="5"
+							><span class="title">Ordered By</span></ion-col
+						>
+						<ion-col size="7"
+							><span class="desc"
+								>{{item.customer_name}}</span
+							></ion-col
+						>
+					</ion-row>
+					<ion-row
+						*ngIf="item.cod_collect_amount && item.cod_collect_amount>0"
+					>
+						<ion-col size="5"
+							><span class="title">COD Amount</span></ion-col
+						>
+						<ion-col size="7"
+							><span class="desc"
+								>RM{{item.cod_collect_amount}}</span
+							></ion-col
+						>
+					</ion-row>
+					<ion-row
+						*ngIf="item.shipping_remark && item.shipping_remark!='null'"
+					>
+						<ion-col size="5"
+							><span class="title">Remark</span></ion-col
+						>
+						<ion-col size="7"
+							><span class="desc"
+								>{{item.shipping_remark?item.shipping_remark:'-'}}</span
+							></ion-col
+						>
+					</ion-row>
+					<ion-row
+						*ngIf="item.service_transport && item.service_transport!='null'"
+					>
+						<ion-col size="5"
+							><span class="title">Transport</span></ion-col
+						>
+						<ion-col size="7"
+							><span class="desc"
+								>{{item.service_transport}}</span
+							></ion-col
+						>
+					</ion-row>
+					<ion-row *ngIf="item.unit_qty && item.unit_qty!='null'">
+						<ion-col size="5"
+							><span class="title">Qty</span></ion-col
+						>
+						<ion-col size="7"
+							><span class="desc"
+								>{{item.unit_qty}} Carton</span
+							></ion-col
+						>
+					</ion-row>
+					<ion-row
+						*ngIf="item.service_UOM && item.service_UOM!='null'"
+					>
+						<ion-col size="5"
+							><span class="title">Uom</span></ion-col
+						>
+						<ion-col size="7"
+							><span class="desc"
+								>{{item.service_UOM}}</span
+							></ion-col
+						>
+					</ion-row>
+					<ion-row *ngIf="item.weight && item.weight!='null'">
+						<ion-col size="5"
+							><span class="title">Weight</span></ion-col
+						>
+						<ion-col size="7"
+							><span class="desc">{{item.weight}}</span></ion-col
+						>
+					</ion-row>
+					<ion-row style="margin-top: 12px">
+						<ion-col size="12" class="ion-no-padding">
+							<ion-button
+								(click)="removeParcel(i)"
+								color="danger"
+							>
+								Remove
+							</ion-button>
+						</ion-col>
+					</ion-row>
+				</ion-label>
+			</ion-item>
+		</ion-accordion>
+	</ion-accordion-group>
+
+	<ion-row class="confirm-container" *ngIf="riderList.length >= 1">
+		<!-- <ion-row class="confirm-container"> -->
+		<ion-col class="header" size="12">
+			<h3 class="title">Confirm Action</h3>
+		</ion-col>
+
+		<ion-col size="12" class="footer ion-no-padding">
+			<!-- Status -->
+			<ion-row class="ion-align-items-center" style="margin-bottom: 6px">
+				<ion-col size="5">
+					<ion-label style="color: #243a76"
+						><strong>Status</strong>
+					</ion-label>
+				</ion-col>
+				<ion-col size="7">
+					<ion-select
+						value="variation"
+						interface="action-sheet"
+						[(ngModel)]="delivery_status"
+						cancelText="Cancel"
+						class="pickupselect"
+					>
+						<ion-select-option
+							[value]="item.id"
+							*ngFor="let item of statusList"
+							>{{item['title']}}</ion-select-option
+						>
+					</ion-select>
+				</ion-col>
+			</ion-row>
+
+			<!-- Upload Photos -->
+			<ion-row class="ion-align-items-center" style="margin-bottom: 6px;">
+				<ion-col size="12" style="padding-bottom: 0">
+					<ion-label
+						><strong>Upload Photos</strong>
+						<ion-icon
+							(click)="openActionSheet()"
+							name="add-circle-outline"
+							style="
+								float: right;
+								background-color: #243a76;
+								color: #fbd23c;
+								font-size: 25px;
+								border-radius: 6px;
+								vertical-align: middle;
+								margin-left: 10px;
+							"
+
+						></ion-icon>
+						<!-- *ngIf="(is_multiple_image == 0 && !imageUrl) || (is_multiple_image == 1 && MultipleImageUrl.length == 0)" -->
+					</ion-label>
+				</ion-col>
+			</ion-row>
+
+			<!-- Single Image -->
+			<ion-row *ngIf="imageUrl && is_multiple_image == 0">
+				<ion-col size="12" class="ion-align-self-center">
+					<img [src]="imageUrl" style="width: 100%" class="logoimg" />
+					<ion-button
+						(click)="delete_img(0,imageUrl)"
+						class="buttontheme-orange"
+						color="danger"
+						>Delete</ion-button
+					>
+				</ion-col>
+			</ion-row>
+
+			<!-- multiple image -->
+			<ion-row *ngIf="MultipleImageUrl && is_multiple_image == 1">
+				<ion-col
+					size="12"
+					class="ion-align-self-center"
+					*ngFor="let item of MultipleImageUrl"
+				>
+					<img [src]="item" style="width: 100%" class="logoimg" />
+					<ion-button
+						(click)="delete_img(1,item)"
+						class="buttontheme-orange"
+						color="danger"
+						>Delete</ion-button
+					>
+				</ion-col>
+			</ion-row>
+
+			<!-- Recipient IC, Recipient Relative & Reason to 3rd Party -->
+			<ion-col
+				size="12"
+				class="content ion-no-padding"
+				*ngIf="require_recipient_detail == 1 && (delivery_status == 2 || delivery_status == 10)"
+			>
+				<ion-row class="ion-align-items-center">
+					<ion-col size="12" style="padding-bottom: 4px">
+						<ion-label><strong>Recipient IC</strong></ion-label>
+					</ion-col>
+					<ion-col size="12" style="padding-top: 0">
+						<ion-input
+							type="text"
+							[(ngModel)]="recipient_ic"
+							class="input"
+							placeholder="010203-01-1234"
+						></ion-input>
+					</ion-col>
+				</ion-row>
+
+				<ion-row class="ion-align-items-center">
+					<ion-col size="12" style="padding-bottom: 0">
+						<ion-label
+							><strong>Recipient's Relative</strong></ion-label
+						>
+					</ion-col>
+					<ion-col size="12" style="padding-top: 0">
+						<ion-select
+							value="variation"
+							interface="action-sheet"
+							[(ngModel)]="recipient_relation"
+							cancelText="Cancel"
+							class="pickupselect"
+						>
+							<ion-select-option
+								[value]="item"
+								*ngFor="let item of relationSettingsList"
+								>{{item}}</ion-select-option
+							>
+						</ion-select>
+					</ion-col>
+				</ion-row>
+
+				<ion-row class="ion-align-items-center">
+					<ion-col size="12" style="padding-bottom: 0">
+						<ion-label
+							><strong>Reason to 3rd Party</strong></ion-label
+						>
+					</ion-col>
+					<ion-col size="12" style="padding-top: 0">
+						<ion-select
+							value="variation"
+							interface="action-sheet"
+							[(ngModel)]="reason_3rdparty"
+							cancelText="Cancel"
+							class="pickupselect"
+						>
+							<ion-select-option
+								[value]="x"
+								*ngFor="let x of passreasonSettingsList"
+								>{{x}}</ion-select-option
+							>
+						</ion-select>
+					</ion-col>
+				</ion-row>
+			</ion-col>
+
+			<!-- Customer Sign -->
+			<ion-row
+				class="ion-align-items-center"
+				*ngIf="require_recipient_detail == 1 && (delivery_status == 2 || delivery_status == 10)"
+			>
+				<ion-col size="12" style="padding-bottom: 0">
+					<ion-label style="color: #243a76">
+						<strong>Customer Sign</strong>
+					</ion-label>
+					<ion-row>
+						<ion-col size="12" class="ion-align-self-center">
+							<img
+								*ngIf="signature_data != 0"
+								[src]="signature_data"
+								style="width: 100%"
+								class="logoimg"
+							/>
+							<ion-button
+								(click)="openModalSign()"
+								class="buttontheme-orange"
+								color="danger"
+								>Sign</ion-button
+							>
+						</ion-col>
+					</ion-row>
+				</ion-col>
+			</ion-row>
+
+			<!-- Remark -->
+			<ion-row class="ion-align-items-center" style="margin-bottom: 10px">
+				<ion-col size="12" style="padding-bottom: 0">
+					<ion-label style="color: #243a76">
+						<strong>Remark</strong>
+					</ion-label>
+					<ion-textarea
+						[(ngModel)]="delivery_remark"
+						autoGrow="true"
+						style="border: 1px solid black; margin-top: 10px"
+						rows="3"
+					>
+					</ion-textarea>
+				</ion-col>
+			</ion-row>
+
+			<ion-row class="ion-align-items-center">
+				<ion-col size="12" style="padding-bottom: 0">
+					<ion-button
+						(click)="confirm()"
+						class="btn"
+						expand="block"
+						mode="ios"
+						[disabled]="riderList.length === 0"
+						>Confirm Action</ion-button
+					>
+				</ion-col>
+			</ion-row>
+		</ion-col>
+	</ion-row>
+</ion-content>
+
+<mytab></mytab>

@@ -1,0 +1,148 @@
+<style>
+  .filter-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin: 10px 15px;
+  }
+
+  .filter-button {
+    flex: 1;
+    margin: 0 5px;
+    text-align: center;
+    border-radius: 5px;
+    font-weight: 600;
+    padding: 10px;
+    background-color: #f4f4f4;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+
+  .filter-button.active {
+    background-color: #ffcc00;
+    color: black;
+    border-color: #d4af37;
+  }
+</style>
+
+<app-common-header [pageSource]="'weight'" [headerTitle]="'Pending Weight'"></app-common-header>
+
+<ion-content class="ordelist ion-padding-top">
+
+  <ion-progress-bar *ngIf="isLoading" type="indeterminate" color="primary"></ion-progress-bar>
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-row>
+    <ion-col size="10">
+      <ion-searchbar [(ngModel)]="searchCustomerText" placeholder="Search Customer Name"></ion-searchbar>
+    </ion-col>
+    <ion-col size="2">
+      <button type="button" style="padding: 10px 5px 10px 5px; margin-top:10px; background-color: #3276b1; border-radius: 10px; color: white;"
+              (click)="resetFilters()">Reset</button>
+    </ion-col>
+  </ion-row>
+
+  <!-- Filter Buttons -->
+  <div class="filter-buttons">
+    <div
+      class="filter-button"
+      [class.active]="currentFilter === 'PO'"
+      (click)="setFilter('PO')"
+    >
+      PO
+    </div>
+    <div
+      class="filter-button"
+      [class.active]="currentFilter === 'Exc'"
+      (click)="setFilter('Exc')"
+    >
+      Exc
+    </div>
+    <div
+      class="filter-button"
+      [class.active]="currentFilter === 'Melt'"
+      (click)="setFilter('Melt')"
+    >
+      Melt
+    </div>
+  </div>
+
+  <h3 style="margin-top: 5px; margin-left: 12px;font-weight: 600;">Select a Customer</h3>
+  <ion-select value="variation" interface="action-sheet" cancelText='Cancel' class="pickupselect"
+              [(ngModel)]="selectedCustomer" (ngModelChange)="get_result_list();">
+    <ion-select-option *ngFor="let x of customerList | search: searchCustomerText"
+                       value="{{x.customer_id}}">{{x.name}}
+    </ion-select-option>
+  </ion-select>
+
+  <ion-row class="ion-align-items-center">
+    <ion-col size="5">
+      <h5 style="margin-top: 5px; margin-left: 12px;font-weight: 600;">Total Count: {{filteredList?.length}}</h5>
+    </ion-col>
+    <ion-col size="7">
+    </ion-col>
+  </ion-row>
+
+  <!-- Filtered Results -->
+  <div class="eachGRN" *ngFor="let item of filteredList; let i = index;" style="background-color: {{item.warehouse_colour}}">
+    <div>
+      <h3>
+        <span [routerLink]="['/weight-detail/'+item.goods_received_note_id]">{{item.customerDetail.name}}</span>
+        &nbsp;
+        <ion-badge color="danger">{{item.item_count}}</ion-badge>
+        &nbsp;
+        <ion-badge *ngIf="item.pending_po > 0" color="primary">+{{item.pending_po}}</ion-badge>
+      </h3>
+
+      <ion-grid [routerLink]="['/weight-detail/'+item.goods_received_note_id]">
+        <ion-row>
+          <ion-col size="4"> Total XAU </ion-col>
+          <ion-col>  <strong>{{item.total_XAU | number :'.3'}}</strong> </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="4">  Serial No </ion-col>
+          <ion-col>  {{item.serial_no}} </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="4">  GRN ID </ion-col>
+          <ion-col>  {{item.goods_received_note_id}} </ion-col>
+        </ion-row>
+      </ion-grid>
+      <div class="label" [routerLink]="['/weight-detail/'+item.goods_received_note_id]">{{item.remark}}</div>
+      <div class="label" [routerLink]="['/weight-detail/'+item.goods_received_note_id]" style="margin-top: 10px;" *ngIf="item.po_remark">{{item.po_remark}}</div>
+      <hr />
+      <div>
+        <button class="btn" (click)="item.is_expand=!item.is_expand">Show Details</button>
+      </div>
+    </div>
+    <div *ngIf="item.is_expand">
+      <p>Collector: {{item.collector}}</p>
+      <p>Created Date: {{item.created_date}}</p>
+      <p>Item List:</p>
+      <table class="table" cellpadding="5" cellspacing="0" border="1">
+        <thead>
+        <tr>
+          <th>ITEM</th>
+          <th>g</th>
+          <th>%</th>
+          <th>XAU</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let keyValuePair of item.itemList | keyvalue">
+          <td>{{keyValuePair.value.gold_name }}</td>
+          <td>{{keyValuePair.value.gram | number :'.2'}}</td>
+          <td>{{keyValuePair.value.gold_pure_percent}}</td>
+          <td>{{keyValuePair.value.XAU_amount | number :'.3'}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="spacer" style="height: 40px"></div>
+</ion-content>
+
+<mytab></mytab>

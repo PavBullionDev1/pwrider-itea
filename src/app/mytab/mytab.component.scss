@@ -1,0 +1,218 @@
+@use 'src/global';
+.tabbg {
+    background-color: #fff;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background-position: 0 0, 0 0%;
+    background-repeat: no-repeat;
+    -webkit-background-size: 100% 0.21874rem;
+    -moz-background-size: 100% 0.21874rem;
+    background-size: 100% 0.21874rem;
+    background-image: -moz-linear-gradient(left,  #762da4 0%, #9e2794 21%, #f30097 54%, #ff76da 76%, #ff008b 100%); /* FF3.6-15 */
+    background-image: -webkit-linear-gradient(left,  #762da4 0%,#9e2794 21%,#f30097 54%,#ff76da 76%,#ff008b 100%); /* Chrome10-25,Safari5.1-6 */
+    background-image: -o-linear-gradient(left,  #762da4 0%,#9e2794 21%,#f30097 54%,#ff76da 76%,#ff008b 100%);
+    background-image: linear-gradient(to right,  #762da4 0%,#9e2794 21%,#f30097 54%,#ff76da 76%,#ff008b 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    box-shadow: 0 0px 5px #888;
+    padding-bottom: 5px;
+}
+
+.tabText {
+    font-size:0.5em;
+}
+.tabIcon {
+    font-size:2em;
+}
+
+.tabFirstIcon {
+    font-size:3em;
+}
+.tradeiconbg{
+       position: relative;
+    background: none;
+    width:96px;
+    border-radius: 50%;
+    -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background-position: 0 0, 0 0%;
+  background-repeat: no-repeat;
+  -webkit-background-size: 350% 36%;
+  -moz-background-size: 350% 36%;
+  background-size: 350% 36%;
+ 
+//  background-image: -moz-linear-gradient(left,  #762da4 0%, #9e2794 21%, #f30097 54%, #ff76da 76%, #ff008b 100%); /* FF3.6-15 */
+//  background-image: -webkit-linear-gradient(left,  #762da4 0%,#9e2794 21%,#f30097 54%,#ff76da 76%,#ff008b 100%); /* Chrome10-25,Safari5.1-6 */
+//  background-image: -o-linear-gradient(left,  #762da4 0%,#9e2794 21%,#f30097 54%,#ff76da 76%,#ff008b 100%);
+//  background-image: linear-gradient(to right,  #762da4 0%,#9e2794 21%,#f30097 54%,#ff76da 76%,#ff008b 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */ 
+    
+     display: inline-block;
+        padding-top: 3px;
+    top: -42px;
+    left: -5px;
+}
+
+.tabicon-lg{
+//    background: none;
+//    width: 77px;
+//    border-radius: 50%;
+//    border: 5px solid #fff;
+//    background-color: #fff;
+//    margin-top: 0px;
+}
+.tradeicontxt{
+  margin-top: -48px;
+    width: 100%;
+    margin-left: 5px;
+    margin-right: auto;
+}
+.tabText{
+    font-size: 11px;
+}
+.tabicon-md{
+        width: 35px;
+    margin-bottom: 2px;
+}
+
+.stroke01{
+    position: absolute;
+    width: 16px;
+    top: -16px;
+    z-index: 1;
+    left: -6px;
+}
+.stroke02{
+    position: relative;
+    width: 17px;
+    top: -104px;
+    z-index: 1;
+    right: -69px;
+}
+
+.footerbtn{
+    background-color: #fff;
+    
+    ion-button{
+        margin: 0;
+        --border-radius: 0;
+        --background: #fff;
+        --background-hover: #fff;
+        --background-activated: #fff;
+        img{
+            width: 40px;
+            margin-right: 3px;
+            margin-top: -1px;
+        }
+        
+        &.servicebtn{
+            color: #A7ACB6;
+            border-bottom: 3px solid #ffffff;
+            font-size: 17px;
+            font-weight: 700;
+            height: 60px;
+        }
+
+        &.requestbtn{
+            color: #bbbec3;
+            border-bottom: 3px solid #ffffff;
+            font-size: 17px;
+            font-weight: 700;
+            height: 60px;
+        }
+
+        &.camerabtn{
+            color: #fbd23c;
+            border-bottom: 3px solid #ffffff;
+            font-size: 17px;
+            font-weight: 700;
+            height: 60px;
+            
+            .btncamerabg{
+                background: #243a76;
+                font-size: 31px;
+                border-radius: 50%;
+                width: 55px;
+                height: 55px;
+                line-height: 60px;
+                
+                img{
+                    width: 38px;
+                    margin: 0;
+                    padding-top: 7px;
+                }
+            }
+        }
+    }
+}
+
+.footerbtnv2{
+    background: none;
+    
+    ion-button{
+        margin: 0;
+        --border-radius: 0;
+        --background-hover: #fff;
+        --background-activated: #fff;
+        --background: none;
+        background: none;
+        display: inline-block;
+        
+        img{
+            width: 40px;
+            margin-right: 3px;
+            margin-top: -1px;
+        }
+        
+        &.servicebtn{
+            color: #A7ACB6;
+            border-bottom: 3px solid #ffffff;
+            font-size: 17px;
+            font-weight: 700;
+            height: 60px;
+        }
+
+        &.requestbtn{
+            color: #bbbec3;
+            border-bottom: 3px solid #ffffff;
+            font-size: 17px;
+            font-weight: 700;
+            height: 60px;
+        }
+
+        &.camerabtn{
+            color: #fbd23c;
+            border-bottom: 3px solid #ffffff;
+            font-size: 17px;
+            font-weight: 700;
+            height: 60px;
+            
+            .btncamerabg{
+                background: #243a76;
+                font-size: 31px;
+                border-radius: 50%;
+                width: 55px;
+                height: 55px;
+                line-height: 60px;
+                
+                img{
+                    width: 38px;
+                    margin: 0;
+                    padding-top: 7px;
+                }
+            }
+        }
+    }
+}
+
+
+
+
+.activebtn{
+       border-top: 3px solid #243a76;
+        ion-button{
+            color: #243a76 !important;
+        }
+}
+.deactivebtn{
+       border-top: 3px solid #fff;
+}

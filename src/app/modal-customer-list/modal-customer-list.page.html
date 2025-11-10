@@ -1,0 +1,160 @@
+<ion-header>
+	<div>
+		<ion-toolbar class="varitaionslect ion-no-padding ion-no-margin" style="padding-top: 10px !important;">
+			<ion-item class="ion-no-padding ion-no-margin" style="--inner-padding-end: 0 !important;" no-padding>
+				<ion-row class="ion-align-items-end">
+					<ion-col>
+						<div class="txt500"><b>Item Detail</b></div>
+					</ion-col>
+				</ion-row>
+			</ion-item>
+
+			<ion-buttons slot="end">
+				<ion-button (click)="dismiss()" class="closemodal" mode="ios" style=" bottom: 35px; right: 0;">
+					<ion-icon name="close-outline" style="color: #999;"></ion-icon>
+				</ion-button>
+			</ion-buttons>
+		</ion-toolbar>
+	</div>
+</ion-header>
+
+<ion-content>
+  <div class="grnlist">
+    <ion-row class="polistitemv2" *ngIf="type === 0">
+
+        <ion-col size="6">
+            <h3>Select Item Code</h3>
+            <ion-select value="variation" class="pickupselect"
+                [(ngModel)]="modalData.gold_pure_id" (ionChange)="selectedGoldPurity(modalData, index)">
+                <ion-select-option *ngFor="let x of goldPurityList" value="{{x.gold_pure_id}}">{{x.gold_name}}</ion-select-option>
+            </ion-select>
+        </ion-col>
+
+        <ion-col size="6">
+            <h3>Purity Name</h3>
+            <h2 class="totaltitle" style="border: 1px solid black;">
+                <ion-input type="text" [(ngModel)]="modalData.gold_name" disabled></ion-input>
+            </h2>
+        </ion-col>
+
+        <ion-col size="6">
+            <h3>Default Percentage (%)</h3>
+            <h2>
+                <ion-input type="text" [(ngModel)]="modalData.gold_pure_percent" disabled></ion-input>
+            </h2>
+        </ion-col>
+
+        <ion-col size="6">
+            <h3>Customer Percentage (%)</h3>
+            <h2>
+                <ion-input type="text" [(ngModel)]="modalData.override_gold_pure_percent_before" disabled></ion-input>
+            </h2>
+        </ion-col>
+
+      <ion-col size="6">
+        <h3>After Percentage (%)</h3>
+        <h2>
+          <ion-input type="text" [(ngModel)]="modalData.override_gold_pure_percent"></ion-input>
+        </h2>
+      </ion-col>
+
+    </ion-row>
+    <ion-row class="polistitemv2" *ngIf="type === 1">
+
+        <ion-col size="6">
+            <h3>Select Item </h3>
+            <ion-select value="variation" class="pickupselect"
+                [(ngModel)]="modalData.item_type_id" (ionChange)="selectedItemType(modalData,0)">
+                <ion-select-option *ngFor="let x of bItemTypeList" value="{{x.id}}">{{x.title}}</ion-select-option>
+            </ion-select>
+        </ion-col>
+
+        <ion-col size="6">
+            <h3>Item Name</h3>
+            <h2 class="totaltitle" style="border: 1px solid black;">
+                <ion-input type="text" [(ngModel)]="modalData.title" disabled></ion-input>
+            </h2>
+        </ion-col>
+
+        <ion-col size="6">
+            <h3>PW Buy Premium (price per tael)</h3>
+            <h2>
+                <ion-input type="text" [(ngModel)]="modalData.premium" (ionChange)="calculate_price_per_gram(modalData,'buy')"></ion-input>
+            </h2>
+        </ion-col>
+
+<!--        <ion-col size="6">-->
+<!--            <h3>PW Buy Premium (price per Gram)</h3>-->
+<!--            <h2>-->
+<!--                <ion-input type="text" [(ngModel)]="modalData.price_per_gram" disabled></ion-input>-->
+<!--            </h2>-->
+<!--        </ion-col>-->
+
+        <ion-col size="6">
+            <h3>PW Sell Premium (price per teal)</h3>
+            <h2>
+                <ion-input type="text" [(ngModel)]="modalData.sell_premium" (ionChange)="calculate_price_per_gram(modalData,'sell')"></ion-input>
+            </h2>
+        </ion-col>
+
+<!--        <ion-col size="6">-->
+<!--            <h3>PW Sell Premium (price per Gram)</h3>-->
+<!--            <h2>-->
+<!--                <ion-input type="text" [(ngModel)]="modalData.sell_price_per_gram" disabled></ion-input>-->
+<!--            </h2>-->
+<!--        </ion-col>-->
+
+    </ion-row>
+    <ion-row class="polistitemv2" *ngIf="type === 2">
+
+        <ion-col size="6">
+            <h3>Select Item Code</h3>
+            <ion-select value="variation" class="pickupselect"
+                [(ngModel)]="modalData.gold_pure_id" (ionChange)="selectedGoldPurity(modalData, index)">
+                <ion-select-option *ngFor="let x of goldPurityList" value="{{x.gold_pure_id}}">{{x.gold_name}}</ion-select-option>
+            </ion-select>
+        </ion-col>
+
+        <ion-col size="6">
+            <h3>Purity Name</h3>
+            <h2 class="totaltitle" style="border: 1px solid black;">
+                <ion-input type="text" [(ngModel)]="modalData.gold_name" disabled></ion-input>
+            </h2>
+        </ion-col>
+
+        <ion-col size="6">
+            <h3>Select Item Type</h3>
+            <ion-select value="variation" class="pickupselect"
+                [(ngModel)]="modalData.item_type_id" (ionChange)="selectedItemType(modalData,1)">
+                <ion-select-option *ngFor="let x of bItemTypeList" value="{{x.id}}">{{x.title}}</ion-select-option>
+            </ion-select>
+        </ion-col>
+
+        <ion-col size="6">
+            <h3>Default Percentage (%)</h3>
+            <h2>
+                <ion-input type="text" [(ngModel)]="modalData.gold_pure_percent" disabled></ion-input>
+            </h2>
+        </ion-col>
+
+        <ion-col size="6">
+            <h3>Customer Percentage (%)</h3>
+            <h2>
+                <ion-input type="text" [(ngModel)]="modalData.override_gold_pure_percent_before" disabled></ion-input>
+            </h2>
+        </ion-col>
+
+      <ion-col size="6">
+        <h3>After Percentage (%)</h3>
+        <h2>
+          <ion-input type="text" [(ngModel)]="modalData.override_gold_pure_percent"></ion-input>
+        </h2>
+      </ion-col>
+
+    </ion-row>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-button color="success" mode="ios" (click)="dismiss()" expand="block">Confirm</ion-button>
+  <ion-button color="danger" mode="ios" (click)="deleteItem(modalData)" expand="block">Delete Item</ion-button>
+</ion-footer>

@@ -1,0 +1,19 @@
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+import { IonicModule } from '@ionic/angular';
+import { MakePoCustomerPageRoutingModule } from './make-po-customer-routing.module';
+import { MakePoCustomerPage } from './make-po-customer.page';
+import { SharedModule } from '../shared/shared.module';
+@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    MakePoCustomerPageRoutingModule,
+    SharedModule],
+  declarations: [MakePoCustomerPage],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+})
+export class MakePoCustomerPageModule {}

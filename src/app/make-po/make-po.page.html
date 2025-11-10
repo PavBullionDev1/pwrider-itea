@@ -1,0 +1,154 @@
+
+<app-common-header [pageSource]="'make-po'" [headerTitle]="'Making Purchase Order'"></app-common-header>
+
+<ion-content>
+  <div>
+    <br><br>
+  </div>
+  <div class="grnlist" *ngFor="let item of poList;let i = index ;">
+    <ion-button class="trashbtn" (click)="removeList(i)">
+      <ion-icon name="close-outline"></ion-icon>
+    </ion-button>
+    <ion-row class="polistitemv2" >
+
+        <ion-col size="3">
+          <h3>Select Item Code</h3>
+          <ion-select value="variation" interface="action-sheet" cancelText='Cancel' class="pickupselect"
+              [(ngModel)]="item.item_code" (ionChange)="recalculate_jewel(item)">
+              <ion-select-option *ngFor="let x of customerGoldPurityList" value="{{x.id}}">{{x.gold_name}}
+                  ({{x.override_gold_pure_percent}}%)</ion-select-option>
+          </ion-select>
+        </ion-col>
+        <ion-col size="4" *ngIf="item.is_editable == 0">
+            <h3>Purity</h3>
+            <h2 class="totaltitle">
+                <ion-input type="number" [(ngModel)]="item.gold_pure_percent" (ionChange)="recalculate(item)" disabled
+                ></ion-input>
+            </h2>
+        </ion-col>
+
+        <ion-col size="2" *ngIf="item.is_editable == 1">
+          <h3>Purity</h3>
+          <h2 class="totaltitle">
+              <ion-input type="number" [(ngModel)]="item.gold_pure_percent" (ionChange)="recalculate(item)"
+              ></ion-input>
+          </h2>
+        </ion-col>
+
+        <ion-col size="4" *ngIf="item.is_editable == 0">
+            <h3>XAU</h3>
+            <h2>
+                <ion-input type="number" [(ngModel)]="item.XAU_amount"
+                    disabled="disabled"></ion-input>
+            </h2>
+        </ion-col>
+        <ion-col size="3" *ngIf="item.is_editable == 1">
+            <h3>XAU</h3>
+            <h2>
+                <ion-input type="number" [(ngModel)]="item.XAU_amount"
+                    disabled="disabled"></ion-input>
+            </h2>
+        </ion-col>
+        <ion-col size="2" *ngIf="item.is_editable == 1">
+          <h3>Barcode</h3>
+          <h2>
+              <ion-input type="text" [(ngModel)]="item.barcode"
+              ></ion-input>
+          </h2>
+        </ion-col>
+        <ion-col size="2" *ngIf="item.is_editable == 1">
+            <h3>PW Barcode</h3>
+            <h2>
+                <ion-input type="text" [(ngModel)]="item.pw_barcode"
+                    ></ion-input>
+            </h2>
+        </ion-col>
+
+
+        <ion-row style="border-top: 2px solid #cbcbcb; width:100%">
+
+            <ion-col size="8" class=" ion-align-self-end">
+                <h3 class="totaltitle">GRAM</h3>
+            </ion-col>
+            <ion-col size="4">
+                <h2 class="totaltitle" style="border: 1px solid black;">
+                    <ion-input type="number" [(ngModel)]="item.gram" (ionChange)="recalculate(item)"
+                        ></ion-input>
+                </h2>
+            </ion-col>
+        </ion-row>
+    </ion-row>
+  </div>
+
+  <div class="polistitem" style="margin-bottom: 10px;">
+    <ion-row class="productorderlist">
+      <ion-col size="12">
+        <ion-button color="warning" mode="ios" (click)="addItem()"expand="block">Add Item</ion-button>
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <div class="grnlist">
+    <ion-col size="12">
+      <h3>Select Item Type</h3>
+      <ion-select value="variation" interface="action-sheet" cancelText='Cancel' class="pickupselect"
+          [(ngModel)]="item_type" (ionChange)="check_premium()">
+          <ion-select-option *ngFor="let x of customerBItemTypeList"
+              value="{{x.item_type_id}}">{{x.title}}
+          </ion-select-option>
+      </ion-select>
+  </ion-col>
+    <ion-col size="12">
+      <h2>Select User</h2>
+      <ion-select value="variation" interface="action-sheet" cancelText='Cancel' class="pickupselect"
+          [(ngModel)]="user_id" (ionChange)="getUserData()">
+          <ion-select-option *ngFor="let x of userNameList" value="{{x.user_id}}">{{x.userName}}</ion-select-option>
+      </ion-select>
+    </ion-col>
+    <ion-col size="12">
+      <ion-button (click)="sendOTP()">Send OTP to: {{userdata?.dial_code}}{{userdata?.mobile}}</ion-button>
+      <h2 class="totaltitle" >Input OTP</h2>
+      <ion-input placeholder="*****" [(ngModel)]="userPassword" style="border: 1px solid black;font-size: 20px;"
+      ></ion-input>
+  </ion-col>
+    <ion-col size="12">
+      <h2>Select Payment Method</h2>
+      <ion-select value="variation" interface="action-sheet" cancelText='Cancel' class="pickupselect"
+          [(ngModel)]="payment_method">
+          <ion-select-option value="Bank Transfer">Bank Transfer</ion-select-option>
+          <ion-select-option value="Cash">Cash</ion-select-option>
+      </ion-select>
+    </ion-col>
+  <ion-col size="12">
+    <h2 class="totaltitle" >Total XAU :
+    </h2>
+    <ion-input type="number" [(ngModel)]="total_XAU_display" style="font-size: 20px;" readonly
+    ></ion-input>
+</ion-col>
+  <ion-col size="12">
+    <h2 class="totaltitle" >Est. Cost :
+    </h2>
+    <ion-input type="number" ng-model="est_cost" style="font-size: 20px;" readonly
+    >RM {{ est_cost | number: '1.2-2' }}</ion-input>
+</ion-col>
+<ion-row>
+  <h2 class="totaltitle" >Remarks :
+  </h2>
+  <ion-col size="12" class="ion-align-self-center">
+      <h2 class="totaltitle" style="border: 1px solid black;">
+          <ion-textarea type="text" [(ngModel)]="remark" rows="3"></ion-textarea>
+      </h2>
+  </ion-col>
+</ion-row>
+  </div>
+
+  <div class="polistitem">
+    <ion-row class="productorderlist">
+        <ion-col size="12">
+            <ion-button class="buttontheme-orange" mode="ios" (click)="submit_po()"
+                expand="block">Submit
+            </ion-button>
+        </ion-col>
+    </ion-row>
+</div>
+</ion-content>

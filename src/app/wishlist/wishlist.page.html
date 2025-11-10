@@ -1,0 +1,94 @@
+<app-common-header
+[pageSource]="'wishlist'"
+[mode]="mode"
+(cusBackEvent)="backToWishlist($event)"
+></app-common-header>
+
+<ion-content class="specialcontent whislist" appSwipe (swipeLeft)="onSwipeLeft($event)">
+  <div *ngIf="mode == 'noSearch'">
+
+        <ion-row>
+            <ion-col size="12">
+                <h2 class="ion-padding-start opensanLBold700">Wishlist</h2>
+            </ion-col>
+        </ion-row>
+
+        <div class="ion-padding-horizontal">
+            <ion-row>
+                <ion-col size="4" *ngFor="let x of wishlistMerchants" class="restaurantborder">
+                  <ion-item lines="none" (click)="toWishlistVoucherDetail(x,type='exist')"  class="ion-no-padding" detail='false'>
+                    <img src="{{x.restaurantImg}}">
+                  </ion-item>
+                </ion-col>
+
+              <ion-col size="4" style="padding: 5px;">
+                  <ion-item (click)="searchWishList()" lines="none" class="ion-no-padding">
+                   <img src="../../assets/add-icon.svg" style="margin-top: 2px; width: 100%;">
+                  </ion-item>
+              </ion-col>
+            </ion-row>
+
+
+        <div style="position: relative;" *ngIf="match == 'valid'">
+            <span class="closebtn" (click)="closeMatch()"><ion-icon name="close"></ion-icon></span>
+          <ion-button class="buttontheme-orange" mode="md">
+              <img src="../../assets/match-icon.svg">
+              <div>
+                  <span class="opensanLBold700" style="letter-spacing: 0; font-size: 13px;">
+                  {{voucherTotal}} match found for your new wishlist</span><br>
+                  <span class="opensanLight300" style="font-size: 10px; letter-spacing: 0;" (click)="this.router.navigate(['search/' + newMerchantTitle]);">
+                  View it now</span>
+              </div>
+          </ion-button>
+        </div>
+
+        </div>
+  </div>
+
+  <div [hidden]="mode == 'noSearch'"  class="searchpage">
+    <!-- Search Bar -->
+    <div class="customsearch" [hidden]="availableToAddWishVouchers.length >0">
+      <div class="customv2searhinput" mode="md">
+      <ion-row class="customv2searhinputarea">
+        <ion-col size="10" class="ion-no-padding">
+         <ion-input (ionChange)="autoFindMerchant()" [(ngModel)]="searchValue" (keyup.enter)="searchMerchant(searchValue)" #autofocus placeholder="Find merchant" style="text-indent:15px;"></ion-input>
+        </ion-col>
+        <ion-col size="2" class="ion-no-padding">
+        <span (click)="searchMerchant(searchValue)" class="searchiconimg"><img src="../../assets/search-icon.svg" alt=""></span>
+        </ion-col>
+      </ion-row>
+      </div>
+    </div>
+
+    <div class="customsearch" *ngIf="availableToAddWishVouchers.length >0">
+      <div class="customv2searhinput" mode="md">
+      <ion-row class="customv2searhinputarea">
+        <ion-col size="10" class="ion-no-padding">
+          <ion-input (ionChange)="autoFindMerchant()" [(ngModel)]="searchValue" (keyup.enter)="searchMerchant(searchValue)" placeholder="Find vouchers" style="text-indent:15px;"></ion-input>
+        </ion-col>
+        <ion-col size="2" class="ion-no-padding">
+           <span (click)="searchMerchant(searchValue)"  class="searchiconimg"><img src="../../assets/search-icon.svg" alt=""></span>
+        </ion-col>
+      </ion-row>
+      </div>
+    </div>
+
+    <ion-list *ngIf="filteredList.length >0 && viewMode == 'empty'">
+      <ion-item *ngFor="let s of filteredList" (click)="chooseMerchant(s)" lines="none">{{ s.title }}</ion-item>
+    </ion-list>
+
+    <div class="searchresultlist">
+    <ion-row>
+        <ion-col size="4" *ngFor="let x of availableToAddWishVouchers">
+            <ion-item (click)="toWishlistVoucherDetail(x,type='new')" class="ion-no-padding" lines="none"  style="padding:0px !important;">
+              <img src="{{x.logo_url}}">
+            </ion-item>
+        </ion-col>
+    </ion-row>
+    </div>
+
+  </div>
+
+    <div class="spacer" style="height: 40px;"></div>
+</ion-content>
+<mytab></mytab>

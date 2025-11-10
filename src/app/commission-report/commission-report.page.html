@@ -1,0 +1,142 @@
+<app-common-header
+  [pageSource]="'commission-report'"
+  [headerTitle]="'Commission Report'"
+></app-common-header>
+<ion-content class="ordelist ion-padding-top">
+
+    
+ <ion-item  class="ion-no-padding" mode="ios" lines="none">  
+    <ion-row class="productorderlist ">
+     
+      <ion-col size="4" class="inputdate">
+            <ion-label>Date Start</ion-label>
+            <a id="open-modal">
+            <ion-input
+              value="{{ start_date | date: 'dd.MM.yyyy' }}"
+              id="start_date"
+              class="ion-text-end" disabled="1"
+            ></ion-input>
+            </a>
+          <ion-modal trigger="open-modal">
+            <ion-content force-overscroll="false">
+              <ng-template>
+                <ion-datetime showDefaultButtons="true"
+                  presentation="date"
+                  [(ngModel)]="start_date"
+                  locale="en-GB-u-hc-h12"
+
+                ></ion-datetime>
+              </ng-template>
+            
+            </ion-content>
+          </ion-modal>
+     
+      </ion-col>
+        
+      <ion-col size="4" class="inputdate">
+        <ion-label>Date End</ion-label>
+        <a id="open-modal2">
+            <ion-input
+              value="{{ end_date | date: 'dd.MM.yyyy' }}"
+              id="end_date"
+              class="ion-text-end" disabled="1"
+            ></ion-input>
+        </a>
+          <ion-modal trigger="open-modal2">
+            <ion-content force-overscroll="false">
+              <ng-template>
+                <ion-datetime showDefaultButtons="true"
+                  presentation="date"
+                  [(ngModel)]="end_date"
+                  locale="en-GB-u-hc-h24"
+                ></ion-datetime>
+              </ng-template>
+            </ion-content>
+          </ion-modal>
+        
+      </ion-col>
+        
+        
+      <ion-col size="2" class="buttonactionsearch">
+            <ion-button (click)="getCommissionReport()" ><ion-icon name="search-outline"></ion-icon></ion-button>
+      </ion-col>
+      
+      <ion-col size="2" class="buttonactionclear">
+            <ion-button (click)="resetFilter()" color="danger"><ion-icon name="refresh-outline"></ion-icon></ion-button>
+      </ion-col>
+        
+    </ion-row>
+  </ion-item>
+    
+    
+    
+    
+    
+  <ion-item  class="ion-no-padding" mode="ios" lines="none">  
+    <ion-row class="productorderlist ">
+      <ion-col size="12" class="productdetail ion-align-self-center">
+        <h2>
+            Total Commission
+        </h2>
+      </ion-col>
+      <ion-col size="12" class="productdetailinfor">
+        <ion-row class="ion-align-items-center">
+            <ion-col size="6" style="padding-bottom:0;">
+                <h3 class="title">Total Count:</h3>
+                <h3 class="desc" style="font-size: 24px;margin-top: 5px;">{{total_count}}</h3>
+            </ion-col>
+            <ion-col size="6" style="padding-bottom:0;">
+                <h3 class="title">Total Commission:</h3>
+                <h3 class="desc" style="font-size: 24px;margin-top: 5px;">RM: {{total_commission|number:"1.2-2"}}</h3>
+            </ion-col>
+            
+        </ion-row>
+      </ion-col>
+      
+    </ion-row>
+  </ion-item>
+
+
+  <ion-item *ngFor="let x of dataList" class="ion-no-padding" mode="ios" lines="none">  
+    <ion-row class="productorderlist ">
+        
+      <ion-col size="12" class="productdetail ion-align-self-center">
+          <h2>
+              Commission Detail 
+              
+              <!-- <a *ngIf="x.action == 0" class="txtgreen-light" style="float: right;font-size: 20px;margin-top: -3px;"><ion-icon name="chevron-forward-outline"></ion-icon></a>
+              <a *ngIf="x.action == 1" class="txtgreen-light" style="float: right;font-size: 20px;margin-top: -3px;"><ion-icon name="chevron-forward-outline"></ion-icon></a> -->
+          </h2>
+      </ion-col>
+
+      <ion-col size="12" class="productdetailinfor">
+        <ion-row class="ion-align-items-center">
+            <ion-col size="5" style="padding-bottom:0;"><h3 class="title">Action</h3></ion-col>
+            <ion-col size="7" *ngIf="x.action == 0" style="padding-bottom:0;"><h3 class="desc">Pickup</h3></ion-col>
+            <ion-col size="7" *ngIf="x.action == 1" style="padding-bottom:0;"><h3 class="desc">Delivery</h3></ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-center">
+            <ion-col size="5" style="padding-bottom:0;"><h3 class="title">Rate:</h3></ion-col>
+            <ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{x.rate}}</h3></ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-center">
+          <ion-col size="5" style="padding-bottom:0;"><h3 class="title">Commission</h3></ion-col>
+          <ion-col size="7" style="padding-bottom:0;"><h3 class="desc">RM {{x.commission}}</h3></ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-center">
+          <ion-col size="5" style="padding-bottom:0;"><h3 class="title">Created Date</h3></ion-col>
+          <ion-col size="7" style="padding-bottom:0;"><h3 class="desc">{{x.created_date}}</h3></ion-col>
+        </ion-row>
+      </ion-col>
+      
+    </ion-row>
+  </ion-item> 
+
+
+
+
+  
+
+  <div class="spacer" style="height: 40px"></div>
+</ion-content>
+<mytab></mytab>

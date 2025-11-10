@@ -1,0 +1,157 @@
+<app-common-header [pageSource]="'collection'" [headerTitle]="'Order Job'"></app-common-header>
+
+<ion-content class="ordelist ion-padding-top">
+
+	<ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+		<ion-refresher-content></ion-refresher-content>
+	</ion-refresher>
+
+	<ion-row class="ion-align-items-center">
+		<ion-col size="5">
+			<h5 style="margin-top: 5px; margin-left: 12px;font-weight: 600;">Total Count: {{collectionList?.length}}
+			</h5>
+		</ion-col>
+		<ion-col size="7">
+			<ion-button [routerLink]="['/collection-order']" mode="ios" class="arangebutton" expand="block"> Arrange
+				Order
+				<ion-icon name="code-working-outline" class="code-working-outline"></ion-icon>
+			</ion-button>
+		</ion-col>
+	</ion-row>
+
+	<ion-accordion-group>
+		<ion-accordion value="{{item.purchase_order_id}}{{i}}" class="ion-no-padding"
+			*ngFor="let item of collectionList; let i = index;">
+			<ion-item slot="header" class="ion-no-padding ion-no-margin" mode="ios" lines="none"
+				style="margin-left: 15px;">
+				<div class="status" style="{{(status_color_kvList[item.order_status])?'color:'+status_color_kvList[item.order_status]+';border-color:'+status_color_kvList[item.order_status]:''}}">{{item.order_status_name}}</div>
+				<ion-label>
+					<div *ngIf="item.urgency_level>0">
+						<ion-badge color="warning" *ngIf="item.urgency_level==1">Urgent</ion-badge>
+						<ion-badge color="danger" *ngIf="item.urgency_level==2">Super Urgent</ion-badge>
+					</div>
+					<ion-row class="productorderlist">
+						<ion-col size="12" class="productdetail">
+							<div>								
+								<h5 class="txt400" style="margin-top: 0;">Name:
+									<div>{{item.customerDetail.name}}</div>
+								</h5>
+								<ion-row>
+									<ion-col size="6">
+										<h5 class="txt400" style="margin-top: 0;">XAU:
+											<div>{{item.XAU_amount}}</div>
+										</h5>
+									</ion-col>
+									<ion-col size="6">
+										<h5 class="txt400" style="margin-top: 0;">Area:
+											<div>{{item.pickup_city}}, {{item.pickup_state}}</div>
+										</h5>
+									</ion-col>
+								</ion-row>								
+							</div>
+						</ion-col>
+					</ion-row>
+				</ion-label>
+			</ion-item>
+
+			<ion-list slot="content">
+				<ion-item
+					style="margin-left: 0 !important;margin-top: 0;border-top: 1px dashed #b4b4b4; margin-left: -5px !important;">
+					<ion-row class="productorderlist">
+						<ion-col size="12" class="productdetail" style="padding:0;">
+							<div>
+								<ion-row style="padding:0;">
+
+									<ion-col size="6">
+										<h5 class="txt400">Amount: <div>RM {{item.total_amount}}</div>
+										</h5>
+									</ion-col>
+
+									<ion-col size="6">
+										<h5 class="txt400">Payment Method: 
+											<div>{{item.payment_method}}</div>
+										</h5>
+									</ion-col>
+
+									<ion-col size="12">
+										<h5 class="txt400">Need Test: <div>{{item.need_test==1?'Yes':'No'}}</div>
+										</h5>
+									</ion-col>
+
+									<ion-col size="12">
+										<h5 class="txt400">Remarks: <div>{{item.remark}}</div>
+										</h5>
+									</ion-col>
+								</ion-row>
+							</div>
+
+							<div class="buttonaction">
+								<ion-row style="margin-left: -5px">
+									<ion-col size="4">
+										<ion-button class="pickupdetail"
+											[routerLink]="['/collection-detail/'+item.purchase_order_id]">
+											GRN </ion-button>
+									</ion-col>
+
+									<ion-col size="2">
+										<a class="wazebtn" target="_blank"
+											href="https://waze.com/ul?q={{item.customerDetail.address1}},{{item.customerDetail.address2}},{{item.customerDetail.city}},{{item.customerDetail.postcode}}">
+											<img src="../../assets/waze.png"></a>
+									</ion-col>
+
+									<ion-col size="2">
+										<a class="googlemapbtn" target="_blank"
+											href="http://maps.google.com/?q={{item.customerDetail.address1}},{{item.customerDetail.address2}},{{item.customerDetail.city}},{{item.customerDetail.postcode}}"><img
+												src="../../assets/google-maps.png"></a>
+									</ion-col>
+
+									<ion-col size="2">
+										<a class="whatsappbtn" target="_blank"
+											href="https://api.whatsapp.com/send/?phone={{item.customerDetail.mobile}}&text=Dear+Valued+Customer%2C+RIDER+will+be+picking+up+your+order+within+30min-1hours%2C+pls+standby+phone+call+and+whatsapp&app_absent=0">
+											<ion-icon name="logo-whatsapp"></ion-icon>
+										</a>
+									</ion-col>
+
+									<ion-col size="2">
+										<a target="_blank" class="callbtn" href="tel:{{item.customerDetail.mobile}}">
+											<ion-icon name="call"></ion-icon>
+										</a>
+									</ion-col>
+								</ion-row>
+							</div>
+						</ion-col>
+					</ion-row>
+				</ion-item>
+			</ion-list>
+		</ion-accordion>
+
+
+
+
+	</ion-accordion-group>
+
+
+
+	<!--
+<ion-row style="width:100%;">
+    <ion-col size="12" class="ion-text-center">
+      <div class="noitemincart ion-margin-top">
+        <img src="../../assets/gg-icon/attention-icon.svg" style="width: 100px;">
+        <h2 class="" style="color: #1A1A1A; font-weight: 600;">No any location</h2>
+      </div>
+    </ion-col>
+  </ion-row>
+-->
+
+	<!-- <ion-list> -->
+	<!-- <ion-col size="4" style="padding: 5px;">
+            <ion-item (click)="searchWishList()" lines="none" class="ion-no-padding">
+            <img src="../../assets/add-icon.svg" style="margin-top: 2px; width: 100%;">
+            </ion-item>   
+        </ion-col>    -->
+
+	<!-- </div> -->
+	<div class="spacer" style="height: 40px"></div>
+</ion-content>
+
+<mytab></mytab>

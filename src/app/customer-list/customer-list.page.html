@@ -1,0 +1,158 @@
+<app-common-header [pageSource]="'customer-list'" [headerTitle]="'Customer List'"></app-common-header>
+
+<ion-content class="ordelist ion-padding-top">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+		<ion-refresher-content></ion-refresher-content>
+	</ion-refresher>
+
+	<ion-row class="ion-align-items-center">
+      <ion-col size="12">
+        <div class="grnlist">
+
+          <ion-col size="12">
+            <ion-searchbar [(ngModel)]="searchText" placeholder="Search Customer Name"></ion-searchbar>
+          </ion-col>
+
+          <h3 style="margin-top: 5px; margin-left: 12px;font-weight: 600;">Select a Customer</h3>
+          <ion-select value="variation" interface="action-sheet" cancelText='Cancel' class="pickupselect"
+              [(ngModel)]="customer_id" (ionChange)="getCustomerDetail(customer_id)">
+              <ion-select-option *ngFor="let x of customerList | search: searchText"
+                  value="{{x.customer_id}}">{{x.name}}
+              </ion-select-option>
+          </ion-select>
+        </div>
+      </ion-col>
+      <ion-col size="12" *ngIf="customerData.customer_id">
+        <ion-row class="grnlist">
+          <ion-col size="12">
+            <h1>Gold Purity Settings</h1>
+          </ion-col>
+          <ion-col size="12">
+            <h3>PW Buy</h3>
+            <table class="table" cellpadding="5" cellspacing="0" border="1" style="margin-bottom: 10px;">
+              <thead>
+                <tr>
+                  <th>Item Code</th>
+                  <th>Default (%)</th>
+                  <th>Customer Override (%)</th>
+                  <th>After Override (%)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let x of customerData.customerGoldPurityList; let i = index ;">
+                  <td (click)="view_detail(x,customerData.customerGoldPurityList,i,0)">{{x.gold_name}}</td>
+                  <td (click)="view_detail(x,customerData.customerGoldPurityList,i,0)">{{x.gold_pure_percent}}</td>
+                  <td (click)="view_detail(x,customerData.customerGoldPurityList,i,0)">{{x.override_gold_pure_percent_before}}</td>
+                  <td (click)="view_detail(x,customerData.customerGoldPurityList,i,0)">{{x.override_gold_pure_percent}}</td>
+                </tr>
+              </tbody>
+            </table>
+						<button type="button" style="padding: 10px 5px 10px 5px; background-color: #3276b1; border-radius: 10px; color: white;" (click)="addGoldPurity()"> Add PW Buy</button>
+          </ion-col>
+          <ion-col size="12">
+            <h3>PW Buy - Block</h3>
+            <table class="table" cellpadding="5" cellspacing="0" border="1" style="margin-bottom: 10px;">
+              <thead>
+                <tr>
+                  <th>Purity Item Code</th>
+                  <th>Default (%)</th>
+                  <th>Override (%)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let x of customerData.customerGoldPurityBlockList; let i = index ;">
+                  <td (click)="view_detail(x,customerData.customerGoldPurityBlockList,i,0)">{{x.gold_name}}</td>
+                  <td (click)="view_detail(x,customerData.customerGoldPurityBlockList,i,0)">{{x.gold_pure_percent}}</td>
+                  <td (click)="view_detail(x,customerData.customerGoldPurityBlockList,i,0)">{{x.override_gold_pure_percent}}</td>
+                </tr>
+              </tbody>
+            </table>
+						<button type="button" style="padding: 10px 5px 10px 5px; background-color: #3276b1; border-radius: 10px; color: white;" (click)="addGoldPurityBlock()"> Add PW Buy - Block</button>
+          </ion-col>
+          <ion-col size="12">
+            <h3>PW Sell</h3>
+            <table class="table" cellpadding="5" cellspacing="0" border="1" style="margin-bottom: 10px;">
+              <thead>
+                <tr>
+                  <th>Purity Item Code</th>
+                  <th>Default (%)</th>
+                  <th>Customer Override (%)</th>
+                  <th>After Override (%)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let x of customerData.customerSellGoldPurityList; let i = index ;">
+                  <td (click)="view_detail(x,customerData.customerSellGoldPurityList,i,0)">{{x.gold_name}}</td>
+                  <td (click)="view_detail(x,customerData.customerSellGoldPurityList,i,0)">{{x.gold_pure_percent}}</td>
+                  <td (click)="view_detail(x,customerData.customerSellGoldPurityList,i,0)">{{x.override_gold_pure_percent_before}}</td>
+                  <td (click)="view_detail(x,customerData.customerSellGoldPurityList,i,0)">{{x.override_gold_pure_percent}}</td>
+                </tr>
+              </tbody>
+            </table>
+						<button type="button" style="padding: 10px 5px 10px 5px; background-color: #3276b1; border-radius: 10px; color: white;" (click)="addSellGoldPurity()"> Add Sell</button>
+          </ion-col>
+          <ion-col size="12">
+            <h3>PW Exchange</h3>
+            <table class="table" cellpadding="5" cellspacing="0" border="1" style="margin-bottom: 10px;">
+              <thead>
+                <tr>
+                  <th>Purity Item Code</th>
+                  <th>Item Type</th>
+                  <th>Default (%)</th>
+                  <th>Customer Override (%)</th>
+                  <th>After Override (%)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let x of customerData.customerExchangeGoldPurityList; let i = index ;">
+                  <td (click)="view_detail(x,customerData.customerExchangeGoldPurityList,i,2)">{{x.gold_name}}</td>
+                  <td (click)="view_detail(x,customerData.customerExchangeGoldPurityList,i,2)">{{x.title}}</td>
+                  <td (click)="view_detail(x,customerData.customerExchangeGoldPurityList,i,2)">{{x.gold_pure_percent}}</td>
+                  <td (click)="view_detail(x,customerData.customerExchangeGoldPurityList,i,2)">{{x.override_gold_pure_percent_before}}</td>
+                  <td (click)="view_detail(x,customerData.customerExchangeGoldPurityList,i,2)">{{x.override_gold_pure_percent}}</td>
+                </tr>
+              </tbody>
+            </table>
+						<button type="button" style="padding: 10px 5px 10px 5px; background-color: #3276b1; border-radius: 10px; color: white;" (click)="addExchangeGoldPurity()"> Add Exchange</button>
+          </ion-col>
+          <!-- <ion-col size="12">
+            <h3>PW Buy Gold Bar Settings ( Gold Purity Percentage )</h3>
+						<div><ion-input type="text" [(ngModel)]="customerData.customerBuyGoldBarPurity"></ion-input></div>
+          </ion-col> -->
+          <ion-col size="12">
+            <h1>Gold Premium Settings</h1>
+          </ion-col>
+          <ion-col size="12">
+            <table class="table" cellpadding="0" cellspacing="0" border="1" style="margin-bottom: 10px;">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>PW Buy Prem Per Tael</th>
+                  <th>PW Sell Prem Per Tael</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let x of customerData.customerBItemTypeList; let i = index ;">
+                  <td (click)="view_detail(x,customerData.customerBItemTypeList,i,1)">{{x.title}}</td>
+                  <td (click)="view_detail(x,customerData.customerBItemTypeList,i,1)">{{x.premium}}</td>
+                  <td (click)="view_detail(x,customerData.customerBItemTypeList,i,1)">{{x.sell_premium}}</td>
+                </tr>
+              </tbody>
+            </table>
+						<button type="button" style="padding: 10px 5px 10px 5px; background-color: #3276b1; border-radius: 10px; color: white;" (click)="addItemType()"> Add Item Type</button>
+          </ion-col>
+          <ion-col size="12" style="margin-bottom: 20px;">
+            <h3>Gold Premium Fee Settings ( Gold Premium Fee )</h3>
+						<div><ion-input style="border: 1px black solid;" type="text" [(ngModel)]="customerData.buy_gold_bar_premium_fee"></ion-input></div>
+          </ion-col>
+          <ion-col size="12">
+						<button type="button" style="padding: 10px 5px 10px 5px; background-color: green; border-radius: 10px; color: white; width:100%;" (click)="submit_now()">Submit</button>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+	</ion-row>
+
+	<div class="spacer" style="height: 40px"></div>
+</ion-content>
+
+<mytab></mytab>

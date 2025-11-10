@@ -1,0 +1,259 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<ion-header class="headerbg">
+	<div class="headerbgtop">
+		<ion-toolbar mode="ios">
+			<!-- This Part is only used on Wishlist page -->
+			<!-- <ion-buttons *ngIf="pageSource == 'wishlist'" slot="start">
+              <ion-buttons slot="start">
+                <ion-back-button defaultHref="home" *ngIf="mode == 'noSearch'" color="light" text="" style="font-size: 20px;"></ion-back-button>
+
+               <ion-back-button defaultHref="" *ngIf="mode == 'search'" (click)="customizedBackEvent('')" color="light" text="" style="font-size: 20px;"></ion-back-button>
+                  <button type="button" (click)="customizedBackEvent('')" class="" style="background: none; padding: 0;"><ion-icon name="arrow-back-outline" style="font-size: 37px;margin-left: -4px;margin-top: 1px;"></ion-icon></button>
+
+              </ion-buttons>
+            </ion-buttons> -->
+
+      <ion-buttons
+        *ngIf="pageSource == 'trade-request-send' || pageSource == 'chathome' || pageSource == 'restaurant-detail'|| pageSource == 'ownerlist' || pageSource == 'quicklink' || pageSource == 'chathome-detail' || pageSource == 'pickup-detail' || pageSource == 'collection-detail' || pageSource == 'qc' || pageSource == 'gold-shipment' || pageSource == 'assay-report-clock-in' || pageSource == 'exchange-note' || pageSource == 'melting-job-wizard' || pageSource == 'melting-job' || pageSource == 'qc-detail' || pageSource =='punching' || pageSource == 'bullion-pending-reweight-detail' || pageSource == 'bullion-pending-check-detail' || pageSource == 'weight-detail' || pageSource == 'task-detail' || pageSource == 'job-log-history' || pageSource == 'make-po' || pageSource == 'test-detail' || pageSource == 'batch-scan' || pageSource == 'tbc-detail' || pageSource == 'bullion-add-change-request' || pageSource == 'change-request' || pageSource == 'redeem-task' || pageSource == 'modal-task-detail' || pageSource == 'modal-claim-cart' || pageSource == 'redeem-cdo' || pageSource == 'cdo-tasks'"
+        slot="start">
+        <!-- <button type="button" (click)="customizedBackEvent('')" class="" style="background: none; padding: 0;"><ion-icon name="arrow-back-outline" style="font-size: 37px;margin-left: -4px;margin-top: 1px;"></ion-icon></button> -->
+        <ion-back-button defaultHref="" text=""></ion-back-button>
+      </ion-buttons>
+
+
+      <ion-buttons
+       *ngIf="pageSource == 'trade-request-send' || pageSource == 'chathome' || pageSource == 'restaurant-detail'|| pageSource == 'ownerlist' || pageSource == 'quicklink' || pageSource == 'chathome-detail' || pageSource == 'pickup-detail' || pageSource == 'collection-detail' || pageSource == 'pickup'|| pageSource == 'gold-shipment-list' || pageSource == 'assay-report-clock-in-list' || pageSource == 'exchange-note-list' || pageSource == 'melting-job-list' || pageSource == 'melting-job-wizard-list' || pageSource == 'scan' || pageSource == 'collection' || pageSource == 'qc' || pageSource == 'qc-detail' || pageSource == 'punch-card' || pageSource == 'bullion-pending-reweight' || pageSource == 'bullion-pending-check' || pageSource == 'task' || pageSource == 'task-detail' || pageSource == 'job-log' || pageSource == 'job-log-history' || pageSource == 'inbox' || pageSource == 'profile' || pageSource == 'make-po-customer' || pageSource == 'make-po' || pageSource == 'weight' || pageSource == 'test' || pageSource == 'pending_tbc' || pageSource == 'pending_order' || pageSource == 'request_job' || pageSource == 'pending-tbc' || pageSource == 'redeem-task' || pageSource == 'personal-dashboard' || pageSource == 'modal-task-detail' || pageSource == 'customer-list' || pageSource == 'gold-shipment-clock-in' || pageSource == 'modal-claim-cart' || pageSource == 'redeem-cdo' || pageSource == 'cdo-tasks'"
+        slot="start" style="margin-left:5px;">
+        <!-- <button type="button" (click)="customizedBackEvent('')" class="" style="background: none; padding: 0;"><ion-icon name="arrow-back-outline" style="font-size: 37px;margin-left: -4px;margin-top: 1px;"></ion-icon></button> -->
+        <ion-icon name="home-outline" [routerLink]="['/home']" style="color: #fbd23c;"></ion-icon>
+      </ion-buttons>
+
+
+			<ion-buttons *ngIf="pageSource == 'request-add'" slot="start">
+				<ion-buttons slot="start" *ngIf="step != 5">
+					<button type="button" (click)="customizedBackEvent('')"
+						style="background: none; padding: 0; color: #000;" class="backbtn">
+						<ion-icon name="chevron-back-outline"></ion-icon>
+					</button>
+				</ion-buttons>
+			</ion-buttons>
+
+
+
+
+
+			<!-- <ion-buttons *ngIf="pageSource == 'voucher_detail' " slot="start">
+              <ion-buttons slot="start">
+                <ion-back-button defaultHref="home" color="light" text="" style="font-size: 20px;"></ion-back-button>
+              </ion-buttons>
+            </ion-buttons> -->
+
+			<!-- <ion-buttons *ngIf="pageSource == 'chathome-detail'" slot="start">
+              <ion-buttons slot="start">
+                <ion-back-button defaultHref="chathome" color="light" text="" style="font-size: 20px;"></ion-back-button>
+              </ion-buttons>
+            </ion-buttons> -->
+
+			<!--
+            <ion-buttons *ngIf="pageSource == 'gift_voucher'" slot="start">
+              <ion-buttons slot="start">
+-->
+			<!-- <ion-back-button defaultHref="vouchers" *ngIf="mode == 'home' || mode == 'trade'" color="light" text="" style="font-size: 20px;"></ion-back-button> -->
+			<!--                <button type="button" (click)="customizedBackEvent('')" class="" style="background: none; padding: 0;"><ion-icon name="arrow-back-outline" style="margin: 11px;font-size: 25px;"></ion-icon></button>-->
+			<!-- <button type="button" *ngIf="mode == 'select' || mode == 'chosen'" (click)="customizedBackEvent('')" class="" style="background: none; padding: 0;"><ion-icon name="arrow-back-outline" style="font-size: 37px;margin-left: -4px;margin-top: 1px;"></ion-icon></button> -->
+			<!--
+              </ion-buttons>
+            </ion-buttons>
+-->
+			<!-- This Part is only used on trade page -->
+			<!--
+            <ion-buttons *ngIf="pageSource == 'trade'" slot="start">
+              <ion-buttons slot="start">
+-->
+			<!-- <ion-back-button defaultHref="home" color="light" text="" style="font-size: 20px;"></ion-back-button> -->
+
+			<!-- <button type="button" (click)="customizedBackEvent('')" class="" style="background: none; padding: 0;"><ion-icon name="arrow-back-outline" style="margin: 11px;font-size: 25px;"></ion-icon></button> -->
+			<!--                <button type="button" *ngIf="mode == 'select' || mode == 'chosen'" (click)="customizedBackEvent('')" class="" style="background: none; padding: 0;"><ion-icon name="arrow-back-outline" style="font-size: 37px;margin-left: -4px;margin-top: 1px;"></ion-icon></button>-->
+			<!-- <ion-back-button defaultHref="" *ngIf="mode == 'select' || mode == 'chosen'" (click)="customizedBackEvent('')" color="light" text="" style="font-size: 20px;"></ion-back-button> -->
+			<!--
+              </ion-buttons>
+            </ion-buttons>
+-->
+
+			<!--
+           <ion-buttons *ngIf="pageSource == 'wishlist-voucher-detail'" slot="start">
+              <ion-buttons slot="start">
+                 <ion-back-button defaultHref="" (click)="dismissModal()"></ion-back-button>
+              </ion-buttons>
+            </ion-buttons>
+-->
+			<ion-title>{{ headerTitle }}</ion-title>
+
+			<!-- <ion-title (click)="navigateHome()"><img src="../../assets/vouch-logo.svg"/></ion-title>-->
+			<ion-buttons slot="end">
+				<!--<span class="messagenumber" *ngIf="msgNumber!=0">{{msgNumber}}</span>
+              <ion-icon (click)="navigate('chathome')" name="chatbubble-ellipses"></ion-icon>
+              <ion-menu-button><img src="../../assets/menu-icon.svg"/></ion-menu-button>-->
+				<span (click)="navigate('profile')" class="usericon"><img
+						src="../../assets/gg-icon/user-icon.svg" /></span>
+			</ion-buttons>
+		</ion-toolbar>
+
+		<!-- <div *ngIf="pageSource == 'profile' || pageSource == 'qr' || pageSource == 'vouchers' || pageSource == 'wishlist' && mode == 'noSearch'" class="profilecontent">
+       <ion-row>
+          <ion-col size="4" class="ion-align-self-center">
+              <div class="avatar">
+                  <div (click)="changeAvatar()" class="changeavatar" *ngIf="pageSource == 'profile'"><img src="../../assets/pencil-icon.svg"></div>
+
+                  <ion-img [src]="userdata.avatar" *ngIf="userdata.avatar!='null'"  (click)="changeAvatar()"></ion-img>
+
+                  <ion-img src="../../assets/avatar-default.svg" *ngIf="userdata.avatar=='null'"  (click)="changeAvatar()"></ion-img>
+              </div>
+          </ion-col>
+
+          <ion-col size="8" class="ion-align-self-center">
+
+               <div class="username opensanLBold700">{{userdata.name}}</div>
+               <ion-note>
+
+            <p class="opensanLight300" style="margin-top: -15px;">
+                <span *ngIf="userdata.email_verified=='1'">Verified member </span>
+                <span *ngIf="pageSource == 'profile'">
+                    <span *ngIf="userdata.email_verified=='0'">Not verified </span>
+                </span>
+                <span *ngIf="pageSource !== 'profile'">
+                <span [routerLink]="['/profile']"  *ngIf="userdata.email_verified=='0'">Not verified </span>
+                </span>
+
+                <span *ngIf="userdata.email_verified=='1'"><ion-icon name="mail"></ion-icon></span>
+                <br/>
+              Joined {{userdata.join_date}}
+            </p>
+
+
+
+
+
+              </ion-note>
+          </ion-col>
+     </ion-row>
+
+    </div>
+
+    <div *ngIf="pageSource == 'ownerlist'" class="profilecontent">
+      <ion-row>
+         <ion-col size="4" class="ion-align-self-center">
+             <div class="avatar">
+
+                 <ion-img [src]="ownerdata.avatar" *ngIf="ownerdata.avatar!='null'"></ion-img>
+
+                 <ion-img src="../../assets/avatar-default.svg" *ngIf="ownerdata.avatar=='null'" ></ion-img>
+             </div>
+         </ion-col>
+
+         <ion-col size="8" class="ion-align-self-center">
+
+              <div class="username opensanLBold700">{{ownerdata.name}}</div>
+              <ion-note>
+
+
+              <p class="opensanLight300" style="margin-top: -15px;">
+
+                <span *ngIf="ownerdata.email_verified=='1'">Verified member </span>
+                <span *ngIf="ownerdata.email_verified=='0'">Not verified </span>
+
+                <span *ngIf="ownerdata.email_verified=='1'"><ion-icon name="mail"></ion-icon></span>
+                <br/>
+              Joined {{userdata.join_date}}
+            </p>
+
+
+
+
+             </ion-note>
+         </ion-col>
+    </ion-row>
+
+   </div>
+
+
+    <div *ngIf="pageSource == 'chathome'" class="profilecontent">
+       <ion-row>
+          <ion-col size="4" class="ion-align-self-center">
+              <div class="avatar">
+                  <div (click)="changeAvatar()" class="changeavatar" *ngIf="pageSource == 'profile'"><img src="../../assets/pencil-icon.svg"></div>
+
+
+                  <ion-img [src]="userdata.avatar" *ngIf="userdata.avatar!='null'"></ion-img>
+
+
+                  <ion-img src="../../assets/avatar-default.svg" *ngIf="userdata.avatar=='null'"></ion-img>
+              </div>
+          </ion-col>
+
+          <ion-col size="8" class="ion-align-self-center">
+
+               <div class="username opensanLBold700">{{userdata.name}}</div>
+               <ion-note>
+                  <div class="chathomefilter opensanLBold600">
+                     <ion-row>
+                          <ion-col size="2" class="ion-no-padding" style="border-right: 1px solid #f6921e !important;">
+                            <ion-button  (click)="getChatroom(1)" *ngIf="type=='1'" style="color:#f6921e;">
+                              All
+                            </ion-button>
+                            <ion-button  (click)="getChatroom(1)" *ngIf="type!='1'">
+                              All
+                            </ion-button>
+                          </ion-col>
+
+                         <ion-col size="4" class="ion-no-padding" style="border-right: 1px solid #f6921e !important;">
+                            <ion-button (click)="getChatroom(2)" *ngIf="type=='2'" style="color:#f6921e;">
+                               My inbox
+                            </ion-button>
+                            <ion-button (click)="getChatroom(2)" *ngIf="type!='2'">
+                              My inbox
+                           </ion-button>
+                          </ion-col>
+
+                         <ion-col size="6" class="ion-no-padding">
+                            <ion-button (click)="getChatroom(3)" *ngIf="type=='3'" style="color:#f6921e;">
+                              My Requests
+                            </ion-button>
+                            <ion-button (click)="getChatroom(3)" *ngIf="type!='3'">
+                              My Requests
+                            </ion-button>
+                          </ion-col>
+                     </ion-row>
+
+
+
+                  </div>
+              </ion-note>
+          </ion-col>
+     </ion-row>
+
+    </div>
+
+
+
+
+    <div *ngIf="pageSource == 'trade' || pageSource == 'trade-request-send' || (pageSource == 'voucher_detail' && mode == 'select')">
+       <ion-row>
+          <ion-col size="12" class="ion-text-center">
+              <img src="../../assets/trade-name-icon.svg" class="tradelogo">
+          </ion-col>
+     </ion-row>
+
+    </div>
+
+
+      <div *ngIf="pageSource == 'gift_voucher'" >
+       <ion-row>
+          <ion-col size="12" class="ion-text-center">
+              <img src="../../assets/ft-thisvoucer-logo.svg" class="tradelogo" style="max-width: 240px;">
+          </ion-col>
+     </ion-row>
+
+    </div> -->
+	</div>
+</ion-header>

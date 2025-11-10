@@ -1,0 +1,39 @@
+<ion-header>
+	<div>
+		<ion-toolbar class="varitaionslect ion-no-padding ion-no-margin" style="padding-top: 10px !important;">
+			<ion-item class="ion-no-padding ion-no-margin" style="--inner-padding-end: 0 !important;" no-padding>
+				<ion-row class="ion-align-items-end">
+					<ion-col>
+						<div class="txt500"><b>Punching Detail</b></div>
+					</ion-col>
+				</ion-row>
+			</ion-item>
+
+			<ion-buttons slot="end">
+				<ion-button (click)="dismiss()" class="closemodal" mode="ios" style=" bottom: 35px; right: 0;">
+					<ion-icon name="close-outline" style="color: #999;"></ion-icon>
+				</ion-button>
+			</ion-buttons>pm
+		</ion-toolbar>
+	</div>
+</ion-header>
+
+<ion-content>
+	<ion-card>
+		<ion-card-header>
+			<ion-card-subtitle>{{modalData[0]['punched_time']}}</ion-card-subtitle>
+			<ion-card-title>{{modalData[0]['type']=='1'?'Check Out':'Check In'}}</ion-card-title>
+		</ion-card-header>
+
+		<ion-card-content>			
+			<div *ngIf="modalData[0]['selfie']" style="border:2px solid black">
+				<ion-img [src]="modalData[0]['selfie']"></ion-img>
+			</div>
+
+			<div *ngIf="modalData[0]['location_photo']" style="border:2px solid black;margin-top:10px">
+				<ion-img [src]="modalData[0]['location_photo']"></ion-img>
+			</div>
+
+		</ion-card-content>
+	</ion-card>
+</ion-content>

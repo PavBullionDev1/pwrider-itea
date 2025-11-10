@@ -1,0 +1,47 @@
+@use 'src/global';
+h2{
+    color: #eb008b;
+    font-size: 20px;
+}
+
+.qrcodedisplay{
+    text-align: center;
+    
+    .qrcodeimg{
+        position: relative;
+        width: 280px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 20px;
+
+        img.qrcodelogo{
+            width: 50px;
+            position: absolute;
+            transform: translate(50%, 50%);
+            left: 33%;
+            top: 30%;
+            background-color: #fff;
+            padding: 2px;
+            box-shadow: none;
+        }
+        
+        img{
+            border-radius: 20px;
+            box-shadow: 0px 0px 15px #999;
+        }
+        
+    }    
+    
+    span{
+        @include global.themeorangetxt;   
+        font-size: 16px;
+    }
+    
+    p{
+        color: #000;
+        margin-left: 30px;
+        margin-right: 30px;
+        font-size: 13px;
+    }
+    
+}

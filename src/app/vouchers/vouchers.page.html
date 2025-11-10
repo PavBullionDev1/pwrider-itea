@@ -1,0 +1,91 @@
+<app-common-header [pageSource]="'vouchers'" (cusBackEvent)="backToPrev($event)"></app-common-header>
+
+<ion-content class="specialcontent voucherslit" appSwipe (swipeLeft)="onSwipeLeft($event)">
+
+<ion-row>
+    <ion-col size="12">
+         <h2 class="ion-padding-start opensanLBold700">Vouchers</h2>
+
+
+          <div class="filterarea ion-padding-start">
+          <ion-button color="dark" mode="md">View:
+            <ion-select interface="popover" (ionChange)="sortingBy(view)" [(ngModel)]="view">
+              <ion-select-option value="all">All</ion-select-option>
+              <ion-select-option value="tradeList">Trade List</ion-select-option>
+              <ion-select-option value="privateVault">Private Vault</ion-select-option>
+            </ion-select>
+          </ion-button>
+
+          <ion-button color="dark" mode="md">Sort:
+            <ion-select interface="popover" (ionChange)="sortingBy(sorting)" [(ngModel)]="sorting">
+              <ion-select-option value="dateAdd">Date Added</ion-select-option>
+              <ion-select-option value="expiring">Expiring Soon</ion-select-option>
+              <ion-select-option value="aToZ">A - Z</ion-select-option>
+            </ion-select>
+          </ion-button>
+
+          <ion-icon name="sync-outline" *ngIf="sortMode=='default'"></ion-icon>
+          <ion-icon name="sync" class="lightUp" *ngIf="sortMode!=='default'" (click)="reset()"></ion-icon>
+         </div>
+
+
+
+          <ion-list class="ion-padding-horizontal">
+              <ion-row *ngFor="let s of myVouchers; let i = index">
+                <ion-col size="4" class="ion-align-self-center">
+                  <div>
+                      <ion-thumbnail>
+                          <div class="boxcontent">
+                            <div class="newlabel opensanLight600" *ngIf="s.is_new==1">
+                             NEW
+                            </div>
+                            <div class="newlabel opensanLight600 expiredlabel" *ngIf="s.is_expired==1">
+                              EXPIRED
+                             </div>
+                                <img src="{{s.merchant_logo}}" style="width: 100%;" (click)="toVoucherDetail(s,type='redeem')" class="logoimg">
+                          </div>
+                      </ion-thumbnail>
+                  </div>
+                </ion-col>
+                <ion-col size="7" class="ion-align-self-center">
+                  <div>
+                    <ion-label (click)="toVoucherDetail(s,type='redeem')">
+                        <h2 class="opensanLBold700"><ion-text>{{s.title}}</ion-text></h2>
+                        <p class="opensanLBold600">{{s.offer}}</p>
+                        <ion-text color="dark" *ngIf="s.display == 1&&s.is_expired==0" style="font-size: 10px;" ><img src="../../assets/trade-icon.svg" class="tradelogo"> Open for Trade</ion-text>
+                    </ion-label>
+                  </div>
+                </ion-col>
+
+                <ion-col size="1" class="ion-align-self-center" >
+                    <ion-icon name="ellipsis-horizontal-circle-outline"></ion-icon>
+
+                    <div style="opacity: 0 !important;">
+                      <ion-select interface="action-sheet" (ionChange)="setDisplay(s.voucher_id,i)" [(ngModel)]="action['voucher'+i]">
+                        <ion-select-option value="display" *ngIf="s.is_expired==0">{{(s.display==1)?'Remove from Trade':'Open for Trade'}}</ion-select-option>
+                        <ion-select-option value="redeem" *ngIf="s.is_expired==0">Redeem Voucher</ion-select-option>
+                        <ion-select-option value="gift" *ngIf="s.is_expired==0">Gift Voucher</ion-select-option>
+                        <ion-select-option value="delete" >Delete Voucher</ion-select-option>
+                      </ion-select>
+                    </div>
+
+                    <!-- <div *ngIf="s.display == 1">
+                      <ion-select interface="action-sheet" (ionChange)="setDisplay(s.voucher_id)" [(ngModel)]="action">
+                        <ion-select-option value="display"></ion-select-option>
+                        <ion-select-option value="redeem">Redeem Voucher</ion-select-option>
+                      </ion-select>
+                    </div> -->
+                </ion-col>
+
+            </ion-row>
+
+
+          </ion-list>
+
+
+    </ion-col>
+</ion-row>
+    <div class="spacer" style="height: 40px;"></div>
+
+</ion-content>
+<mytab></mytab>

@@ -1,0 +1,337 @@
+<app-common-header
+[pageSource]="'trade'"
+[mode]="mode"
+(cusBackEvent)="backToPrev($event)"
+></app-common-header>
+
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home" *ngIf="mode == 'home'"></ion-back-button>
+      <ion-back-button defaultHref="" *ngIf="mode == 'trade'" (click)="backToPrev()"></ion-back-button>
+      <ion-back-button defaultHref="" *ngIf="mode == 'select'" (click)="backToSelect()"></ion-back-button>
+      <ion-back-button defaultHref="" *ngIf="mode == 'chosen'" (click)="backToChosen()"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Trade Vouchers</ion-title>
+    <ion-buttons slot="end">
+      <ion-icon name="chatbubble-ellipses"></ion-icon>
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content class="searchpage" appSwipe (swipeLeft)="onSwipeLeft($event)">
+
+  <div slot='fixed' style="position:sticky;background-color: white;padding-top: 5px;">    
+    <ion-row  class="stepbar">
+      <ion-col size="4" class="ion-text-center">
+              <ion-badge *ngIf="stepMode == 'noSelect'"  class="active">1</ion-badge>
+              <ion-badge *ngIf="stepMode !== 'noSelect'" class="noactive">1</ion-badge>
+
+              <h6 class="opensanLight300">Choose Voucher</h6>
+      </ion-col>
+
+      <ion-col size="4" class="ion-text-center">
+
+              <ion-badge *ngIf="stepMode == 'vouchChosen'" class="active">2</ion-badge>
+              <ion-badge *ngIf="stepMode !== 'vouchChosen'" class="noactive">2</ion-badge>
+              <h6 class="opensanLight300">Search Voucher</h6>
+      </ion-col>
+
+      <ion-col size="4" class="ion-text-center">
+              <ion-badge *ngIf="stepMode == 'vouchRequest'" class="active">3</ion-badge>
+              <ion-badge *ngIf="stepMode !== 'vouchRequest'" class="noactive">3</ion-badge>
+              <h6 class="opensanLight300">Request to trade</h6>
+      </ion-col>
+
+    </ion-row>
+    <div *ngIf="stepMode == 'noSelect'">
+      <!-- Search Bar -->
+      <div class="customsearch" [hidden]="vouchersSelected.length >0 || voucherList.length >0">
+        <div class="customv2searhinput" mode="md">
+          <ion-row class="customv2searhinputarea">
+          <ion-col size="10" class="ion-no-padding">
+            <ion-input (ionChange)="autoFindMerchant()" [(ngModel)]="find" (keyup.enter)="searchMerchant(find)" #autofocus placeholder="Find vouchers" style="text-indent:15px;"></ion-input>
+          </ion-col>
+          <ion-col size="2" class="ion-no-padding">
+          <span (click)="searchMerchant(find)" class="searchiconimg"><img src="../../assets/search-icon.svg" alt=""></span>
+          </ion-col>
+        </ion-row>
+        </div>
+      </div>
+      <div class="customsearch" *ngIf="vouchersSelected.length >0 || voucherList.length >0">
+        <div class="customv2searhinput" mode="md">
+          <ion-row class="customv2searhinputarea">
+            <ion-col size="10" class="ion-no-padding">
+              <ion-input (ionChange)="autoFindMerchant()" [(ngModel)]="find" (keyup.enter)="searchMerchant(find)" placeholder="Find vouchers" style="text-indent:15px;"></ion-input>
+            </ion-col>
+            <ion-col size="2" class="ion-no-padding">
+              <span (click)="searchMerchant(find)"  class="searchiconimg"><img src="../../assets/search-icon.svg" alt=""></span>
+            </ion-col>
+          </ion-row>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="spacer" style="height: 140px;"></div>
+
+  <div *ngIf="stepMode == 'noSelect'">
+    <!-- Search Bar -->
+
+    <!-- <div class="customsearch" [hidden]="vouchersSelected.length >0 || voucherList.length >0">
+      <div class="customv2searhinput" mode="md">
+        <ion-row class="customv2searhinputarea">
+         <ion-col size="10" class="ion-no-padding">
+          <ion-input (ionChange)="autoFindMerchant()" [(ngModel)]="find" (keyup.enter)="searchMerchant(find)" #autofocus placeholder="Find vouchers" style="text-indent:15px;"></ion-input>
+         </ion-col>
+         <ion-col size="2" class="ion-no-padding">
+         <span (click)="searchMerchant(find)" class="searchiconimg"><img src="../../assets/search-icon.svg" alt=""></span>
+         </ion-col>
+       </ion-row>
+      </div>
+    </div> -->
+    <!-- <div class="customsearch" *ngIf="vouchersSelected.length >0 || voucherList.length >0">
+      <div class="customv2searhinput" mode="md">
+        <ion-row class="customv2searhinputarea">
+          <ion-col size="10" class="ion-no-padding">
+            <ion-input (ionChange)="autoFindMerchant()" [(ngModel)]="find" (keyup.enter)="searchMerchant(find)" placeholder="Find vouchers" style="text-indent:15px;"></ion-input>
+          </ion-col>
+          <ion-col size="2" class="ion-no-padding">
+             <span (click)="searchMerchant(find)"  class="searchiconimg"><img src="../../assets/search-icon.svg" alt=""></span>
+          </ion-col>
+        </ion-row>
+      </div>
+    </div> -->
+
+    <ion-list *ngIf="filteredList.length > 0 && viewMode == 'empty'">
+      <ion-item *ngFor="let s of filteredList" (click)="chooseMerchant(s)" lines="none">{{ s.title }}</ion-item>
+    </ion-list>
+
+    <ion-list-header style="margin-top: 10px; padding-right: 20px;"  *ngIf="voucherList.length ==0 && viewMode == 'show'">
+      <div class="opensanLBold700"  style="font-size: 13px;">
+        {{voucherList.length}} Vouchers found for <ion-text class="txtorange">'{{find}}'</ion-text>
+      </div>
+   </ion-list-header>
+   <ion-list-header style="margin-top: 10px; padding-right: 20px;" *ngIf="voucherList.length ==0 && viewMode == 'notFound'" >
+      <div class="opensanLBold700"  style="font-size: 13px;">
+        Sorry, no merchant found with <ion-text class="txtorange">'{{find}}'</ion-text>
+      </div>
+    </ion-list-header>
+
+    <div *ngIf="voucherList.length >0 && vouchersSelected.length ==0" class="vouchertrade">
+      <ion-list-header style="margin-top: 10px; padding-right: 20px;">
+        <div class="opensanLBold700" *ngIf="voucherList.length >0"  style="font-size: 13px;">
+          {{voucherList.length}} Vouchers found for <ion-text class="txtorange">'{{find}}'</ion-text>
+        </div>
+      </ion-list-header>
+
+      <ion-list class="voucherlist">
+
+        <ion-row *ngFor="let s of voucherList">
+          <ion-col size="4" class="ion-align-self-center voucherdetail" (click)="toVoucherDetail(s,type='select')">
+            <div class="boxcontent">
+            <div class="newlabel opensanLight600" *ngIf="s.is_new==1">
+              NEW
+            </div>
+              <img src="{{s.merchant_logo}}" class="logoimg">
+              </div>
+          </ion-col>
+
+          <ion-col size="6" class="ion-align-self-center border-right" (click)="toVoucherDetail(s,type='select')">
+              <h2 class="opensanLBold700"><ion-text class="txtorange">{{s.title}}</ion-text></h2>
+              <p class="opensanLight300">{{s.offer| slice:0:50}}{{s.offer.length>49?'...':''}}</p>
+              <div class="username"><ion-icon name="person-circle-outline"></ion-icon>{{s.username}}</div>
+          </ion-col>
+
+          <ion-col size="2" class="ion-align-self-center">
+              <div class="ownerwishlist">
+                <div *ngIf="s.ownerStatus == 'hvWishlist'" (click)="this.router.navigate(['ownerlist/' + s.user_id+'/wishlist'])">
+                  <img src="../../assets/wishlist-active-icon.svg">
+                  <h5 class="opensanLight300 ion-text-center">Check owner’s wishlist</h5>
+                </div>
+                <div *ngIf="s.ownerStatus == 'noWishlist'">
+                  <img src="../../assets/wishlist-nonactive-icon.svg">
+                  <h5 class="opensanLight300 ion-text-center">No wishlist, anything goes!</h5>
+                </div>
+                <div *ngIf="s.ownerStatus == 'match'">
+                  <img src="../../assets/nomatch-icon.svg">
+                  <h5 class="opensanLight300 ion-text-center">Match found!</h5>
+                </div>
+              </div>
+          </ion-col>
+
+        </ion-row>
+      </ion-list>
+    </div>
+
+    <div *ngIf="vouchersSelected.length >0" class="vouchertrade">
+      <ion-list class="voucherlist">
+
+        <ion-row *ngFor="let s of vouchersSelected">
+          <ion-col size="4" class="ion-align-self-center voucherdetail">
+            <div class="boxcontent">
+              <div class="newlabel opensanLight600" *ngIf="s.is_new==1">
+                NEW
+              </div>
+              <img src="{{s.merchant_logo}}">
+              </div>
+          </ion-col>
+
+          <ion-col size="6" class="ion-align-self-center border-right">
+              <h2 class="opensanLBold700"><ion-text class="txtorange">{{s.title}}</ion-text></h2>
+              <p class="opensanLight300">{{s.offer| slice:0:50}}{{s.offer.length>49?'...':''}}</p>
+              <div class="username"><ion-icon name="person-circle-outline"></ion-icon>{{s.username}}</div>
+          </ion-col>
+
+          <ion-col size="2" class="ion-align-self-center selected ion-text-center">
+              <img src="../../assets/check-icon.svg">
+              <h5 class="opensanLight300 ion-text-center">Selected</h5>
+              <ion-text  (click)="returnToSearch()" class="ion-text-center"><small class="txtorange opensanLBold600">Cancel</small></ion-text>
+          </ion-col>
+
+        </ion-row>
+      </ion-list>
+      <div class="ion-text-center">
+        <ion-button class="buttontheme-orange" (click)="nextStep('vouchChosen')" mode="md">Next</ion-button>
+      </div>
+    </div>
+
+    <div *ngIf="mostTradedVouchers.length > 0 && viewMode == 'empty'">
+      <ion-grid style="padding-bottom: 0;">
+        <ion-row>
+            <ion-col>
+                <h5 style="padding-left: 5px; font-size: 18px; margin-bottom: 0;" class="opensanLBold700">Most Traded Vouchers</h5>
+            </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-list class="voucherlist">
+        <ion-row *ngFor="let s of mostTradedVouchers">
+            <ion-col size="4" class="ion-align-self-center voucherdetail" (click)="toVoucherDetail(s,type='select')">
+                <div class="boxcontent">
+                    <img src="{{s.merchant_logo}}" class="logoimg">
+                </div>
+            </ion-col>
+            <ion-col size="8" class="ion-align-self-center border-right" (click)="toVoucherDetail(s,type='select')">
+              <h2 class="opensanLBold700"><ion-text class="txtorange">{{s.title}}</ion-text></h2>
+              <p class="opensanLight300">{{s.offer| slice:0:50}}{{s.offer.length>49?'...':''}}</p>
+            </ion-col>
+        </ion-row>
+      </ion-list>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  <div *ngIf="stepMode == 'vouchChosen'" class="vouchertrade">
+
+    <ion-row>
+        <ion-col size="12">
+            <h5 class="opensanLBold700">Choose voucher to trade</h5>
+        </ion-col>
+    </ion-row>
+
+
+    <ion-row *ngIf="availableVouchers.length >0">
+      <ion-col size="6" *ngFor="let x of availableVouchers" align="center">
+
+          <div class="voucherdetail" (click)="tradedVoucher(x)" lines="none">
+            <div class="boxcontent">
+              <div class="newlabel opensanLight600" *ngIf="x.is_new==1">
+                  NEW
+              </div>
+              <div class="nomatchicon" *ngIf="x.status == 'matchFound'"><img src="../../assets/nomatch-icon.svg"></div>
+
+              <img src="{{x.merchant_logo}}">
+
+              <div class="voucherdesc">
+                <h4 class="opensanLBold700">{{x.title}}</h4>
+              <p>{{x.offer| slice:0:50}}{{x.offer.length>49?'...':''}}</p>
+            </div>
+          </div>
+        </div>
+
+          <ion-text class="opensanLight300 ion-text-center" *ngIf="x.status == 'matchFound'"><small style="display: inline-block;margin-top: 10px;">This voucher match owner's wishlist</small></ion-text>
+        </ion-col>
+    </ion-row>
+
+    <div *ngIf="availableVouchers.length == 0" class="ion-padding-horizontal ion-margin-top">
+      <span class="opensanLight300">You have none vouchers to trade currently.</span>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+  <div *ngIf="stepMode == 'vouchRequest'" class="vouchertrade">
+    <ion-row>
+        <ion-col size="12">
+            <h5 class="opensanLBold700">Request to trade</h5>
+        </ion-col>
+    </ion-row>
+
+
+    <ion-row style="position: relative;">
+         <div class="tradeimg">
+            <img src="../../assets/trade-icon.svg" class="tradelogo">
+        </div>
+
+        <ion-col size="6" align="center">
+            <div class="voucherdetail">
+
+            <div class="boxcontent">
+              <div class="newlabel opensanLight600" *ngIf="vouchersSelected[0].is_new==1">
+                  NEW
+              </div>
+              <img src="{{vouchersSelected[0].merchant_logo}}">
+
+              <div class="voucherdesc">
+                <h4 class="opensanLBold700">{{vouchersSelected[0].title}}</h4>
+              <p>{{vouchersSelected[0].offer| slice:0:50}}{{vouchersSelected[0].offer>49?'...':''}}</p>
+            </div>
+
+            <div class="username"><ion-icon name="person-circle-outline"></ion-icon>{{vouchersSelected[0].username}}</div>
+            </div>
+          </div>
+        </ion-col>
+
+
+        <ion-col size="6" align="center">
+            <div class="voucherdetail">
+                <div class="nomatchicon" *ngIf="vouchersToTrade[0].status == 'matchFound'"><img src="../../assets/nomatch-icon.svg"></div>
+            <div class="boxcontent">
+              <div class="newlabel opensanLight600" *ngIf="vouchersToTrade[0].is_new==1">
+                  NEW
+              </div>
+
+              <img src="{{vouchersToTrade[0].merchant_logo}}">
+
+              <div class="voucherdesc">
+                <h4 class="opensanLBold700">{{vouchersToTrade[0].title}}</h4>
+              <p>{{vouchersToTrade[0].offer| slice:0:50}}{{vouchersToTrade[0].offer>49?'...':''}}</p>
+            </div>
+
+            <div class="username"><ion-icon name="person-circle-outline"></ion-icon>{{vouchersToTrade[0].username}}</div>
+          </div>
+          </div>
+        </ion-col>
+    </ion-row>
+
+
+
+    <div class="ion-text-center">
+      <ion-button class="buttontheme-orange ion-margin-top" (click)="submitTrade()" mode="md">Send Request</ion-button>
+    </div>
+  </div>
+  <div class="spacer" style="height: 40px;"></div>
+
+</ion-content>
+<mytab></mytab>

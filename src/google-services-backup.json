@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "958071698167",
+    "project_id": "pwrider-32aec",
+    "storage_bucket": "pwrider-32aec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:958071698167:android:6dcded5d784ef6218719f2",
+        "android_client_info": {
+          "package_name": "com.iteatech.pwriderinhouse"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "958071698167-09f58l5foa9ktvqt6sqm6m09rp803c6c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD838DMkXf3THyEpH7bXUarvdn3wQr2BWI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "958071698167-09f58l5foa9ktvqt6sqm6m09rp803c6c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

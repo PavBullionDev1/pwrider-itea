@@ -1,0 +1,40 @@
+<ion-header>
+  <div>
+    <ion-toolbar class="varitaionslect ion-no-padding ion-no-margin" style="padding-top: 10px !important;">
+      <ion-item class="ion-no-padding ion-no-margin" style="--inner-padding-end: 0 !important;" no-padding>
+        <ion-row class="ion-align-items-end">
+          <ion-col>
+            <div class="txt500"><b>On The Way Task</b></div>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+
+    </ion-toolbar>
+  </div>
+</ion-header>
+
+<ion-content>
+  <div class="grnlist">
+    <ion-row>
+      <ion-col size="5" style="margin-top: 10px;">
+        <ion-label style="font-size: 13px; color: #999;">Minutes(times needed):</ion-label>
+      </ion-col>
+      <ion-col size="7">
+        <ion-input [(ngModel)]="minutes" type="number" placeholder="Enter Minutes" style="font-size: 13px;" [disabled]="!task_id"></ion-input>
+      </ion-col>
+    </ion-row>
+    <!-- Checkbox for WhatsApp Notification -->
+    <ion-row>
+      <ion-col size="12" style="margin-top: 10px;">
+        <ion-item lines="none">
+          <ion-checkbox slot="start" [(ngModel)]="sendWhatsapp" [disabled]="!task_id"></ion-checkbox>
+          <ion-label style="font-size: 13px; color: #999;">Send Whatsapp to Inform Customer</ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-button color="primary" mode="ios" (click)="submit()" expand="block">Confirm</ion-button>
+</ion-footer>

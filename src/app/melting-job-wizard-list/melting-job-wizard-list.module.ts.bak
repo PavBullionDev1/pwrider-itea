@@ -1,0 +1,20 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
+import { MeltingJobWizardListPageRoutingModule } from './melting-job-wizard-list-routing.module';
+import { MeltingJobWizardListPage } from './melting-job-wizard-list.page';
+import { SearchPipe } from '../customer-list/search.pipe';
+import { SharedModule } from '../shared/shared.module';
+
+@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    MeltingJobWizardListPageRoutingModule,
+    SharedModule],
+  declarations: [MeltingJobWizardListPage,
+    SearchPipe]
+})
+export class MeltingJobWizardListPageModule {}

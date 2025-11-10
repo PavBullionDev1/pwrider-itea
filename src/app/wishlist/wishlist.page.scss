@@ -1,0 +1,90 @@
+@use 'src/global';
+h2{
+    color: #eb008b;
+    font-size: 20px;
+}
+
+.whislist{
+   
+    .searchresultlist{
+        padding-left: 8px;
+        padding-right: 8px;
+        margin-top: 10px;
+        
+        
+        img{
+            border: 1px solid #faaf40;
+            border-radius: 5px;
+            padding: 7px;
+            background-color: #fff;
+        }
+    }
+    
+    ion-item {
+      --padding-end: 0px;
+      --inner-padding-end: 0px;
+        
+        
+    }
+    
+    span.closebtn{
+        position: absolute;
+        z-index: 1;
+        right: 0px;
+        color: #fff;
+        font-size: 13px;
+        top: 7px;
+    }
+    
+    .buttontheme-orange{
+        
+        @include global.btnthemeorange(100%,16px,3px);
+        text-align: left;
+        height: 55px;
+        
+        img{
+           width: 30px;
+           margin-right: 5px;
+           margin-left: -10px;
+        }
+        
+    }
+    
+    
+    
+    
+    .restaurantborder img{
+         border: 1px solid #faaf40;
+        border-radius: 5px;
+        padding: 5px;
+        background-color: #fff;
+    }
+    
+}
+
+.searchpage{
+    .customsearch{
+        position: relative;
+        z-index: 1;
+    }
+    
+    
+    ion-list{
+        ---background: #fff;
+        box-shadow: 0px 0px 5px #b5b5b5;
+        margin-left: 12px;
+        margin-right: 12px;
+        margin-top: -10px;
+        padding-bottom: 10px;
+        padding-top: 20px;
+     
+        
+        ion-item::part(native){
+            display: inline-block;
+            min-height: 20px;
+            color: #555;
+        }
+        
+        
+    }
+}

@@ -1,0 +1,30 @@
+<app-common-header [pageSource]="'qr'" (cusBackEvent)="backToPrev($event)"></app-common-header>
+
+
+<ion-content class="specialcontent" appSwipe (swipeLeft)="onSwipeLeft($event)">
+
+    <ion-row *ngIf="showNotFound == true">
+        <ion-col size="12">
+             <h2 class="ion-padding-start opensanLBold700">QR</h2>
+
+            <div class="qrcodedisplay">
+                <div class="qrcodeimg">
+                    <img src="../../assets/trade-icon.svg" class="qrcodelogo">
+                    <img src="{{qrlink}}">
+                </div>
+
+                <p class="opensanLight300">
+                    <span class="opensanLBold700">This is your unique QR code</span><br>
+            Merchant will scan this QR code to add voucher to your account.</p>
+
+            </div>
+
+        </ion-col>
+    </ion-row>
+
+
+    <div class="spacer" style="height: 40px;"></div>
+
+</ion-content>
+
+<mytab></mytab>

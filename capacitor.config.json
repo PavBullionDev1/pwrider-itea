@@ -1,0 +1,20 @@
+{
+  "appId": "com.iteatech.pwrider",
+  "appName": "PWRIDER",
+  "webDir": "dist/app",
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": true,
+      "launchShowDuration": 2000,
+      "androidSplashResourceName": "splash",
+      "showSpinner": true,
+      "spinnerColor": "#999999"
+    },
+    "Camera": {
+      "permissions": ["camera", "photos"]
+    }
+  }
+}

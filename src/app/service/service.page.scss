@@ -1,0 +1,117 @@
+@use 'src/global';
+.ordelist{
+    
+    .detailinfor{
+        background-color: #fff;
+        box-shadow: 1px 2px 1px #efefef;
+        margin-bottom: 1px;
+        padding-left: 12px;
+        padding-right: 12px;
+        padding-top: 12px;
+        padding-bottom: 15px;
+        
+        h2{
+            margin: 0;
+           font-size: 20px;
+           font-weight: 600;
+        }
+        p{
+            margin: 0;
+            padding-top: 5px;
+            font-size: 16px;
+        }
+    }
+    
+    ion-item{
+        background: #FFFFFF;
+        border-radius: 12px;
+        margin-left: 12px;
+        margin-right: 12px;
+        margin-top: 10px;
+        --inner-padding-end: 0;
+        box-shadow: 1px 1px 1px #efefef;
+        padding: 13px 10px 10px 10px;
+        
+        .productdetail{
+            h2{
+                margin-top: 0;
+                letter-spacing: 0;
+                font-weight: 600;
+                margin-bottom: 3px;
+                font-size: 18px;
+            } 
+            
+            p{
+                margin-top: 0;
+                color: #757B8A;
+                margin-bottom: 0;
+                font-size: 17px;
+            }
+        }
+        
+        .productdetailinfor{
+            border-top: 1px solid #EEEFF1;
+            padding-top: 15px;
+            h3{
+                margin-top: 0;
+                margin-bottom: 0;
+                
+                &.title{
+                    color: #757B8A;
+                    font-size: 14px;
+                    font-weight: 500;
+                        
+                }
+                
+                &.desc{
+                    font-size: 14px;
+                    color: #1A1A1A;
+                    font-weight: 500;
+                    line-height: 17px;
+                    
+                    .days{
+                        font-weight: 600;
+                    }
+                }
+            }
+            
+            
+            
+        }
+        
+    }
+}
+
+
+.footerbtn{
+    background-color: #fff;
+    
+    ion-button{
+        margin: 0;
+        --border-radius: 0;
+        --background: #fff;
+        --background-hover: #fff;
+        --background-activated: #fff;
+        img{
+            width: 24px;
+            margin-right: 7px;
+            margin-top: -1px;
+        }
+        
+        &.servicebtn{
+            color: #fbd23c;
+            border-bottom: 3px solid #fbd23c;
+            font-size: 17px;
+            font-weight: 700;
+            height: 60px;
+        }
+
+        &.requestbtn{
+            color: #A7ACB6;
+            border-bottom: 3px solid #ffffff;
+            font-size: 17px;
+            font-weight: 700;
+            height: 60px;
+        }
+    }
+}

@@ -1,0 +1,42 @@
+<ion-app>
+    <ion-split-pane contentId="main-content">
+<!--
+        <ion-menu [disabled]="isLogin==false" contentId="main-content" type="overlay">
+            <ion-content class="nomovingcontent navigationmenu">
+                <ion-list id="inbox-list" class="profileheader">
+                    <ion-menu-toggle class="closemenubtn">
+                        <ion-icon name="chevron-back"></ion-icon>
+                    </ion-menu-toggle>
+
+                    <div class="menulist">
+                        <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
+                            <ion-item  (click)="slidePage(p.url)" lines="none" detail="false">
+                                <img src="{{ p.iconimg }}">
+                                <img src="{{ p.iconimgactive }}" class="active">
+                                <ion-label class="opensanLight300">{{ p.title }}</ion-label>
+                            </ion-item>
+                        </ion-menu-toggle>
+
+
+                        <ion-menu-toggle auto-hide="false">
+                            <ion-item (click)="toLogout()" lines="none">
+                                <img src="../assets/logout-icon.svg">
+                                <ion-label class="opensanLight300">Log Out</ion-label>
+                            </ion-item>
+                        </ion-menu-toggle>
+                    </div>
+
+                    <div class="vertxt opensanLight300">
+                        VOUCH Version {{this.appConfig['version']}}
+                    </div>
+
+
+
+                </ion-list>
+            </ion-content>
+        </ion-menu>
+-->
+
+        <ion-router-outlet id="main-content" animated="false"></ion-router-outlet>
+    </ion-split-pane>
+</ion-app>

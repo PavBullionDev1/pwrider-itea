@@ -1,0 +1,163 @@
+<ion-header>
+	<div>
+		<ion-toolbar class="varitaionslect ion-no-padding ion-no-margin" style="padding-top: 10px !important;">
+			<ion-item class="ion-no-padding ion-no-margin" style="--inner-padding-end: 0 !important;" no-padding>
+				<ion-row class="ion-align-items-end">
+					<ion-col>
+						<div class="txt500"><b>Item Detail</b></div>
+					</ion-col>
+				</ion-row>
+			</ion-item>
+
+			<ion-buttons slot="end">
+				<ion-button (click)="dismiss()" class="closemodal" mode="ios" style=" bottom: 35px; right: 0;">
+					<ion-icon name="close-outline" style="color: #999;"></ion-icon>
+				</ion-button>
+			</ion-buttons>
+		</ion-toolbar>
+	</div>
+</ion-header>
+
+<ion-content>
+  <div class="grnlist">
+    <ion-row class="polistitemv2">
+
+        <ion-col size="6">
+            <h3>Select Item Type</h3>
+            <ion-select value="variation" interface="action-sheet" cancelText='Cancel' class="pickupselect"
+                [(ngModel)]="modalData.item_type" (ionChange)="recalculate(modalData)">
+                <ion-select-option *ngFor="let x of customerBItemTypeList"
+                    value="{{x.item_type_id}}">{{x.title}}
+                </ion-select-option>
+            </ion-select>
+        </ion-col>
+
+        <ion-col size="6" *ngIf="modalData.item_type == 1">
+          <h3>Select Item Code</h3>
+          <ion-select value="variation" class="pickupselect"
+              [(ngModel)]="modalData.item_code" (ionChange)="recalculate_jewel(modalData)">
+              <ion-select-option *ngFor="let x of customerGoldPurityList" value="{{x.gold_pure_id}}">{{x.gold_name}}
+                  ({{x.override_gold_pure_percent}}%)</ion-select-option>
+          </ion-select>
+        </ion-col>
+
+        <ion-col size="6" *ngIf="modalData.is_editable == 0">
+            <h3>Purity</h3>
+            <h2 class="totaltitle">
+                <ion-input type="number" [(ngModel)]="modalData.gold_pure_percent" disabled
+                ></ion-input>
+            </h2>
+        </ion-col>
+
+        <ion-col size="6" *ngIf="modalData.item_type != 1">
+          <h3>Select Item Code</h3>
+          <ion-select value="variation" class="pickupselect"
+              [(ngModel)]="modalData.item_code" (ionChange)="recalculate_jewel(modalData)">
+              <ion-select-option *ngFor="let x of customerGoldPurityList" value="{{x.gold_pure_id}}">{{x.gold_name}}
+                  ({{x.override_gold_pure_percent}}%)</ion-select-option>
+          </ion-select>
+        </ion-col>
+
+        <ion-col size="6" *ngIf="modalData.is_editable == 1">
+            <h3>Purity</h3>
+            <h2 class="totaltitle" style="border: 1px solid black;">
+                <ion-input type="number" [(ngModel)]="modalData.gold_pure_percent" (ionChange)="recalculate(modalData)"
+                ></ion-input>
+            </h2>
+        </ion-col>
+
+        <ion-col size="6">
+            <h3>XAU</h3>
+            <h2>
+                <ion-input type="number" [(ngModel)]="modalData.XAU_amount" disabled="disabled"></ion-input>
+            </h2>
+        </ion-col>
+
+        <ion-row style="border-top: 2px solid #cbcbcb; width:100%">
+
+            <ion-col size="6" class=" ion-align-self-end">
+                <h3 class="totaltitle">Previous GRAM</h3>
+            </ion-col>
+            <ion-col size="6">
+
+                <h2 class="totaltitle" style="border: 1px solid black;">
+                  <ion-input type="number" [(ngModel)]="modalData.previous_gram" disabled="disabled"></ion-input>
+
+                </h2>
+            </ion-col>
+          <ion-col size="6" class=" ion-align-self-end">
+            <h3 class="totaltitle">GRAM</h3>
+          </ion-col>
+          <ion-col size="6">
+
+            <h2 class="totaltitle" style="border: 1px solid black;">
+              <ion-input type="number" [(ngModel)]="modalData.gram" (ionChange)="recalculate(modalData)" #gramInput
+                         (click)="gramInput.value = ''"
+              ></ion-input>
+            </h2>
+          </ion-col>
+            <ion-col size="12">
+                <h3>Select Warehouse</h3>
+                <ion-select value="variation" interface="action-sheet" cancelText='Cancel' class="pickupselect"
+                    [(ngModel)]="modalData.warehouse_id">
+                    <ion-select-option *ngFor="let x of warehouseList" value="{{x.warehouse_id}}">{{x.name}}
+                    </ion-select-option>
+                </ion-select>
+            </ion-col>
+            <ion-col size="6" *ngIf="modalData.is_editable == 1">
+                <h3>Bar Code</h3>
+                <h2 class="totaltitle" style="border: 1px solid black;">
+                    <ion-input type="text" style="text-align: start;" [(ngModel)]="modalData.barcode"
+                    ></ion-input>
+                </h2>
+            </ion-col>
+            <ion-col size="6" *ngIf="modalData.is_editable == 1">
+                <h3>PW Bar Code</h3>
+                <h2 class="totaltitle" style="border: 1px solid black;">
+                    <ion-input type="text" style="text-align: start;" [(ngModel)]="modalData.pw_barcode"
+                    ></ion-input>
+                </h2>
+            </ion-col>
+            <ion-col size="12">
+                <ion-button class="buttontheme-orange" mode="ios" (click)="dismiss()"
+                    expand="block">Submit
+                </ion-button>
+            </ion-col>
+            <ion-col size="12">
+              <ion-button color="primary" mode="ios" (click)="openActionSheet()"
+                  expand="block">Upload Photos
+              </ion-button>
+              Upload Photo for Index: {{grnIndex}}
+              <div style="border:1px solid black">
+                <ion-input type="number" [(ngModel)]="grnIndex" ></ion-input>
+              </div>
+            </ion-col>
+
+            <h1 *ngIf="isLoading">Uploading.. please wait..</h1>
+            <ion-col size="12">
+              <ion-row *ngIf="modalData.MultipleImageUrl.length !== 0">
+                <ion-col size="12" >
+                    <ion-slides pager="true" [options]="slideOpts">
+                        <!-- Item Image::Start -->
+                        <ion-slide class="item-slide" *ngFor="let x of modalData.MultipleImageUrl"><!-- List item images -->
+                            <div class="image-slide-content">
+                                <img [src]="x.image" class="itemImage">
+                              <textarea class="remark" [(ngModel)]="x.remark" rows="2">
+                              </textarea>
+                            </div>
+                            <button (click)="delete_img(x)" class="deleteImageBtn">x</button>
+                        </ion-slide>
+                        <!-- Item Image::End -->
+                    </ion-slides>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+
+        </ion-row>
+
+    </ion-row>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-button color="danger" mode="ios" (click)="deleteItem(modalData)" expand="block">Delete Item</ion-button>
+</ion-footer>

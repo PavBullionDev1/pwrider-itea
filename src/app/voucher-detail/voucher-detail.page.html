@@ -1,0 +1,193 @@
+<app-common-header
+[pageSource]="'voucher_detail'"
+[mode]="buttonMode"
+(cusBackEvent)="backToPrev($event)"
+></app-common-header>
+
+<ion-content class="ion-padding-top" *ngIf="showNotFound == true" appSwipe (swipeLeft)="onSwipeLeft($event)">
+
+    <ion-row  class="stepbar" *ngIf="buttonMode == 'select'">
+        <ion-col size="4" class="ion-text-center">
+                <ion-badge class="active">1</ion-badge>
+                <h6 class="opensanLight300">Choose Voucher</h6>
+        </ion-col>
+
+        <ion-col size="4" class="ion-text-center">
+
+                <ion-badge *ngIf="stepMode == 'vouchChosen'" class="active">2</ion-badge>
+                <ion-badge *ngIf="stepMode !== 'vouchChosen'" class="noactive">2</ion-badge>
+                <h6 class="opensanLight300">Search Voucher</h6>
+        </ion-col>
+
+        <ion-col size="4" class="ion-text-center">
+                <ion-badge *ngIf="stepMode == 'vouchRequest'" class="active">3</ion-badge>
+                <ion-badge *ngIf="stepMode !== 'vouchRequest'" class="noactive">3</ion-badge>
+                <h6 class="opensanLight300">Request to trade</h6>
+        </ion-col>
+
+      </ion-row>
+
+
+    <div class="voucherdetail">
+
+     <ion-row>
+        <ion-col size="12">
+            <img src="{{voucherDetail.banner_url}}" class="coucherimg">
+        </ion-col>
+     </ion-row>
+
+
+      <div class="basicinformation">
+        <ion-row>
+            <ion-col size="3">
+                <ion-text class="opensanLBold600 title">Merchant:</ion-text>
+            </ion-col>
+            <ion-col size="9">
+                <ion-text (click)="goToResturantDetail(voucherDetail)" class="opensanLBold700 txthemecolor restaurantname">{{voucherDetail.merchant_title}}</ion-text>
+            </ion-col>
+        </ion-row>
+
+
+        <ion-row>
+            <ion-col size="3">
+                <ion-text class="opensanLBold600 title">Offer:</ion-text>
+            </ion-col>
+            <ion-col size="9">
+                <ion-text class="opensanLBold600 txthemecolor">{{voucherDetail.title}}
+                <div>{{voucherDetail.offer}}</div>
+                </ion-text>
+            </ion-col>
+        </ion-row>
+
+        <ion-row>
+            <ion-col size="3">
+                <ion-text class="opensanLBold600 title">Validity:</ion-text>
+            </ion-col>
+            <ion-col size="9">
+                <ion-text class="opensanLBold700">Till {{voucherDetail.expiry_date}}
+                </ion-text>
+            </ion-col>
+        </ion-row>
+
+        <ion-row>
+            <ion-col size="3">
+                <ion-text class="opensanLBold600 title">Outlets:</ion-text>
+            </ion-col>
+            <ion-col size="9">
+                <ion-text class="opensanLBold700">Valid at
+                    {{voucherDetail.available_outlets}}
+                </ion-text>
+            </ion-col>
+        </ion-row>
+
+        <div class="blackline"></div>
+
+        <div class="tnctitle opensanLBold700" *ngIf="voucherDetail['terms']!=null"><strong>Terms and conditions:</strong></div>
+        <div class="opensanLight300 tncdesc" *ngIf="voucherDetail['terms']!=null">{{voucherDetail.terms}}</div>
+
+        <div class="blackline" *ngIf="voucherDetail['terms']!=null"></div>
+      </div>
+
+
+   <ion-row>
+      <div class="meettheowner" *ngIf="buttonMode !== 'redeem'">
+        <h2 class="opensanLBold700">Meet the owner</h2>
+
+        <div>
+           <ion-row>
+                <ion-col size="3" class="">
+                    <img src="{{ownerData.avatar}}" class="avatar">
+                </ion-col>
+
+                <ion-col size="9" class="ownerdetail ion-align-self-center">
+                    <ion-text (click)="ownerList()" class="ownername opensanLBold700">{{ownerData.name}}</ion-text>
+                    <small *ngIf="ownerData.email_verified == 1">Verified member</small>
+                    <ion-icon name="mail" *ngIf="ownerData.email_verified == 1"></ion-icon>
+
+
+
+                    <div *ngIf="wishList.length >0" class="displaywishlist">
+
+                        <div *ngIf="wishList_str.length >0&&mode==1">
+
+                          <div class="wishlist"><img src="../../assets/wishlist-active-icon.svg" class="tradeicon"> {{wishList_str}}... <a (click)="mode=2" style="color:#f8941c;">View More</a></div>
+
+                        </div>
+
+                        <div *ngIf="wishList_str.length==0||mode==2" class="wishlist">
+                          <img src="../../assets/wishlist-active-icon.svg" class="tradeicon"> <span style="color: #eb008b;" class="opensanLBold700"> Wishlist</span>
+                          <ion-row>
+
+                            <ion-col size="4" *ngFor="let x of wishList" align="center">
+                              <img [src]=x.restaurant_logo class="restauranticon">
+
+                            </ion-col>
+
+                          </ion-row>
+                          <div *ngIf="wishList_str.length >0&&mode==1">
+                          <a (click)="mode=1" style="color:#f8941c;"> View Less</a>
+                          </div>
+                        </div>
+
+
+                      </div>
+
+
+
+                      <div *ngIf="wishList.length ==0" class="nowishlist">
+                        <img src="../../assets/wishlist-nonactive-icon.svg" class="tradeicon"><small>No wishlist, anything goes!</small>
+                      </div>
+
+
+
+
+
+                </ion-col>
+            </ion-row>
+
+
+
+
+        </div>
+      </div>
+
+      <div *ngIf="buttonMode == 'redeem'&&voucherDetail.is_expired==0" class="btnstatus">
+        <ion-row>
+          <ion-col size="7">
+            <app-common-voucher-detail-footer class="ion-text-center"
+            [mode]="buttonMode"
+            (click)="navigate('/redeem/'+voucher_id)"
+
+            ></app-common-voucher-detail-footer>
+        </ion-col>
+            <ion-col size="5">
+                <ion-button mode="md" class="btndecline ion-text-left opbtntrade" (click)="updateTradeVoucher(type='display')" *ngIf="voucherDetail.display == '0'"><img src="../../assets/trade-icon-white.svg">Open for Trade</ion-button>
+
+                <ion-button mode="md"  class="btndecline ion-text-left opbtntrade" (click)="updateTradeVoucher(type='display')" *ngIf="voucherDetail.display == '1'" ><img src="../../assets/remove-trade-icon.svg" class="img1">Remove<br>from Trade</ion-button>
+
+                <ion-button mode="md"  class="btndecline ion-text-left opbtntrade"    (click)="navigate('gift-voucher/'+voucher_id)"><img src="../../assets/gife-this-icon.svg" class="img2">Gift<br>this Voucher</ion-button>
+            </ion-col>
+
+
+
+
+        </ion-row>
+
+
+
+      </div>
+
+    <app-common-voucher-detail-footer class="ion-text-center"
+    [mode]="buttonMode"
+    (cusResponseEvent)="backToResponsePage($event)" *ngIf="buttonMode !== 'redeem'"
+    ></app-common-voucher-detail-footer>
+
+
+
+   </ion-row>
+
+
+</div>
+    <div class="spacer" style="height: 40px;"></div>
+</ion-content>
+<mytab></mytab>
